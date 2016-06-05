@@ -1,3 +1,1 @@
-# STAT133
-# Concepts in Computing with Data
-## Summer 2016
+### STAT133 - Concepts in Computing with Data - Summer 2016
