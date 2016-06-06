@@ -1,0 +1,61 @@
+---
+title: "Lesson 1"
+subtitle: "A Brief Introduction to R"
+output:
+  tufte::tufte_html: default
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+```
+
+# Introduction
+
+Here are some very basic things you can do in R:
+
+R can be used as a calculator: any expressions that you type into the R console will be
+computed, and the answer printed.  For example
+
+```{r}
+1 + 1
+5 / 9
+```
+
+You can write comments in R using the hash symbol #.
+
+```{r}
+# This line of code will not get evaluated.  2 + 2
+## The line below this one will be though
+2 + 2
+```
+
+You can form vectors in R using the command `c`.  Operations are usually applied element-by-element to a vector.
+
+```{r}
+# Adding two vectors together
+c(1, 2, 3) + c(4, 5, 6)
+
+# Multiplying two vectors together
+c(1, 2, 3) * c(1, 2, 3)
+```
+
+You can "save" objects in memory by using either the arrow `<-` or an equal sign `=`. We call this action "assignment".
+
+```{r}
+# Assigning the vector (1, 2, 3) to x
+x <- c(1, 2, 3)
+# Assigning the vector (4, 5, 6) to y
+y <- c(4, 5, 6)
+# Adding x and y should return (5, 7, 9)
+x + y
+```
+
+All functions in R are called using their names followed by their arguments in parentheses (more on this later).  For example, here we take the average of `x`, which was assigned the values 1, 2, and 3 earlier.
+
+```{r}
+mean(x)
+```
+

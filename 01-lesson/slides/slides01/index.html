@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lesson 1</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Lesson 1">
+  <meta name="author" content="Andrew Do">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/pojoaque.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Lesson 1</h1>
+    <h2>Introduction to R</h2>
+    <p>Andrew Do<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h1>Calculator</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Here are some very basic things you can do in R:</p>
+
+<p>R can be used as a calculator: any expressions that you type into the R console will be
+computed, and the answer printed.  For example</p>
+
+<pre><code class="r">1 + 1
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<pre><code class="r">5 / 9
+</code></pre>
+
+<pre><code>## [1] 0.5555556
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <article data-timings="">
+    <p>You can write comments in R using the hash symbol #.</p>
+
+<pre><code class="r"># This line of code will not get evaluated.  2 + 2
+## The line below this one will be though
+2 + 2
+</code></pre>
+
+<pre><code>## [1] 4
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h1>Vectors</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>You can form vectors in R using the command <code>c</code>.  Operations are usually applied element-by-element to a vector.</p>
+
+<pre><code class="r"># Adding two vectors together
+c(1, 2, 3) + c(4, 5, 6)
+</code></pre>
+
+<pre><code>## [1] 5 7 9
+</code></pre>
+
+<pre><code class="r"># Multiplying two vectors together
+c(1, 2, 3) * c(1, 2, 3)
+</code></pre>
+
+<pre><code>## [1] 1 4 9
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h1>Object Assignment</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>You can &quot;save&quot; objects in memory by using either the arrow <code>&lt;-</code> or an equal sign <code>=</code>. We call this action &quot;assignment&quot;.</p>
+
+<pre><code class="r"># Assigning the vector (1, 2, 3) to x
+x &lt;- c(1, 2, 3)
+# Assigning the vector (4, 5, 6) to y
+y = c(4, 5, 6)
+# Adding x and y should return (5, 7, 9)
+x + y
+</code></pre>
+
+<pre><code>## [1] 5 7 9
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h1>Functions</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>All functions in R are called using their names followed by their arguments in parentheses (more on this later).  For example, here we take the average of <code>x</code>, which was assigned the values 1, 2, and 3 earlier.</p>
+
+<pre><code class="r">mean(x)
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h1>Getting Help in R</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>To get help about a function in R, you can use <code>help(function_name)</code> or <code>?function_name</code>.  For example, the following calls would fetch information about the mean function.</p>
+
+<pre><code class="r">help(mean)
+?mean
+</code></pre>
+
+<p>More often than not, though, I end up deferring to StackExchange or Google.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Calculator'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='NA'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Vectors'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Object Assignment'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Functions'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Getting Help in R'>
+         6
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
