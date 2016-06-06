@@ -46,16 +46,24 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
 <p>Here are some very basic things you can do in R:</p>
+<div id="calculator" class="section level2">
+<h2>Calculator</h2>
 <p>R can be used as a calculator: any expressions that you type into the R console will be computed, and the answer printed. For example</p>
 <pre class="r"><code>1 + 1</code></pre>
 <pre><code>## [1] 2</code></pre>
 <pre class="r"><code>5 / 9</code></pre>
 <pre><code>## [1] 0.5555556</code></pre>
+</div>
+<div id="comments" class="section level2">
+<h2>Comments</h2>
 <p>You can write comments in R using the hash symbol #.</p>
 <pre class="r"><code># This line of code will not get evaluated.  2 + 2
 ## The line below this one will be though
 2 + 2</code></pre>
 <pre><code>## [1] 4</code></pre>
+</div>
+<div id="vectors" class="section level2">
+<h2>Vectors</h2>
 <p>You can form vectors in R using the command <code>c</code>. Operations are usually applied element-by-element to a vector.</p>
 <pre class="r"><code># Adding two vectors together
 c(1, 2, 3) + c(4, 5, 6)</code></pre>
@@ -63,7 +71,10 @@ c(1, 2, 3) + c(4, 5, 6)</code></pre>
 <pre class="r"><code># Multiplying two vectors together
 c(1, 2, 3) * c(1, 2, 3)</code></pre>
 <pre><code>## [1] 1 4 9</code></pre>
-<p>You can “save” objects in memory by using either the arrow <code>&lt;-</code> or an equal sign <code>=</code>. We call this action “assignment”.</p>
+</div>
+<div id="naming-objects" class="section level2">
+<h2>Naming Objects</h2>
+<p>You can “save” objects in memory by using either the arrow <code>&lt;-</code> or an equal sign <code>=</code>. We call this action “assignment to a name”.</p>
 <pre class="r"><code># Assigning the vector (1, 2, 3) to x
 x &lt;- c(1, 2, 3)
 # Assigning the vector (4, 5, 6) to y
@@ -71,9 +82,26 @@ y &lt;- c(4, 5, 6)
 # Adding x and y should return (5, 7, 9)
 x + y</code></pre>
 <pre><code>## [1] 5 7 9</code></pre>
+<p>There are some rules for naming objects in R:</p>
+<ul>
+<li>Names cannot start with a number, so, for example <code>001graph</code> would not be valid.</li>
+<li>Names cannot contain punctuation, so <code>n*mmatrix</code> is not legitimate. The only two exceptions are periods <code>.</code> and underscores <code>_</code>.</li>
+<li>Names are case-sensitive, so <code>vorpal1</code> and <code>Vorpal1</code> are two different objects</li>
+</ul>
+</div>
+<div id="functions" class="section level2">
+<h2>Functions</h2>
 <p>All functions in R are called using their names followed by their arguments in parentheses (more on this later). For example, here we take the average of <code>x</code>, which was assigned the values 1, 2, and 3 earlier.</p>
 <pre class="r"><code>mean(x)</code></pre>
 <pre><code>## [1] 2</code></pre>
+</div>
+</div>
+<div id="getting-help-in-r" class="section level1">
+<h1>Getting Help in R</h1>
+<p>To get help about a function in R, you can use <code>help(function_name)</code> or <code>?function_name</code>. For example, the following calls would fetch information about the mean function.</p>
+<pre class="r"><code>help(mean)
+?mean</code></pre>
+<p>More often than not, though, I end up deferring to StackExchange or Google.</p>
 </div>
 
 

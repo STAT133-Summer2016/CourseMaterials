@@ -77,7 +77,7 @@ c(1, 2, 3) * c(1, 2, 3)
 
 ---
 
-# Object Assignment
+# Naming Objects
 
 You can "save" objects in memory by using either the arrow `<-` or an equal sign `=`. We call this action "assignment".
 
@@ -94,6 +94,12 @@ x + y
 ```
 ## [1] 5 7 9
 ```
+
+There are some rules for naming objects in R:
+
+* Names cannot start with a number, so, for example `001graph` would not be valid.
+* Names cannot contain punctuation, so `n*mmatrix` is not legitimate.  The only two exceptions are periods `.` and underscores `_`.
+* Names are case-sensitive, so `vorpal1` and `Vorpal1` are two different objects
 
 ---
 
