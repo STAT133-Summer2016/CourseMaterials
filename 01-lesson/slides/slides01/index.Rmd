@@ -148,7 +148,7 @@ length(x)
 I won't go over these functions explicitly during lecture, but they should be helpful for you in your lab and homework.
 
 ```
-mean, median, max, min, summary
+sum, mean, median, max, min, summary, seq, which, which.max, which.min
 ```
 
 ---
@@ -183,8 +183,6 @@ There are some special values:
 * NA denotes a missing value.  It takes on a data type!
 * Inf is positive infinity
 * NaN is Not a Number
-
-# 
 
 
 

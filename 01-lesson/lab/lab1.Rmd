@@ -39,7 +39,7 @@ These questions refer to the vector `scored`
 These questions refer to both vectors.
 
 1. What was the sum of the scores in game 7?
-2. What was the sum of the scores in the last 5 games?
-3. What was the difference in scores in the odd games?
+2. What was the sum of the scores in each of the last 5 games?
+3. What was the difference in scores in each of the odd games?
 4. Which games did the Raiders win?
 5. Were there any ties?
