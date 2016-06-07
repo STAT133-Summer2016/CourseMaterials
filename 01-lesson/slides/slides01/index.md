@@ -130,6 +130,156 @@ help(mean)
 
 More often than not, though, I end up deferring to StackExchange or Google.
 
+---
+
+# Logical Statements
+R understands the following logical checks:
+```
+==, >=, <=, <, >, !=
+```
+The `==` checks for equality.  Note that it's two equal signs! This is a common mistake.
+
+```r
+5 == 2+3
+```
+
+```
+## [1] TRUE
+```
+
+```r
+c(1,2) == c(1,5)
+```
+
+```
+## [1]  TRUE FALSE
+```
+The `!=` checks for nonequality.  Usually the `!` in programming denotes negation.
+
+```r
+4 != 2+3
+```
+
+```
+## [1] TRUE
+```
+Another thing to note is that R performs these checks element-by-element for vectors.
+
+```r
+c(1, 2, 3, 4, 5) <= 3
+```
+
+```
+## [1]  TRUE  TRUE  TRUE FALSE FALSE
+```
+
+---
+
+# Combining Logical Statements
+To combine logical statements together, we use `&` for the logical `AND` and `|` for the logical `OR`.
+
+
+```r
+x <- 5
+3 < x & x < 7
+```
+
+```
+## [1] TRUE
+```
+
+```r
+# 3 < x < 7 doesn't work!
+```
+
+---
+
+# Subsetting in R
+
+You can pick out certain elements of a vector using square brackets
+
+```r
+x <- c(1, 3, 5, 7, 9)
+x[2]
+```
+
+```
+## [1] 3
+```
+
+```r
+x[c(1, 3, 5)]
+```
+
+```
+## [1] 1 5 9
+```
+
+```r
+x[c(TRUE, FALSE, FALSE, FALSE, TRUE)]
+```
+
+```
+## [1] 1 9
+```
+
+---
+
+# Some useful functions in R
+
+`length` gives you the number of elements in a vector
+
+```r
+x <- c(1, 2, 3, 3, 3)
+length(x)
+```
+
+```
+## [1] 5
+```
+
+I won't go over these functions explicitly during lecture, but they should be helpful for you in your lab and homework.
+
+```
+mean, median, max, min, summary
+```
+
+---
+
+# Data Types in R
+
+* Numeric - regular (real) numbers (also known as double)
+* Integer - well... integers
+* Character - text (also known as strings)
+* Logical - `TRUE` and `FALSE` values
+* Complex - complex values (with imaginary components)
+
+---
+
+# Examples
+
+Type       | Examples
+---------- | --------
+Numeric    | -0.5, 2
+Integer    | 3, 8
+Complex    | 2 + 1i
+Logical    | TRUE, FALSE
+Character  | "hello world"
+
+---
+
+# Special Values
+
+There are some special values:
+
+* NULL is completely empty, no data type, no length
+* NA denotes a missing value.  It takes on a data type!
+* Inf is positive infinity
+* NaN is Not a Number
+
+# 
+
+
 
 
 
