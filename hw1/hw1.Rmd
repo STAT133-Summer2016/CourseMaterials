@@ -7,8 +7,6 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Problem 1 (3 points per part)
-
 Install the `nycflights13` package by typing `install.packages("nycflights13")` into the console (do not leave this in your R Markdown document).  Now load the data set using the following commands:
 
 ```{r}
@@ -18,11 +16,14 @@ data(flights)
 
 You can find the codebook for this dataset using `help(flights).
 
-Using base R commands, answer the following questions.  The bolded word is what you should save your answer under.  You should then print the value.  You can break the problem into smaller steps if needed.  No additional packages should be loaded.  An example is given below.
+Using base R commands, answer the following questions (4 points each).  The bolded word is what you should save your answer under.  You should then print the value.  You can break the problem into smaller steps if needed.  No additional packages should be loaded.  An example is given below.
 
 #### Example
 Which plane (tailnumber) has the longest arrival delay? __plane_max_ad__
 ```{r}
+# To access a variable in a data frame as a vector, the syntax is:
+# name_of_data_frame$name_of_variable
+
 plane_max_ad <- flights$tailnum[which.max(flights$arr_delay)]
 plane_max_ad
 ```

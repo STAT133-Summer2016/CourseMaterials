@@ -103,6 +103,89 @@ x + y</code></pre>
 ?mean</code></pre>
 <p>More often than not, though, I end up deferring to StackExchange or Google.</p>
 </div>
+<div id="logical-statements" class="section level1">
+<h1>Logical Statements</h1>
+<p>R understands the following logical checks:</p>
+<pre><code>==, &gt;=, &lt;=, &lt;, &gt;, !=</code></pre>
+<p>The <code>==</code> checks for equality. Note that it’s two equal signs! This is a common mistake.</p>
+<pre class="r"><code>5 == 2+3</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>c(1,2) == c(1,5)</code></pre>
+<pre><code>## [1]  TRUE FALSE</code></pre>
+<p>The <code>!=</code> checks for nonequality. Usually the <code>!</code> in programming denotes negation.</p>
+<pre class="r"><code>4 != 2+3</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>Another thing to note is that R performs these checks element-by-element for vectors.</p>
+<pre class="r"><code>c(1, 2, 3, 4, 5) &lt;= 3</code></pre>
+<pre><code>## [1]  TRUE  TRUE  TRUE FALSE FALSE</code></pre>
+</div>
+<div id="subsetting-in-r" class="section level1">
+<h1>Subsetting in R</h1>
+<p>You can pick out certain elements of a vector using square brackets</p>
+<pre class="r"><code>x &lt;- c(1, 3, 5, 7, 9)
+x[2]</code></pre>
+<pre><code>## [1] 3</code></pre>
+<pre class="r"><code>x[c(1, 3, 5)]</code></pre>
+<pre><code>## [1] 1 5 9</code></pre>
+<pre class="r"><code>x[c(TRUE, FALSE, FALSE, FALSE, TRUE)]</code></pre>
+<pre><code>## [1] 1 9</code></pre>
+</div>
+<div id="data-types-in-r" class="section level1">
+<h1>Data Types in R</h1>
+<ul>
+<li>Numeric - regular (real) numbers (also known as double)</li>
+<li>Integer - well… integers</li>
+<li>Character - text (also known as strings)</li>
+<li>Logical - <code>TRUE</code> and <code>FALSE</code> values</li>
+<li>Complex - complex values (with imaginary components)</li>
+</ul>
+</div>
+<div id="examples" class="section level1">
+<h1>Examples</h1>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Type</th>
+<th align="left">Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Numeric</td>
+<td align="left">-0.5, 2</td>
+</tr>
+<tr class="even">
+<td align="left">Integer</td>
+<td align="left">3, 8</td>
+</tr>
+<tr class="odd">
+<td align="left">Complex</td>
+<td align="left">2 + 1i</td>
+</tr>
+<tr class="even">
+<td align="left">Logical</td>
+<td align="left">TRUE, FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">Character</td>
+<td align="left">“hello world”</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="special-values" class="section level1">
+<h1>Special Values</h1>
+<p>There are some special values:</p>
+<ul>
+<li>NULL is completely empty, no data type, no length</li>
+<li>NA denotes a missing value. It takes on a data type!</li>
+<li>Inf is positive infinity</li>
+<li>NaN is Not a Number</li>
+</ul>
+</div>
+<div id="section" class="section level1">
+<h1></h1>
+</div>
 
 
 

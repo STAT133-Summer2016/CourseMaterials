@@ -119,17 +119,18 @@ $(document).ready(function () {
 </div>
 
 
-<div id="problem-1-3-points-per-part" class="section level1">
-<h1>Problem 1 (3 points per part)</h1>
 <p>Install the <code>nycflights13</code> package by typing <code>install.packages(&quot;nycflights13&quot;)</code> into the console (do not leave this in your R Markdown document). Now load the data set using the following commands:</p>
 <pre class="r"><code>library(nycflights13)
 data(flights)</code></pre>
 <p>You can find the codebook for this dataset using `help(flights).</p>
-<p>Using base R commands, answer the following questions. The bolded word is what you should save your answer under. You should then print the value. You can break the problem into smaller steps if needed. No additional packages should be loaded. An example is given below.</p>
+<p>Using base R commands, answer the following questions (4 points each). The bolded word is what you should save your answer under. You should then print the value. You can break the problem into smaller steps if needed. No additional packages should be loaded. An example is given below.</p>
 <div id="example" class="section level4">
 <h4>Example</h4>
 <p>Which plane (tailnumber) has the longest arrival delay? <strong>plane_max_ad</strong></p>
-<pre class="r"><code>plane_max_ad &lt;- flights$tailnum[which.max(flights$arr_delay)]
+<pre class="r"><code># To access a variable in a data frame as a vector, the syntax is:
+# name_of_data_frame$name_of_variable
+
+plane_max_ad &lt;- flights$tailnum[which.max(flights$arr_delay)]
 plane_max_ad</code></pre>
 <pre><code>## [1] &quot;N384HA&quot;</code></pre>
 <ol style="list-style-type: decimal">
@@ -144,7 +145,6 @@ plane_max_ad</code></pre>
 <li>How many airlines fly from LGA to DFW? <strong>num_lga_dfw</strong></li>
 <li>Which airline had the most flights coming out of JFK? <strong>most_flights_jfk</strong></li>
 </ol>
-</div>
 </div>
 
 
