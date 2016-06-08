@@ -47,8 +47,8 @@ pwd    # shows you the directory you're currently in
 ## Copying, Moving and Renaming files
 To copy a file, the syntax is
 ```
-cp file_path copied_file_path
-cp hw1.R hw1copy.R
+cp file_path dir_copied_file
+cp hw1.R documents/
 ```
 To move a file, we use
 ```

@@ -177,6 +177,7 @@ sort(x, decreasing = TRUE) # can specify decreasing
 
 `order` gives the _indices_ (positions) of the values in increasing order
 ```{r}
+x <- c(13, 6, 18, 2, 11)
 order(x)
 order(x, decreasing = TRUE)
 ```

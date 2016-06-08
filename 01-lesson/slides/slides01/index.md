@@ -241,7 +241,36 @@ length(x)
 I won't go over these functions explicitly during lecture, but they should be helpful for you in your lab and homework.
 
 ```
-sum, mean, median, max, min, summary, seq, which, which.max, which.min
+sum, mean, median, max, min, summary, seq
+```
+
+---
+
+# Seq
+`seq` creates a sequence of numbers
+
+```r
+seq(from = 1, to = 6, by = 2) # sequence from 1 to 6 by 2
+```
+
+```
+## [1] 1 3 5
+```
+
+```r
+seq(1, 6, 2) # not necessary to type out the argument names
+```
+
+```
+## [1] 1 3 5
+```
+
+```r
+seq(1, 6) # by default, by is 1
+```
+
+```
+## [1] 1 2 3 4 5 6
 ```
 
 ---
@@ -273,6 +302,7 @@ sort(x, decreasing = TRUE) # can specify decreasing
 `order` gives the _indices_ (positions) of the values in increasing order
 
 ```r
+x <- c(13, 6, 18, 2, 11)
 order(x)
 ```
 
@@ -343,6 +373,86 @@ which.max(x)
 ## [1] 1
 ```
 
+---
+
+# unique
+`unique` returns the unique values in a vector
+
+```r
+x <- c(1, 1, 1, 2, 2, 3)
+unique(x)
+```
+
+```
+## [1] 1 2 3
+```
+
+---
+
+# any and all
+`any` is a way to check if _any_ values of a logical vector are `TRUE`
+`all` checks if _all_ values of a logical vector are `TRUE`
+
+```r
+x <- c(1, 100, 1000, 10000, 100000)
+any(x > 10^6)
+```
+
+```
+## [1] FALSE
+```
+
+```r
+all(x <= 10^5)
+```
+
+```
+## [1] TRUE
+```
+
+---
+
+# in
+`%in%` is a special _infix_ operator (it goes between its arguments like a `+` sign) that checks to see if some values are in a set
+
+```r
+# Are the values of x in y?
+x <- c(1, 2, 10)
+y <- seq(1, 5)
+
+x %in% y
+```
+
+```
+## [1]  TRUE  TRUE FALSE
+```
+
+---
+
+# table
+`table` counts the number of occurences of each value in a vector
+
+```r
+x <- c(1, 1, 1, 2, 2, 3)
+table(x)
+```
+
+```
+## x
+## 1 2 3 
+## 3 2 1
+```
+
+```r
+y <- c("a", "a", "b", "b", "b", "c")
+table(y)
+```
+
+```
+## y
+## a b c 
+## 2 3 1
+```
 
 ---
 
