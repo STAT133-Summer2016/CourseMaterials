@@ -1,0 +1,102 @@
+---
+title: "lesson2"
+author: "Andrew Do"
+date: "June 7, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Listing information about a directory
+To see where you are currently, use `pwd`.
+```
+pwd
+```
+To list files in the present working directory, use `ls`
+```
+ls
+```
+You can use additional _flags_ to see additional information. `-a` will show hidden files. `-l` will show long-format information.
+```
+ls -a
+ls -l
+ls -a -l
+ls -al   # same as ls -a -l
+```
+The `-l` flag is useful for viewing:
+
+* Column 1 - File permissions
+* Column 3 - Owner of the file
+* Column 5 - Size of the file in bytes
+* Columns 6-8 - The last time the file was modified
+* Column 9 - Name of the file
+
+## Changing directories
+To change directories, you use the command `cd`. The syntax is simply `cd path/to/directory`
+
+```
+cd /cygdrive/d/teaching # absolute path to teaching directory
+cd     # this takes you to your home directory
+cd ~   # this also takes you to your home directory
+cd ..  # this takes you to the parent of the current directory
+pwd    # shows you the directory you're currently in
+```
+
+## Copying, Moving and Renaming files
+To copy a file, the syntax is
+```
+cp file_path copied_file_path
+cp hw1.R hw1copy.R
+```
+To move a file, we use
+```
+mv old_file_path new_file_path
+mv hw1.R homework_dir/hw1.R
+```
+We can use this to rename files!
+```
+mv old_file_name new_file_name
+mv hw1.R homework1.R
+```
+
+## Removing files and folders
+To remove a file, the command is `rm`
+```
+touch file_to_remove # creates a file called file_to_remove
+rm file_to_remove
+```
+To remove a directory and all its contents, you need the `-r` flag
+```
+mkdir dir_to_remove # creates a directory to remove
+rm -r dir_to_remove
+```
+__WARNING: When working in UNIX, there is no such thing as a "recycle bin," so file recovery is onerous, if at all possible.__
+
+## Basic introduction to Git
+Git allows you to share files between different computers and different people, facilitating collaboration in group projects.  Moreover, it keeps track of different versions of your files so you can easily go back to earlier versions of your work or maintain multiple versions altogether.
+
+In this class, you'll use Git to get the latest course material and to keep track of your homework and projects.
+
+Use the code below to clone our class repository.
+
+```
+cd <path_to_parent_directory> # change this to where you want the folder to be
+git clone https://github.com/doctordo/stat133-su2016
+```
+
+Now suppose I update the course materials, then all you have to do to update the files on your computer is change into the directory on your machine and enter `git pull`.
+```
+cd <path_to_stat133-su2016>
+git pull
+```
+
+To make your own repository, the easiest way is to initialize it on GitHub and then clone it to your desired location on your machine.  After that, copy all the files you want into that folder then, in that folder, run the following commands
+
+```
+git add --all
+git commit -m 'first commit'
+git pull origin master
+git push origin master
+```

@@ -246,6 +246,106 @@ sum, mean, median, max, min, summary, seq, which, which.max, which.min
 
 ---
 
+# Sort
+`sort` sorts the values of a vector in increasing order
+
+```r
+x <- c(13, 6, 18, 2, 11)
+sort(x)
+```
+
+```
+## [1]  2  6 11 13 18
+```
+
+```r
+sort(x, decreasing = TRUE) # can specify decreasing
+```
+
+```
+## [1] 18 13 11  6  2
+```
+
+---
+
+# Order
+
+`order` gives the _indices_ (positions) of the values in increasing order
+
+```r
+order(x)
+```
+
+```
+## [1] 4 2 5 1 3
+```
+
+```r
+order(x, decreasing = TRUE)
+```
+
+```
+## [1] 3 1 5 2 4
+```
+
+---
+
+# Head and Tail
+
+`head` gives the first few elements while `tail` gives the last few elements
+
+```r
+x <- c(1, 2, 3, 4, 5)
+head(x, 2) # gives the first two elements
+```
+
+```
+## [1] 1 2
+```
+
+```r
+tail(x, 3) # gives the last three elements
+```
+
+```
+## [1] 3 4 5
+```
+
+---
+
+# which
+`which` gives the _indices_ (positions) that are `TRUE` for a given logical vector
+
+```r
+which(c(TRUE, TRUE, FALSE, TRUE, FALSE))
+```
+
+```
+## [1] 1 2 4
+```
+
+```r
+x <- c(1, 2, 3, 4, 5)
+which(x <= 3)
+```
+
+```
+## [1] 1 2 3
+```
+`which.max` and `which.min` returns the index of the FIRST value that satisfies maximality or minimality
+
+```r
+x <- c(5, 5, 5, 3, 2)
+which.max(x)
+```
+
+```
+## [1] 1
+```
+
+
+---
+
 # Data Types in R
 
 * Numeric - regular (real) numbers (also known as double)
