@@ -549,6 +549,31 @@ df[2, "x"]
 
 ---
 
+# Selecting all elements in a dimension
+Leaving an index blank means "select all"
+
+```r
+df <- data.frame(x = seq(1, 3), y = c("a", "b", "c"), z = c(T, F, F), stringsAsFactors = F)
+
+# This will select the 3rd row (3rd row, every column)
+df[3, ]
+```
+
+```
+##   x y     z
+## 3 3 c FALSE
+```
+
+```r
+# This will select the 2nd column (2nd col, every row)
+df[ ,2]
+```
+
+```
+## [1] "a" "b" "c"
+```
+
+
 # Adding columns to data frames
 
 

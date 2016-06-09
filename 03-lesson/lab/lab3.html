@@ -134,6 +134,19 @@ tents &lt;- read_csv(&quot;tents.csv&quot;, col_types = &quot;ccnniccc&quot;)</c
 <p>Answer the following questions programatically. Some questions ask for you to explain what you see—you may answer this as text outside a code block.</p>
 <ol style="list-style-type: decimal">
 <li>Run <code>str()</code> on <code>tents</code>. What information does it tell you? This is a useful function to know.</li>
+</ol>
+<pre class="r"><code>str(tents)</code></pre>
+<pre><code>## Classes 'tbl_df', 'tbl' and 'data.frame':    90 obs. of  8 variables:
+##  $ name    : chr  &quot;fly-creek-ul2&quot; &quot;fly-creek-ul3&quot; &quot;salida-2&quot; &quot;jack-rabbit-sl3&quot; ...
+##  $ brand   : chr  &quot;big-agnes&quot; &quot;big-agnes&quot; &quot;kelty&quot; &quot;big-agnes&quot; ...
+##  $ price   : num  350 450 160 360 149 ...
+##  $ weight  : num  960 1450 1700 2160 2210 1530 2690 1840 3200 850 ...
+##  $ height  : int  96 107 102 107 107 107 117 114 122 97 ...
+##  $ bestuse : chr  &quot;Backpacking&quot; &quot;Backpacking&quot; &quot;Backpacking&quot; &quot;Backpacking&quot; ...
+##  $ seasons : chr  &quot;3-season&quot; &quot;3-season&quot; &quot;3-season&quot; &quot;3-season&quot; ...
+##  $ capacity: chr  &quot;2-person&quot; &quot;3-person&quot; &quot;2-person&quot; &quot;3-person&quot; ...</code></pre>
+<p>I think the str function does blah blah blah</p>
+<ol start="2" style="list-style-type: decimal">
 <li>What class is <code>tents</code>?</li>
 <li>How many rows are in <code>tents</code>?</li>
 <li>How many columns are in <code>tents</code>?</li>
@@ -151,6 +164,7 @@ tents &lt;- read_csv(&quot;tents.csv&quot;, col_types = &quot;ccnniccc&quot;)</c
 <li>What is the name of the tend with the best height-to-weight ratio?</li>
 <li>Run <code>table</code> with two arguments, <code>seasons</code> and <code>capacity</code> (this should be one table). What did it do?</li>
 <li>What type of tent (bestuse) is the most common? Your answer should return only the use and not the count.</li>
+<li>Create a data frame called <code>kelty</code> with only data on kelty tents. Do the same for <code>big-agnes</code>. Then, combine the two data frames.</li>
 </ol>
 </div>
 

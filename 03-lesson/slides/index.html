@@ -644,10 +644,31 @@ df[3, 3]
 
 <slide class="" id="slide-21" style="background:;">
   <hgroup>
-    <h1>Adding columns to data frames</h1>
+    <h1>Selecting all elements in a dimension</h1>
   </hgroup>
   <article data-timings="">
-    <pre><code class="r">df &lt;- data.frame(x = seq(1, 3), y = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), z = c(T, F, F), stringsAsFactors = F)
+    <p>Leaving an index blank means &quot;select all&quot;</p>
+
+<pre><code class="r">df &lt;- data.frame(x = seq(1, 3), y = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), z = c(T, F, F), stringsAsFactors = F)
+
+# This will select the 3rd row (3rd row, every column)
+df[3, ]
+</code></pre>
+
+<pre><code>##   x y     z
+## 3 3 c FALSE
+</code></pre>
+
+<pre><code class="r"># This will select the 2nd column (2nd col, every row)
+df[ ,2]
+</code></pre>
+
+<pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;
+</code></pre>
+
+<h1>Adding columns to data frames</h1>
+
+<pre><code class="r">df &lt;- data.frame(x = seq(1, 3), y = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), z = c(T, F, F), stringsAsFactors = F)
 df
 </code></pre>
 
@@ -799,7 +820,7 @@ df
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=21 title='Adding columns to data frames'>
+        data-slide=21 title='Selecting all elements in a dimension'>
          21
       </a>
     </li>
