@@ -39,3 +39,4 @@ Answer the following questions programatically.  Some questions ask for you to e
 16. What is the name of the tend with the best height-to-weight ratio?
 17. Run `table` with two arguments, `seasons` and `capacity` (this should be one table).  What did it do?
 18. What type of tent (bestuse) is the most common? Your answer should return only the use and not the count.
+19. Create a data frame called `kelty` with only data on kelty tents.  Do the same for `big-agnes`.  Then, combine the two data frames.

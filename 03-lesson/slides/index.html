@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lesson 3</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Lesson 3">
+  <meta name="author" content="Andrew Do">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/pojoaque.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Lesson 3</h1>
+    <h2>Data Structures in R</h2>
+    <p>Andrew Do<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h1>Data Types in R</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Numeric - regular (real) numbers (also known as double)</li>
+<li>Integer - well... integers</li>
+<li>Character - text (also known as strings)</li>
+<li>Logical - <code>TRUE</code> and <code>FALSE</code> values</li>
+<li>Complex - complex values (with imaginary components)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h1>Examples</h1>
+  </hgroup>
+  <article data-timings="">
+    <table><thead>
+<tr>
+<th>Type</th>
+<th>Examples</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Numeric</td>
+<td>-0.5, 2</td>
+</tr>
+<tr>
+<td>Integer</td>
+<td>3, 8</td>
+</tr>
+<tr>
+<td>Complex</td>
+<td>2 + 1i</td>
+</tr>
+<tr>
+<td>Logical</td>
+<td>TRUE, FALSE</td>
+</tr>
+<tr>
+<td>Character</td>
+<td>&quot;hello world&quot;</td>
+</tr>
+</tbody></table>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h1>Special Values</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>There are some special values:</p>
+
+<ul>
+<li>NULL is completely empty, no data type, no length</li>
+<li>NA denotes a missing value.  It takes on a data type!</li>
+<li>Inf is positive infinity</li>
+<li>NaN is Not a Number</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h1>Vectors</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Vectors are the most basic data type in R</li>
+<li>For those coming from another language: There are no numerical primitizes. In other words, all naked numbers are double-width floating-point atomic vectors of length one. </li>
+<li>Vectors are atomic, meaning they can only hold one type of data</li>
+<li>You create vectors with <code>c()</code></li>
+<li>You can create a sequence of consecutive numbers with <code>:</code></li>
+</ul>
+
+<pre><code class="r"># This is a vector
+1:6
+</code></pre>
+
+<pre><code>## [1] 1 2 3 4 5 6
+</code></pre>
+
+<pre><code class="r"># So is this
+1
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h1>Atomic Vector Examples</h1>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># Vectors can only hold one type of data
+# Everything converted into strings
+c(&quot;a&quot;, &quot;b&quot;, 1, 2, FALSE)
+</code></pre>
+
+<pre><code>## [1] &quot;a&quot;     &quot;b&quot;     &quot;1&quot;     &quot;2&quot;     &quot;FALSE&quot;
+</code></pre>
+
+<pre><code class="r"># Everything converted into numeric
+x &lt;- c(1, 0, FALSE, TRUE)
+x
+</code></pre>
+
+<pre><code>## [1] 1 0 0 1
+</code></pre>
+
+<pre><code class="r">class(x)
+</code></pre>
+
+<pre><code>## [1] &quot;numeric&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h1>More Vector Info</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Vectors are always 1-dimensional, even if you try to nest <code>c()</code></li>
+</ul>
+
+<pre><code class="r">c(1, c(2, 3), c(4))
+</code></pre>
+
+<pre><code>## [1] 1 2 3 4
+</code></pre>
+
+<ul>
+<li>This, in fact, is how you join vectors together</li>
+</ul>
+
+<pre><code class="r">x &lt;- 1:3
+y &lt;- 4:6
+c(x, y)
+</code></pre>
+
+<pre><code>## [1] 1 2 3 4 5 6
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h1>Named Vectors</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>You can create named vectors. This allows you to subset using the names</p>
+
+<pre><code class="r">x &lt;- c(first = &quot;a&quot;, second = &quot;b&quot;, third = &quot;c&quot;)
+x
+</code></pre>
+
+<pre><code>##  first second  third 
+##    &quot;a&quot;    &quot;b&quot;    &quot;c&quot;
+</code></pre>
+
+<pre><code class="r">x[&quot;second&quot;]
+</code></pre>
+
+<pre><code>## second 
+##    &quot;b&quot;
+</code></pre>
+
+<pre><code class="r">x[c(&quot;first&quot;, &quot;third&quot;)]
+</code></pre>
+
+<pre><code>## first third 
+##   &quot;a&quot;   &quot;c&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h1>Accessing Names and Renaming</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>You can use <code>names()</code> to print the names or to overwrite them</p>
+
+<pre><code class="r">names(x) 
+</code></pre>
+
+<pre><code>## [1] &quot;first&quot;  &quot;second&quot; &quot;third&quot;
+</code></pre>
+
+<pre><code class="r">names(x) &lt;- c(&quot;alpha&quot;, &quot;beta&quot;, &quot;gamma&quot;) # renaming all the values
+x
+</code></pre>
+
+<pre><code>## alpha  beta gamma 
+##   &quot;a&quot;   &quot;b&quot;   &quot;c&quot;
+</code></pre>
+
+<pre><code class="r">names(x)[2] &lt;- &quot;bubbles&quot; # renaming the second element
+x
+</code></pre>
+
+<pre><code>##   alpha bubbles   gamma 
+##     &quot;a&quot;     &quot;b&quot;     &quot;c&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h1>Testing data type</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>You can determine type with <code>typeof</code>.  If you want to test for a specific type, use an &quot;is&quot; function: <code>is.character()</code>, <code>is.double()</code>, <code>is.integer()</code>, <code>is.logical()</code>.</p>
+
+<pre><code class="r">int_var &lt;- c(1L, 6L, 10L) # You differentiate integers from doubles with the L
+typeof(int_var)
+</code></pre>
+
+<pre><code>## [1] &quot;integer&quot;
+</code></pre>
+
+<pre><code class="r">is.integer(int_var)
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">is.double(int_var)
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h1>Coercion</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>You can explicitly coerce a vector using the <code>as</code> functions: <code>as.numeric</code>, <code>as.character</code>, <code>as.integer</code>, <code>as.logical</code>.</p>
+
+<pre><code class="r">x &lt;- c(1, 2, 3)
+typeof(x)
+</code></pre>
+
+<pre><code>## [1] &quot;double&quot;
+</code></pre>
+
+<pre><code class="r">x &lt;- as.integer(x)
+typeof(x)
+</code></pre>
+
+<pre><code>## [1] &quot;integer&quot;
+</code></pre>
+
+<pre><code class="r">as.logical(c(1, 1, 0, 0, 1))
+</code></pre>
+
+<pre><code>## [1]  TRUE  TRUE FALSE FALSE  TRUE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h1>Implicit Coercion</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>When you call on a function that doesn&#39;t make sense with a certain data type, <code>R</code> will try to find a data type that it will work on.  This is called <em>implicit coercion</em>.</p>
+
+<pre><code class="r"># Logicals are converted into 1s and 0s in sum
+sum(c(T, F, T, F, F))
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<pre><code class="r"># Numerical values converted into logicals for &amp;, |, any, etc.
+# If R thinks you might lose information, it gives you a warning
+any(c(1, 1, 0, 0))
+</code></pre>
+
+<pre><code>## Warning in any(c(1, 1, 0, 0)): coercing argument of type &#39;double&#39; to
+## logical
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h1>Lists</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Lists, unlike vectors, can contain more than one data type.  They are <em>recursive</em> objects, meaning that lists can contain lists.  You create lists using the <code>list()</code> command.</p>
+
+<pre><code class="r">list(&quot;a&quot;, 1, FALSE, 5 + 3i)
+</code></pre>
+
+<pre><code>## [[1]]
+## [1] &quot;a&quot;
+## 
+## [[2]]
+## [1] 1
+## 
+## [[3]]
+## [1] FALSE
+## 
+## [[4]]
+## [1] 5+3i
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h1>More list examples</h1>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># List with lists
+list(&quot;fruits&quot;, c(&quot;apples&quot;, &quot;bananas&quot;, &quot;cranberries&quot;), list(&quot;other things&quot;))
+</code></pre>
+
+<pre><code>## [[1]]
+## [1] &quot;fruits&quot;
+## 
+## [[2]]
+## [1] &quot;apples&quot;      &quot;bananas&quot;     &quot;cranberries&quot;
+## 
+## [[3]]
+## [[3]][[1]]
+## [1] &quot;other things&quot;
+</code></pre>
+
+<pre><code class="r"># Named list
+list(fruits = c(&quot;apples&quot;, &quot;bananas&quot;, &quot;cranberries&quot;))
+</code></pre>
+
+<pre><code>## $fruits
+## [1] &quot;apples&quot;      &quot;bananas&quot;     &quot;cranberries&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h1>Accessing Items in a list</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>You can get items in a list:</p>
+
+<ul>
+<li>By position, with <code>[[]]</code></li>
+<li>By name (if it&#39;s named) with <code>$</code> or <code>[[]]</code></li>
+</ul>
+
+<pre><code class="r">x &lt;- list(&#39;first&#39; = &quot;a&quot;, &#39;second&#39; = &quot;b&quot;, &#39;third&#39; = &quot;c&quot;)
+x[[1]]
+</code></pre>
+
+<pre><code>## [1] &quot;a&quot;
+</code></pre>
+
+<pre><code class="r">x$first
+</code></pre>
+
+<pre><code>## [1] &quot;a&quot;
+</code></pre>
+
+<pre><code class="r">x[[&quot;first&quot;]]
+</code></pre>
+
+<pre><code>## [1] &quot;a&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h1>Getting/Changing the Names of a list</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Like with vectors, you can use <code>names</code> to get and change the names in a list</p>
+
+<pre><code class="r">x &lt;- list(&#39;first&#39; = &quot;a&quot;, &#39;second&#39; = &quot;b&quot;, &#39;third&#39; = &quot;c&quot;)
+names(x)
+</code></pre>
+
+<pre><code>## [1] &quot;first&quot;  &quot;second&quot; &quot;third&quot;
+</code></pre>
+
+<pre><code class="r">names(x) &lt;- c(&quot;apples&quot;, &quot;bananas&quot;, &quot;cherries&quot;)
+x
+</code></pre>
+
+<pre><code>## $apples
+## [1] &quot;a&quot;
+## 
+## $bananas
+## [1] &quot;b&quot;
+## 
+## $cherries
+## [1] &quot;c&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h1>Matrices and Arrays</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Matrices and Arrays are just n-dimensional generalizations of vectors.  They, too, are atmoic objects (what does this mean again?)</p>
+
+<pre><code class="r"># You make a matrix with the command matrix()
+# You provide it with a vector of numbers, the number of rows, and whether or not to fill the matrix by row.
+matrix(c(1, 2, 3, 4, 5, 6), nrow = 2, byrow = FALSE)
+</code></pre>
+
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6
+</code></pre>
+
+<pre><code class="r"># For an array, you specify dimensions
+array(c(1,2,3,4,5,6,7,8), dim = c(2, 2, 2))
+</code></pre>
+
+<pre><code>## , , 1
+## 
+##      [,1] [,2]
+## [1,]    1    3
+## [2,]    2    4
+## 
+## , , 2
+## 
+##      [,1] [,2]
+## [1,]    5    7
+## [2,]    6    8
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h1>Some commands for 2D structures</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><code>nrow</code> and <code>ncol</code> give the number of columns and rows, respectively</li>
+<li><code>rownames()</code> and <code>colnames</code> act like <code>names</code>, but for the dimensions</li>
+<li>You can combine 2-D objects with <code>cbind</code> and <code>rbind</code></li>
+</ul>
+
+<pre><code class="r">x &lt;- matrix(c(1, 2, 3, 4, 5, 6), nrow = 2, byrow = FALSE)
+y &lt;- matrix(c(7, 8, 9, 10, 11, 12), nrow = 2, byrow = FALSE)
+ncol(x)
+</code></pre>
+
+<pre><code>## [1] 3
+</code></pre>
+
+<pre><code class="r">rbind(x, y)
+</code></pre>
+
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6
+## [3,]    7    9   11
+## [4,]    8   10   12
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h1>Data Frame</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>The most common way of storing data in R is the data frame.  Under the hood, it&#39;s a list of named equal-length vectors.  Since it&#39;s 2D, <code>cbind</code>, <code>rbind</code>, <code>colnames</code>, <code>rownames</code>, <code>ncol</code>, and <code>nrow</code> work on it. To make a data frame, you use the <code>data.frame()</code> command</p>
+
+<pre><code class="r">df &lt;- data.frame(x = seq(1, 3), y = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), z = c(T, F, F))
+df
+</code></pre>
+
+<pre><code>##   x y     z
+## 1 1 a  TRUE
+## 2 2 b FALSE
+## 3 3 c FALSE
+</code></pre>
+
+<p>Are data frames atomic structures?</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h1>Accessing things in data frames</h1>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">df &lt;- data.frame(x = seq(1, 3), y = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), z = c(T, F, F))
+
+# Get variables with $
+df$x
+</code></pre>
+
+<pre><code>## [1] 1 2 3
+</code></pre>
+
+<pre><code class="r"># Get variables with [[]].  This returns a vector.
+df[[&quot;x&quot;]]
+</code></pre>
+
+<pre><code>## [1] 1 2 3
+</code></pre>
+
+<pre><code class="r"># Get variables with [].  This returns a data frame
+df[&quot;x&quot;]
+</code></pre>
+
+<pre><code>##   x
+## 1 1
+## 2 2
+## 3 3
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h1>Accessing specific elements in a data frame</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>To access a specific element in a data frame, use <code>[]</code></p>
+
+<pre><code class="r">df &lt;- data.frame(x = seq(1, 3), y = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), z = c(T, F, F))
+df[3, 3]
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
+
+<pre><code class="r">df[2, &quot;z&quot;]
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h1>Adding columns to data frames</h1>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">df &lt;- data.frame(x = seq(1, 3), y = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), z = c(T, F, F))
+df
+</code></pre>
+
+<pre><code>##   x y     z
+## 1 1 a  TRUE
+## 2 2 b FALSE
+## 3 3 c FALSE
+</code></pre>
+
+<pre><code class="r"># Use $ or [] to write or overwrite a column in a data frame
+df$w &lt;- seq(4, 6)
+df[&quot;x&quot;] &lt;- c(&quot;one&quot;, &quot;two&quot;, &quot;three&quot;)
+df
+</code></pre>
+
+<pre><code>##       x y     z w
+## 1   one a  TRUE 4
+## 2   two b FALSE 5
+## 3 three c FALSE 6
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Data Types in R'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Examples'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Special Values'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Vectors'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Atomic Vector Examples'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='More Vector Info'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Named Vectors'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Accessing Names and Renaming'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Testing data type'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Coercion'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Implicit Coercion'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Lists'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='More list examples'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Accessing Items in a list'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Getting/Changing the Names of a list'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Matrices and Arrays'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Some commands for 2D structures'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Data Frame'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Accessing things in data frames'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Accessing specific elements in a data frame'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Adding columns to data frames'>
+         21
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
