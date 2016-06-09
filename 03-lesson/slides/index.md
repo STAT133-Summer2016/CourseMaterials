@@ -472,10 +472,10 @@ rbind(x, y)
 ---
 
 # Data Frame
-The most common way of storing data in R is the data frame.  Under the hood, it's a list of named equal-length vectors.  Since it's 2D, `cbind`, `rbind`, `colnames`, `rownames`, `ncol`, and `nrow` work on it. To make a data frame, you use the `data.frame()` command
+The most common way of storing data in R is the data frame.  Under the hood, it's a list of named equal-length vectors.  Since it's 2D, `cbind`, `rbind`, `colnames`, `rownames`, `ncol`, and `nrow` work on it. To make a data frame, you use the `data.frame()` command.  You should specify `stringsAsFactors = F`
 
 ```r
-df <- data.frame(x = seq(1, 3), y = c("a", "b", "c"), z = c(T, F, F))
+df <- data.frame(x = seq(1, 3), y = c("a", "b", "c"), z = c(T, F, F), stringsAsFactors = F)
 df
 ```
 
@@ -494,7 +494,7 @@ Are data frames atomic structures?
 
 
 ```r
-df <- data.frame(x = seq(1, 3), y = c("a", "b", "c"), z = c(T, F, F))
+df <- data.frame(x = seq(1, 3), y = c("a", "b", "c"), z = c(T, F, F), stringsAsFactors = F)
 
 # Get variables with $
 df$x
@@ -531,7 +531,7 @@ df["x"]
 To access a specific element in a data frame, use `[]`
 
 ```r
-df <- data.frame(x = seq(1, 3), y = c("a", "b", "c"), z = c(T, F, F))
+df <- data.frame(x = seq(1, 3), y = c("a", "b", "c"), z = c(T, F, F), stringsAsFactors = F)
 df[3, 3]
 ```
 
@@ -540,11 +540,11 @@ df[3, 3]
 ```
 
 ```r
-df[2, "z"]
+df[2, "x"]
 ```
 
 ```
-## [1] FALSE
+## [1] 2
 ```
 
 ---
@@ -553,7 +553,7 @@ df[2, "z"]
 
 
 ```r
-df <- data.frame(x = seq(1, 3), y = c("a", "b", "c"), z = c(T, F, F))
+df <- data.frame(x = seq(1, 3), y = c("a", "b", "c"), z = c(T, F, F), stringsAsFactors = F)
 df
 ```
 
@@ -577,7 +577,6 @@ df
 ## 2   two b FALSE 5
 ## 3 three c FALSE 6
 ```
-
 
 
 

@@ -565,9 +565,9 @@ ncol(x)
     <h1>Data Frame</h1>
   </hgroup>
   <article data-timings="">
-    <p>The most common way of storing data in R is the data frame.  Under the hood, it&#39;s a list of named equal-length vectors.  Since it&#39;s 2D, <code>cbind</code>, <code>rbind</code>, <code>colnames</code>, <code>rownames</code>, <code>ncol</code>, and <code>nrow</code> work on it. To make a data frame, you use the <code>data.frame()</code> command</p>
+    <p>The most common way of storing data in R is the data frame.  Under the hood, it&#39;s a list of named equal-length vectors.  Since it&#39;s 2D, <code>cbind</code>, <code>rbind</code>, <code>colnames</code>, <code>rownames</code>, <code>ncol</code>, and <code>nrow</code> work on it. To make a data frame, you use the <code>data.frame()</code> command.  You should specify <code>stringsAsFactors = F</code></p>
 
-<pre><code class="r">df &lt;- data.frame(x = seq(1, 3), y = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), z = c(T, F, F))
+<pre><code class="r">df &lt;- data.frame(x = seq(1, 3), y = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), z = c(T, F, F), stringsAsFactors = F)
 df
 </code></pre>
 
@@ -588,7 +588,7 @@ df
     <h1>Accessing things in data frames</h1>
   </hgroup>
   <article data-timings="">
-    <pre><code class="r">df &lt;- data.frame(x = seq(1, 3), y = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), z = c(T, F, F))
+    <pre><code class="r">df &lt;- data.frame(x = seq(1, 3), y = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), z = c(T, F, F), stringsAsFactors = F)
 
 # Get variables with $
 df$x
@@ -625,17 +625,17 @@ df[&quot;x&quot;]
   <article data-timings="">
     <p>To access a specific element in a data frame, use <code>[]</code></p>
 
-<pre><code class="r">df &lt;- data.frame(x = seq(1, 3), y = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), z = c(T, F, F))
+<pre><code class="r">df &lt;- data.frame(x = seq(1, 3), y = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), z = c(T, F, F), stringsAsFactors = F)
 df[3, 3]
 </code></pre>
 
 <pre><code>## [1] FALSE
 </code></pre>
 
-<pre><code class="r">df[2, &quot;z&quot;]
+<pre><code class="r">df[2, &quot;x&quot;]
 </code></pre>
 
-<pre><code>## [1] FALSE
+<pre><code>## [1] 2
 </code></pre>
 
   </article>
@@ -647,7 +647,7 @@ df[3, 3]
     <h1>Adding columns to data frames</h1>
   </hgroup>
   <article data-timings="">
-    <pre><code class="r">df &lt;- data.frame(x = seq(1, 3), y = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), z = c(T, F, F))
+    <pre><code class="r">df &lt;- data.frame(x = seq(1, 3), y = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), z = c(T, F, F), stringsAsFactors = F)
 df
 </code></pre>
 
