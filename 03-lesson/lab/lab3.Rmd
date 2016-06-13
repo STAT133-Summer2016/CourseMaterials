@@ -22,11 +22,6 @@ tents <- read_csv("tents.csv", col_types = "ccnniccc")
 Answer the following questions programatically.  Some questions ask for you to explain what you see---you may answer this as text outside a code block.
 
 1. Run `str()` on `tents`.  What information does it tell you? This is a useful function to know.
-```{r}
-str(tents)
-```
-I think the str function does blah blah blah
-
 2. What class is `tents`?
 3. How many rows are in `tents`?
 4. How many columns are in `tents`?
