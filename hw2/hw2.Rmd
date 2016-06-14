@@ -130,7 +130,7 @@ is_hex("blue")     # FALSE
 
 ### Problem 4 - Reversing Characters (4 pts)
 
-Write a function that reverses a string by characters. You may find the `rev` function useful.
+Write a function called `reverse_chars` that reverses a string by characters. You may find the `rev` function useful.
 
 ```{r}
 # reverse_chars()
