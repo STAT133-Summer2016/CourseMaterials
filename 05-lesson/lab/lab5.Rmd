@@ -92,7 +92,7 @@ You may have noticed that in the `countries` vector, words in a country's name a
 # Your code here
 ```
 
-Use `str_detect` to see if there are any countries with the world "island" in them, ignoring case.  You may also want to look up how to use `ignore.case`.
+Use `str_detect` to see if there are any countries with the world "island" in them, ignoring case.  You may also want to look up how to use `regex` as a way to ignore case.
 
 ```{r}
 # Your code here

@@ -147,13 +147,13 @@ reverse_chars("Repello Muggletum")
 
 Rarely does text data come clean enough for immediate use.  In this exercise, you'll get a taste of parsing XML Data, which a non-tabular data format that makes use of tags.  The data are sometimes presented in the following form:
 ```
-<tag_name>data<\tag_name>
+<tag_name>data</tag_name>
 ```
 Your job is to write a function `remove_tag` that takes a vector of text from an XML document and removes the tags, returning a character vector with only the data values.  So, for example:
 
-* `<common>dandelion<\common>` is converted to `dandelion`
-* `<genus>Taraxacum<\genus>` is converted to `Taraxacum`
-* `<kingdom>Plantae<\kingdom>` is converted to `Plantae`
+* `<common>dandelion</common>` is converted to `dandelion`
+* `<genus>Taraxacum</genus>` is converted to `Taraxacum`
+* `<kingdom>Plantae</kingdom>` is converted to `Plantae`
 
 ```{r}
 # Your code
@@ -161,9 +161,9 @@ Your job is to write a function `remove_tag` that takes a vector of text from an
 
 Test your code:
 ```{r, eval = F}
-phylo <- c("<common>dandelion<\common>",
-           "<genus>Taraxacum<\genus>",
-           "<kingdom>Plantae<\kingdom>")
+phylo <- c("<common>dandelion</common>",
+           "<genus>Taraxacum</genus>",
+           "<kingdom>Plantae</kingdom>")
 remove_tag(phylo)
 ```
 

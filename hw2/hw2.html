@@ -213,18 +213,18 @@ reverse_chars(&quot;Repello Muggletum&quot;)</code></pre>
 <div id="problem-5---cleaning-xml-data-4-points" class="section level3">
 <h3>Problem 5 - Cleaning XML Data (4 points)</h3>
 <p>Rarely does text data come clean enough for immediate use. In this exercise, you’ll get a taste of parsing XML Data, which a non-tabular data format that makes use of tags. The data are sometimes presented in the following form:</p>
-<pre><code>&lt;tag_name&gt;data&lt;\tag_name&gt;</code></pre>
+<pre><code>&lt;tag_name&gt;data&lt;/tag_name&gt;</code></pre>
 <p>Your job is to write a function <code>remove_tag</code> that takes a vector of text from an XML document and removes the tags, returning a character vector with only the data values. So, for example:</p>
 <ul>
-<li><code>&lt;common&gt;dandelion&lt;\common&gt;</code> is converted to <code>dandelion</code></li>
-<li><code>&lt;genus&gt;Taraxacum&lt;\genus&gt;</code> is converted to <code>Taraxacum</code></li>
-<li><code>&lt;kingdom&gt;Plantae&lt;\kingdom&gt;</code> is converted to <code>Plantae</code></li>
+<li><code>&lt;common&gt;dandelion&lt;/common&gt;</code> is converted to <code>dandelion</code></li>
+<li><code>&lt;genus&gt;Taraxacum&lt;/genus&gt;</code> is converted to <code>Taraxacum</code></li>
+<li><code>&lt;kingdom&gt;Plantae&lt;/kingdom&gt;</code> is converted to <code>Plantae</code></li>
 </ul>
 <pre class="r"><code># Your code</code></pre>
 <p>Test your code:</p>
-<pre class="r"><code>phylo &lt;- c(&quot;&lt;common&gt;dandelion&lt;\common&gt;&quot;,
-           &quot;&lt;genus&gt;Taraxacum&lt;\genus&gt;&quot;,
-           &quot;&lt;kingdom&gt;Plantae&lt;\kingdom&gt;&quot;)
+<pre class="r"><code>phylo &lt;- c(&quot;&lt;common&gt;dandelion&lt;/common&gt;&quot;,
+           &quot;&lt;genus&gt;Taraxacum&lt;/genus&gt;&quot;,
+           &quot;&lt;kingdom&gt;Plantae&lt;/kingdom&gt;&quot;)
 remove_tag(phylo)</code></pre>
 </div>
 <div id="problem-6---processing-dna-12-points" class="section level3">
