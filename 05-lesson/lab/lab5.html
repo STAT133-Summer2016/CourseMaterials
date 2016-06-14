@@ -123,8 +123,10 @@ $(document).ready(function () {
 </div>
 
 
-<div id="section" class="section level2">
-<h2></h2>
+<div id="getting-help-for-packages" class="section level2">
+<h2>Getting Help for Packages</h2>
+<p>You can see what an entire package has to offer with</p>
+<pre class="r"><code>help(package = &quot;stringr&quot;)</code></pre>
 </div>
 <div id="counting-number-of-vowels" class="section level2">
 <h2>Counting number of vowels</h2>
@@ -151,8 +153,8 @@ letrs &lt;- &quot;gfngenodgsyctyviqyyigeinyngbkwjdjqkrrollhpxdkfldlytympmcgmjyni
 # a e i o u
 # 0 3 4 2 1</code></pre>
 </div>
-<div id="exploring-new-functions" class="section level2">
-<h2>Exploring new functions</h2>
+<div id="exploring-new-functions-str_pad" class="section level2">
+<h2>Exploring new functions: str_pad</h2>
 <p>Write a short description of what each of the following calls of <code>str_pad</code> is doing. The last three examples were found at the bottom of the function’s documentation.</p>
 <ol style="list-style-type: decimal">
 <li>In this call of <code>str_pad</code>, <strong>YOUR DESCRIPTION</strong>.</li>
@@ -179,6 +181,26 @@ letrs &lt;- &quot;gfngenodgsyctyviqyyigeinyngbkwjdjqkrrollhpxdkfldlytympmcgmjyni
 </ol>
 <pre class="r"><code>str_pad(&quot;a&quot;, 10, pad = c(&quot;-&quot;, &quot;_&quot;, &quot; &quot;))</code></pre>
 <pre><code>## [1] &quot;---------a&quot; &quot;_________a&quot; &quot;         a&quot;</code></pre>
+</div>
+<div id="regular-expressions" class="section level2">
+<h2>Regular Expressions</h2>
+<p>We read in the data from the csv file and extract the names column</p>
+<pre class="r"><code>flags &lt;- read_csv(&quot;flags.csv&quot;)
+countries &lt;- flags$name</code></pre>
+<p>You may have noticed that in the <code>countries</code> vector, words in a country’s name are separated by <code>-</code>. Use <code>str_replace_all</code> to replace the hyphens with spaces. For example <code>&quot;Vatican-City&quot;</code> should be replaced with <code>&quot;Vatican City&quot;</code></p>
+<pre class="r"><code># Your code here</code></pre>
+<p>Use <code>str_detect</code> to see if there are any countries with the world “island” in them, ignoring case. You may also want to look up how to use <code>ignore.case</code>.</p>
+<pre class="r"><code># Your code here</code></pre>
+<p>Use <code>str_subset</code> to find all countries that begin with a capital <code>A</code>.</p>
+<pre class="r"><code># Your code here</code></pre>
+<p>Find all countries that end with <code>stan</code></p>
+<pre class="r"><code># Your code here</code></pre>
+<p>Use <code>str_replace_all</code> to replace the <code>$</code>’s in <code>baws</code> with <code>s</code>’s. Recall that the <code>$</code> is a metacharacter.</p>
+<pre class="r"><code>baws &lt;- &quot;Bo$$&quot;
+str_replace_all(baws, &quot;\\$&quot;, &quot;s&quot;)</code></pre>
+<pre><code>## [1] &quot;Boss&quot;</code></pre>
+<p>Use a character class (denoted by square brackets) to find all countries beginning with a vowel and ending with a consonant.</p>
+<pre class="r"><code># Fill in</code></pre>
 </div>
 
 

@@ -7,10 +7,17 @@ output: html_document
 
 ```{r setup, include=FALSE}
 library(stringr)
+library(readr)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-##
+## Getting Help for Packages
+
+You can see what an entire package has to offer with
+```{r}
+help(package = "stringr")
+```
+
 
 ## Counting number of vowels
 
@@ -43,7 +50,7 @@ This exercise will guide you through how to arrive at this frequency table.
 # 0 3 4 2 1
 ```
 
-## Exploring new functions
+## Exploring new functions: str_pad
 Write a short description of what each of the following calls of `str_pad` is doing.  The last three examples were found at the bottom of the function's documentation.
 
 1. In this call of `str_pad`, __YOUR DESCRIPTION__.
@@ -70,5 +77,48 @@ str_pad("a", c(5, 10, 20))
 ```{r}
 str_pad("a", 10, pad = c("-", "_", " "))
 ```
+
+## Regular Expressions
+
+We read in the data from the csv file and extract the names column
+```{r}
+flags <- read_csv("flags.csv")
+countries <- flags$name
+```
+
+You may have noticed that in the `countries` vector, words in a country's name are separated by `-`.  Use `str_replace_all` to replace the hyphens with spaces.  For example `"Vatican-City"` should be replaced with `"Vatican City"`
+
+```{r}
+# Your code here
+```
+
+Use `str_detect` to see if there are any countries with the world "island" in them, ignoring case.  You may also want to look up how to use `ignore.case`.
+
+```{r}
+# Your code here
+```
+
+Use `str_subset` to find all countries that begin with a capital `A`.
+```{r}
+# Your code here
+```
+
+Find all countries that end with `stan`
+```{r}
+# Your code here
+```
+
+Use `str_replace_all` to replace the `$`'s in `baws` with `s`'s.  Recall that the `$` is a metacharacter.
+```{r}
+baws <- "Bo$$"
+str_replace_all(baws, "\\$", "s")
+```
+
+Use a character class (denoted by square brackets) to find all countries beginning with a vowel and ending with a consonant.
+```{r}
+# Fill in
+```
+
+
 
 
