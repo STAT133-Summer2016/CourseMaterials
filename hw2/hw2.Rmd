@@ -63,7 +63,7 @@ Do not use any looping constructions (we haven't covered this yet, and they're s
 
 ### Problem 2 - USA States Names (8 pts)
 
-One of the datasets that comes with R is `USArrests`. The row names of this data set correspond to the 50 states. This next problem refers to the following vector:
+One of the datasets that comes with R is `USArrests`. The row names of this data set correspond to the 50 states. This next problem refers to the `states` vector below.  Ignore upper and lower case.
 
 ```{r}
 states <- rownames(USArrests)
