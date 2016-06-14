@@ -36,7 +36,7 @@ Your GitHub repository should contain 18 folders:
 `labs1`, `labs2`, ..., `labs9`
 * 1 folder labelled `final_project`
 
-Place your homework and lab files in the appropriate folders.  Lab 1 and 3 should be in `labs1`.  Labs 4-6 should be in `labs2`.
+Place your homework and lab files in the appropriate folders.  Lab 1 and 3 should be in `labs1`.  Labs 5-7 should be in `labs2`.
 
 ## Problems 
 

@@ -1,0 +1,74 @@
+---
+title: "lab4"
+author: "Andrew Do"
+date: "June 13, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(stringr)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##
+
+## Counting number of vowels
+
+Consider the following vector `letrs` which contains various letters:
+```{r}
+# Garbage string
+letrs <- "gfngenodgsyctyviqyyigeinyngbkwjdjqkrrollhpxdkfldlytympmcgmjynihusebtq"
+```
+
+If you were to count the number of vowels in `letrs` you would get the following counts:
+
+- a: 0
+- e: 3
+- i: 4
+- o: 2
+- u: 1
+
+This exercise will guide you through how to arrive at this frequency table.
+
+```{r}
+# Create a character vector of vowels.  Give it an appropriate name.
+
+
+# Use str_count to get the counts.  Assign this an appropriate name.
+
+
+# Give each element of the vector a name using the names function.
+# The result should look like:
+# a e i o u
+# 0 3 4 2 1
+```
+
+## Exploring new functions
+Write a short description of what each of the following calls of `str_pad` is doing.  The last three examples were found at the bottom of the function's documentation.
+
+1. In this call of `str_pad`, __YOUR DESCRIPTION__.
+```{r}
+str_pad("a", width = 4, side = "left", pad = "x")
+```
+
+2. In this call of `str_pad`, __YOUR DESCRIPTION__.
+```{r}
+str_pad("a", width = 3, side = "left")
+```
+
+3. In this call of `str_pad`, __YOUR DESCRIPTION__.
+```{r}
+str_pad(c("a", "abc", "abcdef"), 10)
+```
+
+4. In this call of `str_pad`, __YOUR DESCRIPTION__.
+```{r}
+str_pad("a", c(5, 10, 20))
+```
+
+5. In this call of `str_pad`, __YOUR DESCRIPTION__.
+```{r}
+str_pad("a", 10, pad = c("-", "_", " "))
+```
+
+
