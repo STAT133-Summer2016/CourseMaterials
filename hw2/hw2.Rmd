@@ -99,7 +99,7 @@ states <- rownames(USArrests)
 
 ```
 
-7. Which states contain five vowels (e.g. California)?
+7. Which states contain exactly five vowels (e.g. California)?
 ```{r}
 
 ```

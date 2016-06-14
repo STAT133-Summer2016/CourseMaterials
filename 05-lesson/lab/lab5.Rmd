@@ -111,7 +111,6 @@ Find all countries that end with `stan`
 Use `str_replace_all` to replace the `$`'s in `baws` with `s`'s.  Recall that the `$` is a metacharacter.
 ```{r}
 baws <- "Bo$$"
-str_replace_all(baws, "\\$", "s")
 ```
 
 Use a character class (denoted by square brackets) to find all countries beginning with a vowel and ending with a consonant.
