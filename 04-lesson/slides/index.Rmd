@@ -83,20 +83,29 @@ It will "recycle" shorter vectors until it reaches the right length so long as t
 ```{r}
 # Recycling at work
 c(1,2) + c(1,2,3,4)
+1:3 / 1:6
+```
 
-# This doesn't work
+---
+
+## Invalid Lengths
+
+You should avoid using the recycling rule if you aren't sure how the operation will extend the shorter vector.
+
+```{r}
+# This "works" but is not recommended
 c(1,2) + c(1,2,3,4,5)
 ```
-  
+
 ---
 
 ## paste
 
 `paste()` is one of the most important tools for string manipulation.  
 
-
+```
 paste(..., sep = " ", collapse = NULL)
-
+```
 
 It takes one or more vectors, coerces them into the `character` type, and "pastes" them together.
 
@@ -215,13 +224,17 @@ str_sub(restaurants, start = -4, end = -1)
 You can use str_sub to replace text at exact locations
 ```{r}
 lorem <- "Lorem Ipsum"
-
 # One substitution
-str_sub(lorem, 1, 5) <- "Nullam"
+str_sub(lorem, 1) <- "Nullaming"
 lorem
 
 # Multiple substitutions
+lorem <- "Lorem Ipsum"
 str_sub(lorem, c(1,7), c(5,8)) <- c("Nullam", "Enim")
 lorem
 ```
 
+---
+
+## Regular Expressions
+[http://regexone.com/](Interactive Tutorial)

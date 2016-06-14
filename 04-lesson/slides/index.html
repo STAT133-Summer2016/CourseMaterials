@@ -182,7 +182,24 @@ c(1,2) + c(1,2,3,4)
 <pre><code>## [1] 2 4 4 6
 </code></pre>
 
-<pre><code class="r"># This doesn&#39;t work
+<pre><code class="r">1:3 / 1:6
+</code></pre>
+
+<pre><code>## [1] 1.00 1.00 1.00 0.25 0.40 0.50
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Invalid Lengths</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>You should avoid using the recycling rule if you aren&#39;t sure how the operation will extend the shorter vector.</p>
+
+<pre><code class="r"># This &quot;works&quot; but is not recommended
 c(1,2) + c(1,2,3,4,5)
 </code></pre>
 
@@ -193,13 +210,19 @@ c(1,2) + c(1,2,3,4,5)
 <pre><code>## [1] 2 4 4 6 6
 </code></pre>
 
-<hr>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
 
-<h2>paste</h2>
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>paste</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><code>paste()</code> is one of the most important tools for string manipulation.  </p>
 
-<p><code>paste()</code> is one of the most important tools for string manipulation.  </p>
-
-<p>paste(..., sep = &quot; &quot;, collapse = NULL)</p>
+<pre><code>paste(..., sep = &quot; &quot;, collapse = NULL)
+</code></pre>
 
 <p>It takes one or more vectors, coerces them into the <code>character</code> type, and &quot;pastes&quot; them together.</p>
 
@@ -207,7 +230,7 @@ c(1,2) + c(1,2,3,4,5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-7" style="background:;">
+<slide class="" id="slide-9" style="background:;">
   <hgroup>
     <h2>Examples</h2>
   </hgroup>
@@ -233,7 +256,7 @@ c(1,2) + c(1,2,3,4,5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-8" style="background:;">
+<slide class="" id="slide-10" style="background:;">
   <hgroup>
     <h2>sep</h2>
   </hgroup>
@@ -262,7 +285,7 @@ c(1,2) + c(1,2,3,4,5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-9" style="background:;">
+<slide class="" id="slide-11" style="background:;">
   <hgroup>
     <h2>collapse</h2>
   </hgroup>
@@ -285,7 +308,7 @@ c(1,2) + c(1,2,3,4,5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-10" style="background:;">
+<slide class="" id="slide-12" style="background:;">
   <hgroup>
     <h2>Installing Packages in R</h2>
   </hgroup>
@@ -304,7 +327,7 @@ c(1,2) + c(1,2,3,4,5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-11" style="background:;">
+<slide class="" id="slide-13" style="background:;">
   <hgroup>
     <h2>Stringr</h2>
   </hgroup>
@@ -323,7 +346,7 @@ c(1,2) + c(1,2,3,4,5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-12" style="background:;">
+<slide class="" id="slide-14" style="background:;">
   <hgroup>
     <h2>Basic <code>stringr</code> functions</h2>
   </hgroup>
@@ -372,7 +395,7 @@ c(1,2) + c(1,2,3,4,5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-13" style="background:;">
+<slide class="" id="slide-15" style="background:;">
   <hgroup>
     <h2>str_c</h2>
   </hgroup>
@@ -401,7 +424,7 @@ c(1,2) + c(1,2,3,4,5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-14" style="background:;">
+<slide class="" id="slide-16" style="background:;">
   <hgroup>
     <h2>str_length</h2>
   </hgroup>
@@ -419,7 +442,7 @@ str_length(some_text)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-15" style="background:;">
+<slide class="" id="slide-17" style="background:;">
   <hgroup>
     <h2>str_sub</h2>
   </hgroup>
@@ -446,7 +469,7 @@ str_sub(restaurants, start = -4, end = -1)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-16" style="background:;">
+<slide class="" id="slide-18" style="background:;">
   <hgroup>
     <h2>Replacing at exact locations</h2>
   </hgroup>
@@ -454,22 +477,33 @@ str_sub(restaurants, start = -4, end = -1)
     <p>You can use str_sub to replace text at exact locations</p>
 
 <pre><code class="r">lorem &lt;- &quot;Lorem Ipsum&quot;
-
 # One substitution
-str_sub(lorem, 1, 5) &lt;- &quot;Nullam&quot;
+str_sub(lorem, 1) &lt;- &quot;Nullaming&quot;
 lorem
 </code></pre>
 
-<pre><code>## [1] &quot;Nullam Ipsum&quot;
+<pre><code>## [1] &quot;Nullaming&quot;
 </code></pre>
 
 <pre><code class="r"># Multiple substitutions
+lorem &lt;- &quot;Lorem Ipsum&quot;
 str_sub(lorem, c(1,7), c(5,8)) &lt;- c(&quot;Nullam&quot;, &quot;Enim&quot;)
 lorem
 </code></pre>
 
-<pre><code>## [1] &quot;Nullamm Ipsum&quot;  &quot;NullamEnimpsum&quot;
+<pre><code>## [1] &quot;Nullam Ipsum&quot;  &quot;Lorem Enimsum&quot;
 </code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Regular Expressions</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><a href="Interactive%20Tutorial">http://regexone.com/</a></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -517,62 +551,80 @@ lorem
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=7 title='Examples'>
+        data-slide=7 title='Invalid Lengths'>
          7
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=8 title='sep'>
+        data-slide=8 title='paste'>
          8
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=9 title='collapse'>
+        data-slide=9 title='Examples'>
          9
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=10 title='Installing Packages in R'>
+        data-slide=10 title='sep'>
          10
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=11 title='Stringr'>
+        data-slide=11 title='collapse'>
          11
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=12 title='Basic <code>stringr</code> functions'>
+        data-slide=12 title='Installing Packages in R'>
          12
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=13 title='str_c'>
+        data-slide=13 title='Stringr'>
          13
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=14 title='str_length'>
+        data-slide=14 title='Basic <code>stringr</code> functions'>
          14
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=15 title='str_sub'>
+        data-slide=15 title='str_c'>
          15
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=16 title='Replacing at exact locations'>
+        data-slide=16 title='str_length'>
          16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='str_sub'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Replacing at exact locations'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Regular Expressions'>
+         19
       </a>
     </li>
   </ul>

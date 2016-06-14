@@ -125,7 +125,22 @@ c(1,2) + c(1,2,3,4)
 ```
 
 ```r
-# This doesn't work
+1:3 / 1:6
+```
+
+```
+## [1] 1.00 1.00 1.00 0.25 0.40 0.50
+```
+
+---
+
+## Invalid Lengths
+
+You should avoid using the recycling rule if you aren't sure how the operation will extend the shorter vector.
+
+
+```r
+# This "works" but is not recommended
 c(1,2) + c(1,2,3,4,5)
 ```
 
@@ -137,16 +152,16 @@ c(1,2) + c(1,2,3,4,5)
 ```
 ## [1] 2 4 4 6 6
 ```
-  
+
 ---
 
 ## paste
 
 `paste()` is one of the most important tools for string manipulation.  
 
-
+```
 paste(..., sep = " ", collapse = NULL)
-
+```
 
 It takes one or more vectors, coerces them into the `character` type, and "pastes" them together.
 
@@ -343,23 +358,27 @@ You can use str_sub to replace text at exact locations
 
 ```r
 lorem <- "Lorem Ipsum"
-
 # One substitution
-str_sub(lorem, 1, 5) <- "Nullam"
+str_sub(lorem, 1) <- "Nullaming"
 lorem
 ```
 
 ```
-## [1] "Nullam Ipsum"
+## [1] "Nullaming"
 ```
 
 ```r
 # Multiple substitutions
+lorem <- "Lorem Ipsum"
 str_sub(lorem, c(1,7), c(5,8)) <- c("Nullam", "Enim")
 lorem
 ```
 
 ```
-## [1] "Nullamm Ipsum"  "NullamEnimpsum"
+## [1] "Nullam Ipsum"  "Lorem Enimsum"
 ```
 
+---
+
+## Regular Expressions
+[http://regexone.com/](Interactive Tutorial)
