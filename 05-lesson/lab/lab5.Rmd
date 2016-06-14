@@ -1,7 +1,7 @@
 ---
-title: "lab4"
+title: "lab5"
 author: "Andrew Do"
-date: "June 13, 2016"
+date: "June 14, 2016"
 output: html_document
 ---
 
@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Getting Help for Packages
 
 You can see what an entire package has to offer with
-```{r}
+```{r, eval = F}
 help(package = "stringr")
 ```
 
