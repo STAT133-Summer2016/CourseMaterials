@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Spooky Scary
-Write a function `Spooky` that uses a loop and takes `n` as its argument and prints out `"mspooky(m+2)spookyme"` for `m = 1, ..., n`.  For example
+Write a function `Spooky` that uses a loop and takes `n` as its argument and prints out `"mspooky(m+2)me"` for `m = 1, ..., n`.  For example
 ```
 > Spooky(3)
 [1] "1spooky3me"

@@ -29,9 +29,9 @@ Write a function `ConvertTemperature` that takes a numeric vector of temperature
 
 Test your function
 ```{r, eval = F}
-ConvertTemperature(32, "Celsius") == 0
-ConvertTemperature(212, "Kelvin") == 373.15
-ConvertTemperature(10, "Rankine") == 501.67
+ConvertTemperature(32, "Celsius") # 0
+ConvertTemperature(212, "Kelvin") # 373.15
+ConvertTemperature(10, "Rankine") # 569.67
 ```
 
 
@@ -44,5 +44,5 @@ sample(x = vector_to_be_sampled, size, replace = FALSE, prob = NULL)
 1. What does `pmax` do? How is it different from `max`? Hint: test both on the two vectors `c(1, 5, 3)` and `c(2, 4, 2)`.
 2. When you "roll dice with advantage", you roll a pair of dice and take the higher value as your roll.  Write a function `AdvRoll` the simulates rolling with advantage `n` times. The function should take on 2 arguments `sides` and `n` and output a length `n` vector of rolls.
 3. Write your own summary function called `MySummary` that, given a numeric vector `x`, returns the following summary statistics: mean, median, mode, sum, and sum of squares.
-4. Using your two functions, simulate "rolling dice with advantage" 1000 times and find the summary statistics.
+4. Using your two functions, simulate "rolling 6-sided dice with advantage" 1000 times and find the summary statistics.
 
