@@ -128,15 +128,3 @@ fix_missing <- function(x, na.value) {
   x
 }
 ```
-```{r}
-```{r}
-library(dplyr)
-
-letter.counts <- sort(unique(nchar(states)))
-names <- paste(letter.counts, "chars", sep = "-")
-lapply(setNames(letter.counts, names),
-       function(x) {
-         states[nchar(states) == x] %>%
-           casefold(upper = x %% 2)
-       })
-```
