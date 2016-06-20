@@ -281,6 +281,7 @@ When do you use the `lapply` family?  Almost anytime you would want to loop in R
 
 1. Don't use `lapply` when the loop is recursive.  i.e. New elements depend on previous ones
 2. You don't actually want output (e.g. you only want print statements)
+3. The apply functions cannot replace while loops
 
 ---
 
