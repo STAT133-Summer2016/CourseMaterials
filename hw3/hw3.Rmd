@@ -29,7 +29,7 @@ You will now clone the repository you've been curating into our class account.  
 1.  [Click on this link to create a classwork repository](https://classroom.github.com/assignment-invitations/835d025a13c633bada1b31cbfba82250)
 2.  Copy the clone/download address for this new repository.  The link should look something like https://github.com/STAT133-Summer2016/githubrepos-youraccount.git
 3.  Open up terminal/Cygwin and go to your repository folder
-4.  Using a basic text editor (vim, notepad, textedit, etc.), create/modify your README.md file so that it looks like:
+4.  Using a basic text editor (vim, notepad, textedit, etc.), create/modify your README.md file so that it looks like the text below.  End each of the Name, Preferred Name, and Email lines with two spaces so it generates a new line on GitHub.
 
 ```
 ### STAT133 Coursework - Summer 2016
