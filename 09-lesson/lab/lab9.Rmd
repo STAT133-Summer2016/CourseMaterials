@@ -57,7 +57,7 @@ It creates a bizarre 1x4 matrix with vector elements.
 # Your code
 ```
 
-6.  Review: Convert the matrix into a data frame and name the columns `name` and `byear`.  Hint: `as...`
+6.  Review: Convert the matrix into a data frame and name the columns `name` and `byear`.  Hint: `as...` Set `stringsAsFactors = FALSE`.
 ```{r}
 # Your code
 ```
