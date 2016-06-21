@@ -41,7 +41,7 @@ pioneers <- c("GAUSS:1777", "BAYES:1702", "NEYMAN:1894", "LAPLACE:1749")
 # Your code
 ```
 
-3.  Without writing a loop, convert the strings to first-letter uppercase only.  Hint: `str_to_upper` is actually part of a family of functions.  Getting the documentation on it will reveal other functions like it.  Assign the output to the variable `statisticians`
+3.  Using `lapply`, convert the strings of `split_pioneers` to first-letter uppercase only.  Hint: `str_to_upper` is actually part of a family of functions.  Getting the documentation on it will reveal other functions like it.  Assign the output to the variable `statisticians`
 ```{r}
 # Your code
 ```
