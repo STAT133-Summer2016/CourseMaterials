@@ -46,7 +46,7 @@ pioneers <- c("GAUSS:1777", "BAYES:1702", "NEYMAN:1894", "LAPLACE:1749")
 # Your code
 ```
 
-4.  Try running `rbind` on statisticians.  What happens?
+4.  Try running `rbind` on `statisticians`.  What happens (it shouldn't be good)?
 ```{r}
 # Your code
 ```
