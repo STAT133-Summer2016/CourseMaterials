@@ -77,7 +77,7 @@ The `sleep` dataset (built into R---no need to load anything) shows the effect o
 ```
 
 2.  Use `lapply` and an anonymous function to split the data frame into 10 2x3 sub-data frames grouped by ID.  Assign the output to `split_sleep`.  This is just practice thinking about `lapply` since you could actually just use this call in practice:
-```{r}
+```{r, eval = F}
 split(sleep, sleep$ID)
 ```
 
