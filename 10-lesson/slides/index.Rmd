@@ -250,7 +250,8 @@ df <- read_csv("../data/billboard.csv")
 ```{r}
 tidydf <- df %>%
   gather(Week, Rank, -year, -artist.inverted, -track, -time, -genre,
-         -date.entered, - date.peaked)
+         -date.entered, - date.peaked) %>%
+  mutate(Week = str_match(Week, "[0-9]+"))
 ```
 Do you notice anything undesirable about this "tidy" form?
 
@@ -268,12 +269,13 @@ Need to separate out into song and rank tables.
 ## Multiple Data Types in One Table
 
 ```{r}
-Rankings <- tidydf %>% 
+Songs <- tidydf %>% 
   select(-Week, -Rank, -date.entered, -date.peaked) %>%
   unique %>%
   mutate(Song_ID = row_number())
 ```
 
+In order to create the ranking data by week, we'll need some tools for time data.  We'll see how to deal with the time data tomorrow!
 ---
 
 ## One Data Type in Multiple Tables
