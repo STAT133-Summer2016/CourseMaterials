@@ -1,0 +1,126 @@
+---
+title: "Midterm Topics"
+author: "Andrew Do"
+date: "June 22, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Exam Logistics
+
+* The exam will take place on Thursday, June 30 during our usual classtime in our usual classroom.
+* The exam should take most people 80 minutes, but you will be allowed 120 minutes.
+* You will take the exam in ink, crossing out unwanted answers with a single strike-through
+* You are allowed a single cheat sheet.  It can be in the form of flashcards, 8.5x11 paper, mobius strips---so long as the surface area covered in notes including the whitespace bounding box is less than $93.5 in^2$ (8.5x11 piece of paper).  The scribing method doesn't matter---it can be typed, handwritten, printed in 5 overlayed ink colors decipherable only with color-filtering glasses.
+
+## Basic Terminal
+
+1.  You should recognize basic terminal commands and be able to describe what they do
+2.  You should be able to construct absolute and relative paths given a directory tree
+
+## Data Types
+
+1.  You should be able to name the basic data types in `R` and give examples of each: numeric, integer, complex, logical, character
+2.  You should know the difference between atomic (e.g. vectors and matrices) and non-atomic classes (e.g. lists and data frames)
+3.  You should know basic interactions with factors and time data.
+4.  You should be able to distinguish between an instant, period, duration, and interval.
+
+## Reading documention
+
+You might be asked to read documentation on a function that you've never seen before.  You could then be asked to write a basic function call that would return a requested result.  This will require understanding data types.
+
+## Subsetting
+
+You should be able to subset vectors, lists, matrices, and data frames by index and by name.  Know which data type each subsetting operation returns.  Below is a nonexhaustive list of examples.
+
+Subset Call           | Meaning
+--------------------- | ---------------------------------------------------
+myvector[1]           | vector containing first element of myvector
+myvector[c(3,6)]      | vector containing third and sixth element of myvector
+myvector["bob"]       | element named "bob" in myvector
+mylist[2]             | list containing second element of mylist
+mylist[[2]]           | second element of mylist
+mylist[2:3]           | list containing second and third elements of mylist
+mymatrix[1,2]         | element in first row, second column of mymatrix
+mymatrix[1, ]         | first row of mymatrix
+mymatrix[ ,3]         | third column of mymatrix
+mydataframe["x"]      | data frame containing "x" column of mydataframe
+mydataframe[["x"]]    | vector containing data from the "x" column of mydataframe
+mydataframe$x         | vector containing data from the "x" column of mydataframe
+
+## Strings
+
+1.  You should be able to construct regular expressions
+2.  Save space on your cheat sheet: memorize the metacharacters---you should be super comfortable with these anyway.
+3.  You don't have to know the specific arguments of each of the `stringr` functions, but you should remember what each one does
+
+Function       | Description
+-------------- | -------------------------------
+str_c          | same usage as paste
+str_length     | number of characters
+str_sub        | extracts substrings
+str_dup        | duplicates characters
+str_to_lower   | converts to lowercase
+str_to_upper   | converts to uppercase
+str_pad        | pads a string
+str_detect     | detects presence of a pattern
+str_locate     | finds first position of pattern
+str_replace    | replaces first matched pattern
+str_replace_all| replace all matched patterns
+str_match      | returns first matched pattern
+str_match_all  | returns all matched patterns
+str_split      | splits string at matched pattern
+
+## Control Flow and user-defined functions
+
+1.  You should be able to construct for and while loops
+2.  You should understand how to use if, else, ifelse
+3.  You should be able to read through a basic function and predict output based off a function call
+
+```{r, eval = F}
+x <- -1
+y <- 2
+
+example <- function(x = 0) {
+  y <- x + y
+  x + y
+}
+# What does example() return? example(1)? example(x = y)?
+```
+
+
+## Data Manipulation
+
+1.  You should be very comfortable with the data verbs
+
+Verb        | Meaning
+----------- | -----------------------------------------
+filter      | keep rows matching criteria
+select      | pick columns by name
+arrange     | reorder rows
+mutate      | create new variables/modify existing ones
+summarise   | reduce variables to values
+gather      | Take columns and collapse into key-value pairs
+spread      | Take key-value pair and lay it over multiple columns
+separate    | Turn a single character column into multiple columns
+unite       | Turn multiple character columns into one
+
+2.  You should understand how joins work
+
+Type      | Description
+--------- | ------------------------------------------------------------------------------
+inner     | return rows in `x` AND `y`
+left      | return all of `x` and matching rows in `y`
+semi_join | return rows of `x` that match `y`, only columns of `x`
+anti_join | only rows of `x` not in `y`, keeping only columns of `x`
+full_join | return all rows and all columns from both `x` and `y`, matching when possible
+
+## Grammar of Graphics
+
+1.  Be able to distinguish between variable-mapped vs. fixed aesthetics in a graph.
+2.  Be able to identify glyphs and their variable mappings
+3.  Be able to identify parts of a graph
+4.  Know how faceting works
