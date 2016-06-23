@@ -295,4 +295,5 @@ life %/% days(1)
 
 * `%within%` checks if a moment is in an interval
 * `int_overlaps` checks if two intervals overlap
-* `setdiff` returns any overlaps in the intervals
+* `intersect` returns any overlaps in the intervals
+* `setdiff` returns the parts that don't overlap in the intervals

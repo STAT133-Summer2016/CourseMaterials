@@ -153,7 +153,7 @@ now()
 ```
 
 ```
-## [1] "2016-06-23 09:22:28 PDT"
+## [1] "2016-06-23 13:33:44 PDT"
 ```
 
 ```r
@@ -169,7 +169,7 @@ hour(now())
 ```
 
 ```
-## [1] 9
+## [1] 13
 ```
 
 ```r
@@ -238,7 +238,7 @@ time
 ```
 
 ```
-## [1] "2016-06-23 09:22:28 PDT"
+## [1] "2016-06-23 13:33:44 PDT"
 ```
 
 ```r
@@ -251,7 +251,7 @@ time
 ```
 
 ```
-## [1] "2000-07-15 23:22:28 UTC"
+## [1] "2000-07-15 23:33:44 UTC"
 ```
 
 ---
@@ -388,4 +388,5 @@ life %/% days(1)
 
 * `%within%` checks if a moment is in an interval
 * `int_overlaps` checks if two intervals overlap
-* `setdiff` returns any overlaps in the intervals
+* `intersect` returns any overlaps in the intervals
+* `setdiff` returns the parts that don't overlap in the intervals

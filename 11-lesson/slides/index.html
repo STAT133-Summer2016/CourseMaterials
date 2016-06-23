@@ -252,7 +252,7 @@ wday(ymd(&quot;2016-06-23&quot;))
     <pre><code class="r">now()
 </code></pre>
 
-<pre><code>## [1] &quot;2016-06-23 09:22:28 PDT&quot;
+<pre><code>## [1] &quot;2016-06-23 13:33:44 PDT&quot;
 </code></pre>
 
 <pre><code class="r">year(now())
@@ -264,7 +264,7 @@ wday(ymd(&quot;2016-06-23&quot;))
 <pre><code class="r">hour(now())
 </code></pre>
 
-<pre><code>## [1] 9
+<pre><code>## [1] 13
 </code></pre>
 
 <pre><code class="r">day(now())
@@ -322,7 +322,7 @@ wday(ymd(&quot;2016-06-23&quot;))
 time
 </code></pre>
 
-<pre><code>## [1] &quot;2016-06-23 09:22:28 PDT&quot;
+<pre><code>## [1] &quot;2016-06-23 13:33:44 PDT&quot;
 </code></pre>
 
 <pre><code class="r">year(time) &lt;- 2000
@@ -333,7 +333,7 @@ tz(time) &lt;- &quot;UTC&quot;
 time
 </code></pre>
 
-<pre><code>## [1] &quot;2000-07-15 23:22:28 UTC&quot;
+<pre><code>## [1] &quot;2000-07-15 23:33:44 UTC&quot;
 </code></pre>
 
   </article>
@@ -521,7 +521,8 @@ life %/% days(1)
     <ul>
 <li><code>%within%</code> checks if a moment is in an interval</li>
 <li><code>int_overlaps</code> checks if two intervals overlap</li>
-<li><code>setdiff</code> returns any overlaps in the intervals</li>
+<li><code>intersect</code> returns any overlaps in the intervals</li>
+<li><code>setdiff</code> returns the parts that don&#39;t overlap in the intervals</li>
 </ul>
 
   </article>
