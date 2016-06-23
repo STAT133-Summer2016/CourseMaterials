@@ -525,6 +525,17 @@ life %/% days(1)
 <li><code>setdiff</code> returns the parts that don&#39;t overlap in the intervals</li>
 </ul>
 
+<pre><code class="r"># Try these to see
+int_a &lt;- ymd(&quot;2016-08-01&quot;) %--% ymd(&quot;2016-08-31&quot;)
+int_b &lt;- ymd(&quot;2016-08-15&quot;) %--% ymd(&quot;2016-09-15&quot;)
+test_dates &lt;- ymd(c(&quot;20160802&quot;, &quot;20160831&quot;, &quot;20160703&quot;))
+
+test_dates %within% int_a
+int_overlaps(int_a, int_b)
+setdiff(int_a, int_b)
+intersect(int_a, int_b)
+</code></pre>
+
   </article>
   <!-- Presenter Notes -->
 </slide>

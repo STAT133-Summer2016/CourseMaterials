@@ -390,3 +390,17 @@ life %/% days(1)
 * `int_overlaps` checks if two intervals overlap
 * `intersect` returns any overlaps in the intervals
 * `setdiff` returns the parts that don't overlap in the intervals
+
+
+```r
+# Try these to see
+int_a <- ymd("2016-08-01") %--% ymd("2016-08-31")
+int_b <- ymd("2016-08-15") %--% ymd("2016-09-15")
+test_dates <- ymd(c("20160802", "20160831", "20160703"))
+
+test_dates %within% int_a
+int_overlaps(int_a, int_b)
+setdiff(int_a, int_b)
+intersect(int_a, int_b)
+```
+
