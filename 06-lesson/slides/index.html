@@ -168,6 +168,37 @@ SqPlusOne(2)
 
 <slide class="" id="slide-6" style="background:;">
   <hgroup>
+    <h2>Where does R look for variables?</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><code>R</code> looks for variable values in the following places in the order specified:</p>
+
+<ol>
+<li> The function.</li>
+<li> The function call.</li>
+<li> The default values.</li>
+<li> The &quot;global environment&quot; (saved from previous code --- dangerous!)</li>
+</ol>
+
+<pre><code class="r">x &lt;- 0 # This saves x to the global environment
+
+example &lt;- function(x = 1) { # 1 is a default value
+  x &lt;- 2 # x is equal to 2 inside the function
+  x
+}
+# This call will return 2 since x is defined as 2 inside the function
+example(x = 3) # 3 is the value of x in the function call
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
     <h2>If-then-else Statements</h2>
   </hgroup>
   <article data-timings="">
@@ -190,7 +221,7 @@ if (condition) {
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-7" style="background:;">
+<slide class="" id="slide-8" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
@@ -211,7 +242,7 @@ if (x &gt; 5) {
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-8" style="background:;">
+<slide class="" id="slide-9" style="background:;">
   <hgroup>
     <h2>Example 2</h2>
   </hgroup>
@@ -232,7 +263,7 @@ if (party) {
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-9" style="background:;">
+<slide class="" id="slide-10" style="background:;">
   <hgroup>
     <h2>How it works</h2>
   </hgroup>
@@ -248,7 +279,7 @@ if (party) {
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-10" style="background:;">
+<slide class="" id="slide-11" style="background:;">
   <hgroup>
     <h2>Chaining If-else</h2>
   </hgroup>
@@ -274,7 +305,7 @@ if (x &gt; 0) {
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-11" style="background:;">
+<slide class="" id="slide-12" style="background:;">
   <hgroup>
     <h2>Returning Values</h2>
   </hgroup>
@@ -302,7 +333,7 @@ Subtracter(4, 2)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-12" style="background:;">
+<slide class="" id="slide-13" style="background:;">
   <hgroup>
     <h2>Returning values</h2>
   </hgroup>
@@ -327,7 +358,7 @@ BasicOperations(2, 1)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-13" style="background:;">
+<slide class="" id="slide-14" style="background:;">
   <hgroup>
     <h2>Return halts execution</h2>
   </hgroup>
@@ -354,7 +385,7 @@ Parity(1)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-14" style="background:;">
+<slide class="" id="slide-15" style="background:;">
   <hgroup>
     <h2>Stop</h2>
   </hgroup>
@@ -386,7 +417,7 @@ IsEven(-1)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-15" style="background:;">
+<slide class="" id="slide-16" style="background:;">
   <hgroup>
     <h2>Strategy</h2>
   </hgroup>
@@ -404,7 +435,7 @@ IsEven(-1)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-16" style="background:;">
+<slide class="" id="slide-17" style="background:;">
   <hgroup>
     <h2>Lets write a function together</h2>
   </hgroup>
@@ -412,6 +443,32 @@ IsEven(-1)
     <p>A leap year is defined as follows:</p>
 
 <p>Every year that can be evenly divided by 4 unless the year can be divided by 100 but not 400.  Write a function that, given a year, returns whether or not it&#39;s a leap year.</p>
+
+<pre><code class="r">LeapYear &lt;- function(year) {
+  condition1 &lt;- year %% 4 == 0
+  condition2 &lt;- year %% 100 != 0
+  condition3 &lt;- year %% 400 == 0
+
+  condition1 &amp; (condition2 | condition3)
+}
+
+LeapYear(2000)
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">LeapYear(2004)
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">LeapYear(2015)
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -453,68 +510,74 @@ IsEven(-1)
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=6 title='If-then-else Statements'>
+        data-slide=6 title='Where does R look for variables?'>
          6
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=7 title='Example'>
+        data-slide=7 title='If-then-else Statements'>
          7
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=8 title='Example 2'>
+        data-slide=8 title='Example'>
          8
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=9 title='How it works'>
+        data-slide=9 title='Example 2'>
          9
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=10 title='Chaining If-else'>
+        data-slide=10 title='How it works'>
          10
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=11 title='Returning Values'>
+        data-slide=11 title='Chaining If-else'>
          11
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=12 title='Returning values'>
+        data-slide=12 title='Returning Values'>
          12
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=13 title='Return halts execution'>
+        data-slide=13 title='Returning values'>
          13
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=14 title='Stop'>
+        data-slide=14 title='Return halts execution'>
          14
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=15 title='Strategy'>
+        data-slide=15 title='Stop'>
          15
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=16 title='Lets write a function together'>
+        data-slide=16 title='Strategy'>
          16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Lets write a function together'>
+         17
       </a>
     </li>
   </ul>

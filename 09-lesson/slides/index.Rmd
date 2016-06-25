@@ -276,6 +276,18 @@ flights %>%
 
 ---
 
+## Exploring Summarise
+
+```{r}
+# Mean departure delay by date
+flights %>%
+  group_by(year, month, day) %>%
+  summarise()
+```
+
+
+---
+
 ## Multistep data wrangling
 
 ### Which destinations have the highest average arrival delays?

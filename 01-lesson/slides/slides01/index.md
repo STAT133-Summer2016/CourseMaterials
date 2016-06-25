@@ -194,6 +194,39 @@ x <- 5
 
 ---
 
+# Logical Symbols
+In this table, `a` and `b` are numerical vectors.  `p` and `q` are logical values (`TRUE` or `FALSE`).  Unless otherwise stated, the operations are vectorized.
+
+Symbol | Usage      | Meaning 
+------ | ---------- | -------------------------------------
+`==`   | `a == b`   | Does `a` equal `b`?
+`<=`   | `a <= b`   | Is `a` less than or equal to `b`?
+`>=`   | `a >= b`   | Is `a` greater than or equal to `b`?
+`<`    | `a < b`    | Is `a` less than `b`?
+`>`    | `a > b`    | Is `a` greater than `b`?
+`!`    | `!p`       | Returns negation of `p`
+&#124; | p &#124; q | `p` OR `q`
+`&`    | `p & q`    | `p` AND `q`
+&#124;&#124;  | p &#124;&#124; q   | `p` OR `q` (first element only)
+`&&`   | `p && q`   | `p` AND `q` (first element only)
+`xor`  | `xor(p, q)`| `p` XOR `q` (exclusive or)
+`%in%` | `a %in% b` | Is `a` in `b`?
+
+---
+
+# Logical Checks
+
+Say you have a logical vector, `x`, then there are some special checks you can do with that vector:
+
+Function Call | Meaning
+------------- | ------------------------------------
+`any(x)`      | Is at least one element of `x` `TRUE`?
+`all(x)`      | Are all values of `x` `TRUE`?
+
+Strategy: Sometimes the complements of these are useful. `!any(x)` would mean "are all the elements of `x` `FALSE`?"
+
+---
+
 # Subsetting in R
 
 You can pick out certain elements of a vector using square brackets
@@ -453,41 +486,3 @@ table(y)
 ## a b c 
 ## 2 3 1
 ```
-
----
-
-# Data Types in R
-
-* Numeric - regular (real) numbers (also known as double)
-* Integer - well... integers
-* Character - text (also known as strings)
-* Logical - `TRUE` and `FALSE` values
-* Complex - complex values (with imaginary components)
-
----
-
-# Examples
-
-Type       | Examples
----------- | --------
-Numeric    | -0.5, 2
-Integer    | 3, 8
-Complex    | 2 + 1i
-Logical    | TRUE, FALSE
-Character  | "hello world"
-
----
-
-# Special Values
-
-There are some special values:
-
-* NULL is completely empty, no data type, no length
-* NA denotes a missing value.  It takes on a data type!
-* Inf is positive infinity
-* NaN is Not a Number
-
-
-
-
-

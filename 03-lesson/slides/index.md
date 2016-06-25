@@ -573,6 +573,7 @@ df[ ,2]
 ## [1] "a" "b" "c"
 ```
 
+---
 
 # Adding columns to data frames
 
@@ -603,6 +604,24 @@ df
 ## 3 three c FALSE 6
 ```
 
+---
+
+## Subsetting
+
+Subset Call           | Meaning
+--------------------- | ---------------------------------------------------
+myvector[1]           | vector containing first element of myvector
+myvector[c(3,6)]      | vector containing third and sixth element of myvector
+myvector["bob"]       | element named "bob" in myvector
+mylist[2]             | list containing second element of mylist
+mylist[[2]]           | second element of mylist
+mylist[2:3]           | list containing second and third elements of mylist
+mymatrix[1,2]         | element in first row, second column of mymatrix
+mymatrix[1, ]         | first row of mymatrix
+mymatrix[ ,3]         | third column of mymatrix
+mydataframe["x"]      | data frame containing "x" column of mydataframe
+mydataframe[["x"]]    | vector containing data from the "x" column
+mydataframe$x         | vector containing data from the "x" column
 
 
 

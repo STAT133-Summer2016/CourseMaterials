@@ -113,8 +113,9 @@ HowManyFives <- function(n) {
   counter <- 0 # Initialize a counter
   while (n >= 5) {
     n <- n - 5 # update the value of n
-    i <- i + 1 # update the counter
+    counter <- counter + 1 # update the counter
   }
+  return(counter)
 }
 ```
 
@@ -143,5 +144,6 @@ First, let's break down the problem into digestable bits:
 
 * We need to know the number of columns (`ncol`)
 * We'll need to only have the odd columns (`seq` or `%%`)
-* We'll loop over the set of odd columns
+* We'll loop over the set of odd columns (`for (i in set)`)
+* In each iteration of the loop, we 
 

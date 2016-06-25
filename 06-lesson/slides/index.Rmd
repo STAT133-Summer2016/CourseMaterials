@@ -86,6 +86,29 @@ CylinderVol()
 
 ---
 
+## Where does R look for variables?
+
+`R` looks for variable values in the following places in the order specified:
+
+1.  The function.
+2.  The function call.
+3.  The default values.
+4.  The "global environment" (saved from previous code --- dangerous!)
+
+```{r}
+x <- 0 # This saves x to the global environment
+
+example <- function(x = 1) { # 1 is a default value
+  x <- 2 # x is equal to 2 inside the function
+  x
+}
+# This call will return 2 since x is defined as 2 inside the function
+example(x = 3) # 3 is the value of x in the function call
+```
+
+
+---
+
 ## If-then-else Statements
 
 If you want your script to do certain operations under certain conditions, then you use if-then-else statements.  The basic construct looks like:

@@ -666,9 +666,16 @@ df[ ,2]
 <pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;
 </code></pre>
 
-<h1>Adding columns to data frames</h1>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
 
-<pre><code class="r">df &lt;- data.frame(x = seq(1, 3), y = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), z = c(T, F, F), stringsAsFactors = F)
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h1>Adding columns to data frames</h1>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">df &lt;- data.frame(x = seq(1, 3), y = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;), z = c(T, F, F), stringsAsFactors = F)
 df
 </code></pre>
 
@@ -689,6 +696,71 @@ df
 ## 2   two b FALSE 5
 ## 3 three c FALSE 6
 </code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>Subsetting</h2>
+  </hgroup>
+  <article data-timings="">
+    <table><thead>
+<tr>
+<th>Subset Call</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>myvector[1]</td>
+<td>vector containing first element of myvector</td>
+</tr>
+<tr>
+<td>myvector[c(3,6)]</td>
+<td>vector containing third and sixth element of myvector</td>
+</tr>
+<tr>
+<td>myvector[&quot;bob&quot;]</td>
+<td>element named &quot;bob&quot; in myvector</td>
+</tr>
+<tr>
+<td>mylist[2]</td>
+<td>list containing second element of mylist</td>
+</tr>
+<tr>
+<td>mylist[[2]]</td>
+<td>second element of mylist</td>
+</tr>
+<tr>
+<td>mylist[2:3]</td>
+<td>list containing second and third elements of mylist</td>
+</tr>
+<tr>
+<td>mymatrix[1,2]</td>
+<td>element in first row, second column of mymatrix</td>
+</tr>
+<tr>
+<td>mymatrix[1, ]</td>
+<td>first row of mymatrix</td>
+</tr>
+<tr>
+<td>mymatrix[ ,3]</td>
+<td>third column of mymatrix</td>
+</tr>
+<tr>
+<td>mydataframe[&quot;x&quot;]</td>
+<td>data frame containing &quot;x&quot; column of mydataframe</td>
+</tr>
+<tr>
+<td>mydataframe[[&quot;x&quot;]]</td>
+<td>vector containing data from the &quot;x&quot; column</td>
+</tr>
+<tr>
+<td>mydataframe$x</td>
+<td>vector containing data from the &quot;x&quot; column</td>
+</tr>
+</tbody></table>
 
   </article>
   <!-- Presenter Notes -->
@@ -822,6 +894,18 @@ df
       <a href="#" target="_self" rel='tooltip' 
         data-slide=21 title='Selecting all elements in a dimension'>
          21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Adding columns to data frames'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Subsetting'>
+         23
       </a>
     </li>
   </ul>

@@ -608,8 +608,9 @@ HowManyFives &lt;- function(n) {
   counter &lt;- 0 # Initialize a counter
   while (n &gt;= 5) {
     n &lt;- n - 5 # update the value of n
-    i &lt;- i + 1 # update the counter
+    counter &lt;- counter + 1 # update the counter
   }
+  return(counter)
 }
 </code></pre>
 
@@ -653,7 +654,7 @@ HowManyFives &lt;- function(n) {
 <ul>
 <li>We need to know the number of columns (<code>ncol</code>)</li>
 <li>We&#39;ll need to only have the odd columns (<code>seq</code> or <code>%%</code>)</li>
-<li>We&#39;ll loop over the set of odd columns</li>
+<li>We&#39;ll loop over the set of odd columns (<code>for (i in set)</code>)</li>
 </ul>
 
   </article>

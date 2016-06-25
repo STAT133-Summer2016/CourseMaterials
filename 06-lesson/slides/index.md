@@ -113,6 +113,34 @@ CylinderVol()
 
 ---
 
+## Where does R look for variables?
+
+`R` looks for variable values in the following places in the order specified:
+
+1.  The function.
+2.  The function call.
+3.  The default values.
+4.  The "global environment" (saved from previous code --- dangerous!)
+
+
+```r
+x <- 0 # This saves x to the global environment
+
+example <- function(x = 1) { # 1 is a default value
+  x <- 2 # x is equal to 2 inside the function
+  x
+}
+# This call will return 2 since x is defined as 2 inside the function
+example(x = 3) # 3 is the value of x in the function call
+```
+
+```
+## [1] 2
+```
+
+
+---
+
 ## If-then-else Statements
 
 If you want your script to do certain operations under certain conditions, then you use if-then-else statements.  The basic construct looks like:
@@ -319,3 +347,37 @@ IsEven(1)
 A leap year is defined as follows:
 
 Every year that can be evenly divided by 4 unless the year can be divided by 100 but not 400.  Write a function that, given a year, returns whether or not it's a leap year.
+
+
+```r
+LeapYear <- function(year) {
+  condition1 <- year %% 4 == 0
+  condition2 <- year %% 100 != 0
+  condition3 <- year %% 400 == 0
+
+  condition1 & (condition2 | condition3)
+}
+
+LeapYear(2000)
+```
+
+```
+## [1] TRUE
+```
+
+```r
+LeapYear(2004)
+```
+
+```
+## [1] TRUE
+```
+
+```r
+LeapYear(2015)
+```
+
+```
+## [1] FALSE
+```
+

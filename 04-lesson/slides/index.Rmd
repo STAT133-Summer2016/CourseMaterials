@@ -178,10 +178,9 @@ str_c          | same usage as paste
 str_length     | number of characters
 str_sub        | extracts substrings
 str_dup        | duplicates characters
-str_detect     | detects presence of a pattern
-str_locate     | finds first position of pattern
-str_replace    | replaces first matched pattern
-str_replace_all| replace all matched patterns
+str_to_lower   | converts to lowercase
+str_to_upper   | converts to uppercase
+str_pad        | pads a string
 
 ---
 

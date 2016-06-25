@@ -192,6 +192,19 @@ str_detect("Beat", neg_class)
 
 ---
 
+# stringr functions
+function       | description
+-------------- | ---------------------------------
+str_detect     | detects presence of a pattern
+str_locate     | finds first position of pattern
+str_replace    | replaces first matched pattern
+str_replace_all| replace all matched patterns
+str_match      | returns first matched pattern
+str_match_all  | returns all matched patterns
+str_split      | splits string at matched pattern
+
+---
+
 # Your Turn
 
 ### Create a regular expression to match a date. Test it against the following cases:

@@ -1,0 +1,261 @@
+---
+title: "Sample Midterm Questions"
+author: "Andrew Do"
+date:
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r libraries, echo = F, message = F}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+```
+
+```{r data, echo = F, results = 'hide'}
+# Data frame for questions
+data <- data.frame(V1 = rep(c("a","b","c"), each = 2),
+                   V2 = rep(c(1:2), times = 3),
+                   V3 = rep(c("alpha", "beta", "gamma")),
+                   V4 = seq(10, 60, by = 10))
+print(data)
+```
+
+### Sample Question 1
+
+Suppose you have a data frame, `data`, as given below:
+```{r ref.label = 'data', echo = F}
+```
+Assuming that the `tidyr` and `dplyr` libraries are already loaded, write down the output for each step of the pipeline in the following code.
+```{r SQ1, results = 'hide'}
+data %>%
+  filter(V1 == "a") %>% # Step 1
+  select(V2, V4) %>% # Step 2
+  gather(key = Apple, value = Banana, V2, V4) %>% # Step 3
+  mutate(Apple = Banana) # Step 4
+```
+
+### Sample Question 2
+
+Suppose you have a data frame, `data`, as given below:
+```{r ref.label = 'data', echo = F}
+```
+Assuming that the `tidyr` and `dplyr` libraries are already loaded, write down the output for each step of the pipeline in the following code.
+```{r MT1, results = 'hide'}
+data %>%
+  select(-V1) %>% # Step 1
+  spread(key = V3, value = V4) %>% # Step 2
+  mutate(delta = (alpha + beta) / gamma) %>% # Step 3
+  filter(alpha %% 8 == 2) # Step 4
+  
+```
+
+### Sample Question 3
+Consider the following script:
+```{r}
+f <- 1
+g <- 0
+
+h <- function(n, f = -1, g = 1) {
+  for(i in 1:n) {
+    f <- f + g
+    g <- f - g
+  }
+  return(g)
+}
+```
+
+a) What would the following call return?
+```{r MTa, results = 'hide'}
+h(5, g, f)
+```
+
+b) What is the value of `x` after the following line of code is run?
+```{r MTb}
+x <- sapply(1:5, function(t) h(t, 0, 1))
+```
+
+c) Write a loop that uses `h` to produce a vector `y` that is equal to the `x` in part (b).
+
+### Sample Question 4
+
+The top few rows of the `diamonds` dataset are given below.
+  
+```{r, echo = FALSE}
+diamonds <- tbl_df(diamonds) %>%
+  filter(cut %in% c("Good", "Premium", "Ideal"),
+         color %in% c("D", "E", "F"))
+```
+
+Consider the graph below, created according to our grammar of graphics.
+
+a) What geometries are present in the graph?
+b) Is the data set faceted in this plot? If so, what are the facets?
+c) What are the aesthetic mappings for each geometry?
+d) Are there any fixed aesthetics for any of the geometries?
+
+```{r echo=FALSE,fig.height=6,fig.width=8}
+diamonds %>%
+  ggplot(aes(x = carat,y = price)) +
+  geom_point(aes(col = clarity)) +
+  geom_smooth(se = FALSE) +
+  facet_grid(color ~ cut) +
+  labs(title = "Carat vs Price") +
+  theme(plot.title = element_text(size=20)) +
+  scale_y_continuous(breaks = c(0, 10000, 20000))
+  
+```
+
+### Sample Question 5
+
+Suppose you had a character vector of file names with their extensions stored under `file_names`.  The extension is always the set of characters following and including the last period.  For example the file extension for `IMG_0391.?jpg` is `.?jpg` and for `dance.dance.mp3` is `.mp3`.  Fill in the following `str_replace` call with the appropriate strings so that the file extensions are removed.  i.e. `IMG_0391.?jpg` becomes `IMG_0391`, and `dance.dance.mp3` becomes `dance.dance`
+
+```{r, eval = F}
+str_replace(file_names, pattern = ________, replacement = ________)
+```
+
+### Sample Question 6
+
+What is the output of the code below?  Explain.  If it would return an error when run, write "ERROR" and the reason.  You don't need to state the whole error message.  
+
+Part A
+```{r, eval = FALSE}
+x <- "-"
+str1 <- c("a","b","c")
+str2 <- "z"
+str_c(str1, str2, sep = "x")
+```
+
+Part B
+```{r, eval = FALSE}
+x <- 1:3
+if (x > 1) {
+  x + 1
+}
+```
+
+Part C
+```{r, eval = FALSE}
+c(factor("z"), 1 < 3, 0) + TRUE
+```
+
+### Sample Question 7
+
+Suppose you have the following objects:
+```{r, eval = F}
+x <- c(1:3, 4:6, 7:9)
+y <- list(a = 1:3, b = 4:6, c = 7:9)
+z <- data.frame(a = 1:3, b = 4:6, c = 7:9)
+```
+
+Write down the output of the following function calls then state whether the output is a vector, matrix, list, or data frame.  If the call would return an error, simply state "ERROR".  To help you out, some various sums are given below:
+
+```
+sum(1:3) == 6
+sum(4:6) == 15
+sum(7:9) == 24
+sum(1:9) == 45
+sum(1, 4, 7) == 12
+sum(2, 5, 8) == 15
+sum(3, 6, 9) == 18
+```
+
+```{r, eval = F}
+y$a
+z$a
+y[[1]] == z[[1]]
+z[1]
+lapply(z, sum)
+sapply(x, sum)
+do.call(sum, y)
+x[1] + y[[2]] + z$c
+```
+
+### Sample Question 8
+
+Imagine that you had the following directory tree:
+
+<img src="file_tree_vanilla.png" alt="file_tree" style="width: 600px;"/>
+
+The `~` expands out to the root of the tree `/user/home/`.  You may use it to represent the root in your absolute paths.  Names without extensions represent directories.
+
+You open up terminal/cygwin and run `pwd` to get the following output:
+```
+/user/home/unix_tut_dir/docs/coursework
+```
+
+1.  What does the command `ls` return?
+2.  How would you change to the `programs` directory with a relative path?
+3.  How would you change to the `appdata` directory with an absolute path?
+
+### Sample Question 9
+
+You come across a function that you've never seen before, `sobad`.  Like a sensible person, you look up the documentation to figure out how it works, and this is what you get:
+
+```
+sobad {terrible.package}
+
+Description
+Does some mathy things according to some stuff
+
+Usage
+sobad(poop, wow = NULL, ...)
+
+Arguments
+poop - a data frame
+wow - a logical vector.  If TRUE, a sum will be taken.  Otherwise, the function will return the product.
+... - strings with digits specifying the rows to apply the specified operation to
+
+Value
+A list, row-wise summaries of the data (only sums and products currently supported)
+
+Examples
+prod <- "2"
+df <- data.frame(a = c(1,3), b = 1:2)
+# This returns 6
+sobad(df, F, prod)
+```
+
+You have the following objects:
+```{r, eval = FALSE}
+alpha <- 1
+gamma <- 3
+a <- c(alpha, gamma)
+b <- 4:6
+lala <- 8 > 1
+x <- data.frame(a = 1:3, b = 4:6)
+y <- list(a = 1:3, b = 4:6)
+wow1 <- function(x) sum(x)
+wow2 <- function(x) prod(x)
+wow3 <- function(x) as.character(x)
+fafa <- "sum"
+```
+
+Using only the objects defined above, construct a function call to `sobad` that will return a length 2 numerical vector with the values 5 and 9.  Explain your answer.
+
+### Sample Question 10
+
+Consider these two data frames:
+```{r, echo = F}
+x <- data.frame(a = 1:4, b = letters[1:2], stringsAsFactors = FALSE)
+y <- data.frame(a = 1:2, b = letters[1:4], 
+                d = c("ichi", "ni", "san", "shi"),
+                 stringsAsFactors = FALSE)
+```
+```{r}
+x
+y
+```
+
+1. What is the output of the following call?
+```{r, eval = F}
+inner_join(x, y)
+```
+
+2. Which join operation would output the table below?
+```{r, echo = F, message = FALSE}
+anti_join(y, x)
+```

@@ -79,6 +79,7 @@ str_split      | splits string at matched pattern
 1.  You should be able to construct for and while loops
 2.  You should understand how to use if, else, ifelse
 3.  You should be able to read through a basic function and predict output based off a function call
+4.  You should understand how `lapply`, `sapply`, `vapply`, and `tapply` work.
 
 ```{r, eval = F}
 x <- -1

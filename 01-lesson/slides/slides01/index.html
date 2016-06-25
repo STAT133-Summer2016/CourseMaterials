@@ -239,6 +239,115 @@ x + y
 
 <slide class="" id="slide-9" style="background:;">
   <hgroup>
+    <h1>Logical Symbols</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>In this table, <code>a</code> and <code>b</code> are numerical vectors.  <code>p</code> and <code>q</code> are logical values (<code>TRUE</code> or <code>FALSE</code>).  Unless otherwise stated, the operations are vectorized.</p>
+
+<table><thead>
+<tr>
+<th>Symbol</th>
+<th>Usage</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>==</code></td>
+<td><code>a == b</code></td>
+<td>Does <code>a</code> equal <code>b</code>?</td>
+</tr>
+<tr>
+<td><code>&lt;=</code></td>
+<td><code>a &lt;= b</code></td>
+<td>Is <code>a</code> less than or equal to <code>b</code>?</td>
+</tr>
+<tr>
+<td><code>&gt;=</code></td>
+<td><code>a &gt;= b</code></td>
+<td>Is <code>a</code> greater than or equal to <code>b</code>?</td>
+</tr>
+<tr>
+<td><code>&lt;</code></td>
+<td><code>a &lt; b</code></td>
+<td>Is <code>a</code> less than <code>b</code>?</td>
+</tr>
+<tr>
+<td><code>&gt;</code></td>
+<td><code>a &gt; b</code></td>
+<td>Is <code>a</code> greater than <code>b</code>?</td>
+</tr>
+<tr>
+<td><code>!</code></td>
+<td><code>!p</code></td>
+<td>Returns negation of <code>p</code></td>
+</tr>
+<tr>
+<td>&#124;</td>
+<td>p &#124; q</td>
+<td><code>p</code> OR <code>q</code></td>
+</tr>
+<tr>
+<td><code>&amp;</code></td>
+<td><code>p &amp; q</code></td>
+<td><code>p</code> AND <code>q</code></td>
+</tr>
+<tr>
+<td>&#124;&#124;</td>
+<td>p &#124;&#124; q</td>
+<td><code>p</code> OR <code>q</code> (first element only)</td>
+</tr>
+<tr>
+<td><code>&amp;&amp;</code></td>
+<td><code>p &amp;&amp; q</code></td>
+<td><code>p</code> AND <code>q</code> (first element only)</td>
+</tr>
+<tr>
+<td><code>xor</code></td>
+<td><code>xor(p, q)</code></td>
+<td><code>p</code> XOR <code>q</code> (exclusive or)</td>
+</tr>
+<tr>
+<td><code>%in%</code></td>
+<td><code>a %in% b</code></td>
+<td>Is <code>a</code> in <code>b</code>?</td>
+</tr>
+</tbody></table>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h1>Logical Checks</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Say you have a logical vector, <code>x</code>, then there are some special checks you can do with that vector:</p>
+
+<table><thead>
+<tr>
+<th>Function Call</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>any(x)</code></td>
+<td>Is at least one element of <code>x</code> <code>TRUE</code>?</td>
+</tr>
+<tr>
+<td><code>all(x)</code></td>
+<td>Are all values of <code>x</code> <code>TRUE</code>?</td>
+</tr>
+</tbody></table>
+
+<p>Strategy: Sometimes the complements of these are useful. <code>!any(x)</code> would mean &quot;are all the elements of <code>x</code> <code>FALSE</code>?&quot;</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
     <h1>Subsetting in R</h1>
   </hgroup>
   <article data-timings="">
@@ -267,7 +376,7 @@ x[2]
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-10" style="background:;">
+<slide class="" id="slide-12" style="background:;">
   <hgroup>
     <h1>Some useful functions in R</h1>
   </hgroup>
@@ -290,7 +399,7 @@ length(x)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-11" style="background:;">
+<slide class="" id="slide-13" style="background:;">
   <hgroup>
     <h1>Seq</h1>
   </hgroup>
@@ -319,7 +428,7 @@ length(x)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-12" style="background:;">
+<slide class="" id="slide-14" style="background:;">
   <hgroup>
     <h1>Sort</h1>
   </hgroup>
@@ -343,7 +452,7 @@ sort(x)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-13" style="background:;">
+<slide class="" id="slide-15" style="background:;">
   <hgroup>
     <h1>Order</h1>
   </hgroup>
@@ -367,7 +476,7 @@ order(x)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-14" style="background:;">
+<slide class="" id="slide-16" style="background:;">
   <hgroup>
     <h1>Head and Tail</h1>
   </hgroup>
@@ -391,7 +500,7 @@ head(x, 2) # gives the first two elements
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-15" style="background:;">
+<slide class="" id="slide-17" style="background:;">
   <hgroup>
     <h1>which</h1>
   </hgroup>
@@ -424,7 +533,7 @@ which.max(x)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-16" style="background:;">
+<slide class="" id="slide-18" style="background:;">
   <hgroup>
     <h1>unique</h1>
   </hgroup>
@@ -442,7 +551,7 @@ unique(x)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-17" style="background:;">
+<slide class="" id="slide-19" style="background:;">
   <hgroup>
     <h1>any and all</h1>
   </hgroup>
@@ -467,7 +576,7 @@ any(x &gt; 10^6)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-18" style="background:;">
+<slide class="" id="slide-20" style="background:;">
   <hgroup>
     <h1>in</h1>
   </hgroup>
@@ -488,7 +597,7 @@ x %in% y
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-19" style="background:;">
+<slide class="" id="slide-21" style="background:;">
   <hgroup>
     <h1>table</h1>
   </hgroup>
@@ -512,78 +621,6 @@ table(y)
 ## a b c 
 ## 2 3 1
 </code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-20" style="background:;">
-  <hgroup>
-    <h1>Data Types in R</h1>
-  </hgroup>
-  <article data-timings="">
-    <ul>
-<li>Numeric - regular (real) numbers (also known as double)</li>
-<li>Integer - well... integers</li>
-<li>Character - text (also known as strings)</li>
-<li>Logical - <code>TRUE</code> and <code>FALSE</code> values</li>
-<li>Complex - complex values (with imaginary components)</li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-21" style="background:;">
-  <hgroup>
-    <h1>Examples</h1>
-  </hgroup>
-  <article data-timings="">
-    <table><thead>
-<tr>
-<th>Type</th>
-<th>Examples</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>Numeric</td>
-<td>-0.5, 2</td>
-</tr>
-<tr>
-<td>Integer</td>
-<td>3, 8</td>
-</tr>
-<tr>
-<td>Complex</td>
-<td>2 + 1i</td>
-</tr>
-<tr>
-<td>Logical</td>
-<td>TRUE, FALSE</td>
-</tr>
-<tr>
-<td>Character</td>
-<td>&quot;hello world&quot;</td>
-</tr>
-</tbody></table>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-22" style="background:;">
-  <hgroup>
-    <h1>Special Values</h1>
-  </hgroup>
-  <article data-timings="">
-    <p>There are some special values:</p>
-
-<ul>
-<li>NULL is completely empty, no data type, no length</li>
-<li>NA denotes a missing value.  It takes on a data type!</li>
-<li>Inf is positive infinity</li>
-<li>NaN is Not a Number</li>
-</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -643,86 +680,80 @@ table(y)
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=9 title='Subsetting in R'>
+        data-slide=9 title='Logical Symbols'>
          9
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=10 title='Some useful functions in R'>
+        data-slide=10 title='Logical Checks'>
          10
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=11 title='Seq'>
+        data-slide=11 title='Subsetting in R'>
          11
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=12 title='Sort'>
+        data-slide=12 title='Some useful functions in R'>
          12
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=13 title='Order'>
+        data-slide=13 title='Seq'>
          13
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=14 title='Head and Tail'>
+        data-slide=14 title='Sort'>
          14
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=15 title='which'>
+        data-slide=15 title='Order'>
          15
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=16 title='unique'>
+        data-slide=16 title='Head and Tail'>
          16
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=17 title='any and all'>
+        data-slide=17 title='which'>
          17
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=18 title='in'>
+        data-slide=18 title='unique'>
          18
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=19 title='table'>
+        data-slide=19 title='any and all'>
          19
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=20 title='Data Types in R'>
+        data-slide=20 title='in'>
          20
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=21 title='Examples'>
+        data-slide=21 title='table'>
          21
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=22 title='Special Values'>
-         22
       </a>
     </li>
   </ul>

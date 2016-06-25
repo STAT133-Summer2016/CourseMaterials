@@ -144,4 +144,3 @@ There are some special values:
 * Inf is positive infinity
 * NaN is Not a Number
 
-# 
