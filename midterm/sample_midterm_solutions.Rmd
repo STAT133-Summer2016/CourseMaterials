@@ -237,7 +237,7 @@ __Solution__
 Part A
 
 ```
-"axc" "bxc" "cxc"
+"axz" "bxz" "cxz"
 ```
 `"a"`, `"b"`, and `"c"` are pasted to `"z"` with `"x"` as a separator.  The sep argument is `"x"` the string and not `x` the variable.
 
