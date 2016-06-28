@@ -210,7 +210,7 @@ wow - a logical vector.  If TRUE, a sum will be taken.  Otherwise, the function 
 ... - strings with digits specifying the rows to apply the specified operation to
 
 Value
-A list, row-wise summaries of the data (only sums and products currently supported)
+A vector with dimension equal to the number of rows in poop, row-wise summaries of the data (only sums and products currently supported)
 
 Examples
 prod <- "2"
