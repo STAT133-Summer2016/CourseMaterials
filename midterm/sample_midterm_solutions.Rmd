@@ -250,7 +250,7 @@ Part C
 2 2 1
 ```
 
-Since vectors are __atomic objects__, `R` will __implicitly coerce__ the data type to the most compatible type.  __Factors__ are stored as `integers` under the hood, so since `"z"` has one __level__, it is understood as `1`.  `1 < 3` is `FALSE`, which can be coerced to 0.  The whole vector, then, takes on the `numeric` type.  Attempting to add `TRUE` will coerce it to being `1`. 
+Since vectors are __atomic objects__, `R` will __implicitly coerce__ the data type to the most compatible type.  __Factors__ are stored as `integers` under the hood, so since `"z"` has one __level__, it is understood as `1`.  `1 < 3` is `TRUE`, which can be coerced to 1.  The whole vector, then, takes on the `numeric` type.  Attempting to add `TRUE` will coerce it to being `1`. 
 
 ### Sample Question 7
 

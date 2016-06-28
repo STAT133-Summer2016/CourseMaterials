@@ -282,7 +282,7 @@ if (x &gt; 1) {
 <p>ERROR. <code>If</code> can only handle logical vectors of length 1. <code>x &gt; 1</code> would produce <code>c(F, T, T)</code>, which has length 3.</p>
 <p>Part C</p>
 <pre><code>2 2 1</code></pre>
-<p>Since vectors are <strong>atomic objects</strong>, <code>R</code> will <strong>implicitly coerce</strong> the data type to the most compatible type. <strong>Factors</strong> are stored as <code>integers</code> under the hood, so since <code>&quot;z&quot;</code> has one <strong>level</strong>, it is understood as <code>1</code>. <code>1 &lt; 3</code> is <code>FALSE</code>, which can be coerced to 0. The whole vector, then, takes on the <code>numeric</code> type. Attempting to add <code>TRUE</code> will coerce it to being <code>1</code>.</p>
+<p>Since vectors are <strong>atomic objects</strong>, <code>R</code> will <strong>implicitly coerce</strong> the data type to the most compatible type. <strong>Factors</strong> are stored as <code>integers</code> under the hood, so since <code>&quot;z&quot;</code> has one <strong>level</strong>, it is understood as <code>1</code>. <code>1 &lt; 3</code> is <code>TRUE</code>, which can be coerced to 1. The whole vector, then, takes on the <code>numeric</code> type. Attempting to add <code>TRUE</code> will coerce it to being <code>1</code>.</p>
 </div>
 <div id="sample-question-7" class="section level3">
 <h3>Sample Question 7</h3>
@@ -354,7 +354,7 @@ wow - a logical vector.  If TRUE, a sum will be taken.  Otherwise, the function 
 ... - strings with digits specifying the rows to apply the specified operation to
 
 Value
-A list, row-wise summaries of the data (only sums and products currently supported)
+A vector with dimension equal to the number of rows in poop, row-wise summaries of the data (only sums and products currently supported)
 
 Examples
 prod &lt;- &quot;2&quot;
