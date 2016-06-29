@@ -1,0 +1,341 @@
+---
+title: "lab14"
+author: "Andrew Do"
+date: "June 28, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      fig.width = 9,
+                      fig.height = 6)
+```
+
+## Allowed Packages
+The following packages are allowed:
+
+* dplyr
+* tidyr
+* readr
+* stringr
+* lubridate
+* ggplot2
+* ggrepel
+
+```{r, include = FALSE}
+library(dplyr)
+library(tidyr)
+library(readr)
+library(stringr)
+library(lubridate)
+library(ggplot2)
+library(ggrepel)
+library(grid)
+library(gridExtra)
+```
+
+## Goal
+The goal of this lab is to emphasize the amount of trial-and-error iterations, documentation look-up, and plain overall grit it takes to produce a professional-quality graphic.  You will be recreating the graphic below:
+
+![Source: http://www.economist.com/node/21541178](Economist.png)
+
+R has its limitations in customization, so scroll to the bottom to see what the closest we'll get.
+
+## Read in the data
+The first thing you'll want to do is read in the data.  You probably want to exclude the column containing row numbers as they're being read in.  Look up the documentation of `col_types` in `read_csv` to find out how.
+
+```{r}
+econ <- read_csv("EconomistData.csv", col_types = "_ciddc")
+```
+
+## Make a basic plot
+To start the graphing process, you always want to start with one basic layer and inspect it for any a priori irregularities.  The worst thing would be to find out that you've got bad data near the end of the process.  See if you can make this plot:
+```{r}
+ggplot(econ, aes(x = CPI, y = HDI, color = Region)) +
+  geom_point()
+
+```
+
+## My little second layer
+Now add the smoothing line __under__ the points.  `ggplot` add the layers from top to bottom, meaning that the last layer you add will be the one on top.  The method used was `"lm"` for linear model and the formula was `y ~ log(x)` denoting a log-transformation of x before fitting.
+```{r}
+ggplot(econ, aes(x = CPI, y = HDI, color = Region)) +
+  geom_smooth(method = "lm",
+              formula = y ~ log(x),
+              se = FALSE,
+              color = "red") +
+  geom_point()
+```
+
+### Shapes of points
+Points have 25 basic shape values they can take on.  While we may not know what they are off the top of our heads, we can be a little clever in figuring out what the different values of the shapes are.  Note that shapes 20-25 take on a fill value.  Take note of the shape you want in the graph below.
+```{r}
+df <- data.frame(x = 1:5 , y = 1:25, z = 1:25)
+shapes <- ggplot(df, aes(x = x, y = y)) +
+  geom_point(aes(shape = z), size = 4, colour = "Red", fill = "Black") +
+  scale_shape_identity()
+shapes
+```
+
+Change the `shape` aesthetic of your points to a suitable value.  Check your understanding: is this a fixed attribute or one mapped from a variable?
+```{r}
+ggplot(econ, aes(x = CPI, y = HDI, color = Region)) +
+  geom_smooth(method = "lm",
+              formula = y ~ log(x),
+              se = FALSE,
+              color = "red") +
+  geom_point(shape = 1)
+```
+
+### Finagling more aesthetics
+This still doesn't look right.  The points are too small and the line around them is too thin.  Play around with the `size` and `stroke` aesthetics until it looks right.
+```{r}
+ggplot(econ, aes(x = CPI, y = HDI, color = Region)) +
+  geom_smooth(method = "lm",
+              formula = y ~ log(x),
+              se = FALSE,
+              color = "red") +
+  geom_point(shape = 1, size = 3, stroke = 2)
+  
+```
+
+### Adding the text
+Only certain points were actually labelled in the Economist graph.  I don't think it was systematic, so to save you some time I've provided the labelled points in a vector below.  Label only these points using `geom_text`.  `ggplot` will always want to only graph the whole data frame, so you'll need to create a new data frame with only these countries and feed it to the `geom_text` call.  The color of the text was `"gray20"`.
+
+```{r}
+points_to_label <- c("Russia", "Venezuela", "Iraq", "Myanmar", "Sudan",
+                     "Afghanistan", "Congo", "Greece", "Argentina", "Brazil",
+                     "India", "Italy", "China", "South Africa", "Spane",
+                     "Botswana", "Cape Verde", "Bhutan", "Rwanda", "France",
+                     "United States", "Germany", "Britain", "Barbados", "Norway", 
+                     "Japan", "New Zealand", "Singapore")
+data_to_label <- filter(econ, Country %in% points_to_label)
+ggplot(econ, aes(x = CPI, y = HDI, color = Region)) +
+  geom_smooth(method = "lm",
+              formula = y ~ log(x),
+              se = FALSE,
+              color = "red") +
+  geom_point(shape = 1, size = 3, stroke = 2) +
+  geom_text(aes(label = Country), data = data_to_label, color = "gray20")
+```
+
+### `ggplot` extension `ggrepel`
+Now this is hideous.  Thankfully, there's an extension package called `ggrepel` that adds a new text geometry called `geom_text_repel` that moves text out into whitespace if needed.  Use this geometry instead of `geom_text`.
+
+```{r}
+ggplot(econ, aes(x = CPI, y = HDI, color = Region)) +
+  geom_smooth(method = "lm",
+              formula = y ~ log(x),
+              se = FALSE,
+              color = "red") +
+  geom_point(shape = 1, size = 3, stroke = 2) +
+  geom_text_repel(aes(label = Country), data = data_to_label, color = "gray20")
+```
+
+### Modifying the legend
+The legend names are off.  Use `mutate` and `factor` to change the `label` of the `levels` of `Region`.  Reason your way through the equialencies if you're not familiar.
+```{r}
+econ <- econ %>%
+  mutate(
+    Region = factor(Region,
+      levels = c("EU W. Europe",
+                "Americas",
+                "Asia Pacific",
+                "East EU Cemt Asia",
+                "MENA",
+                "SSA"),
+      labels = c("OECD",
+                "Americas",
+                "Asia &\nOceania",
+                "Central &\nEastern Europe",
+                "Middle East &\nnorth Africa",
+                "Sub-Saharan\nAfrica")))
+```
+
+### Adding the titles
+Use `labs` to correct the titles.  Inside the call, you name the aesthetics corresponding to the element that you want to rename.  For example, if you wanted to change the `fill` legend title to `"Region"`, the call would be `labs(fill = "Region")`.
+```{r}
+ggplot(econ, aes(x = CPI, y = HDI, color = Region)) +
+  geom_smooth(method = "lm",
+              formula = y ~ log(x),
+              se = FALSE,
+              color = "red") +
+  geom_point(shape = 1, size = 3, stroke = 2) +
+  geom_text_repel(aes(label = Country), data = data_to_label, color = "gray20") +
+  labs(title = "Corruption and Human development",
+       x = "Corruption Perceptions Index, 2011 (10=least corrupt)",
+       y = "Human Development Index, 2011 (1=Best)")
+```
+
+### Modifying the scales
+The __scale__ lets you interpret the data.  Without a scale, we would have no way of understand the values presented on the graph!  Use the `limits` and `breaks` arguments of `scale_x_continuous` and `scale_y_countinuous` to make the scales match the Economist graph.  Limits refer to the min and max values whereas breaks refers to how the tick marks are spaced.
+```{r}
+ggplot(econ, aes(x = CPI, y = HDI, color = Region)) +
+  geom_smooth(method = "lm",
+              formula = y ~ log(x),
+              se = FALSE,
+              color = "red") +
+  geom_point(shape = 1, size = 3, stroke = 2) +
+  geom_text_repel(aes(label = Country), data = data_to_label, color = "gray20") +
+  scale_x_continuous(limits = c(0.9, 10.5), 
+                     breaks = 1:10) +
+  scale_y_continuous(limits = c(0.2, 1.0), 
+                     breaks = seq(0.2, 1.0, by = 0.1)) +
+  labs(title = "Corruption and Human development",
+       x = "Corruption Perceptions Index, 2011 (10=least corrupt)",
+       y = "Human Development Index, 2011 (1=Best)")
+```
+
+### Changing the color scheme
+Our color scheme is a little too bright.  As data scientists, you'll have to understand that visual design is an integral part of communication.  Change the colors of the points using `scale_color_manual`.  The hexadecimal colors are: #099DD7, #248E84, #28AADC, #24576D, #96503F, and #F2583F.  You'll have to figure out the Regions the colors correspond to and how to input them into the `scale_color_manual` call.
+```{r}
+ggplot(econ, aes(x = CPI, y = HDI, color = Region)) +
+  geom_smooth(method = "lm",
+              formula = y ~ log(x),
+              se = FALSE,
+              color = "red") +
+  geom_point(shape = 1, size = 3, stroke = 2) +
+  geom_text_repel(aes(label = Country), data = data_to_label, color = "gray20") +
+  scale_x_continuous(limits = c(0.9, 10.5), 
+                     breaks = 1:10) +
+  scale_y_continuous(limits = c(0.2, 1.0), 
+                     breaks = seq(0.2, 1.0, by = 0.1)) +
+  scale_color_manual(values = c("#24576D",
+                                "#099DD7",
+                                "#28AADC",
+                                "#248E84",
+                                "#F2583F",
+                                "#96503F")) +
+  labs(title = "Corruption and Human development",
+       x = "Corruption Perceptions Index, 2011 (10=least corrupt)",
+       y = "Human Development Index, 2011 (1=Best)")
+```
+
+### Moving the legend
+Add a `theme_minimal()` with no arguments to your plot---this will make everything barebones.  Now modify the legend position by adding `theme()` with some legend arguments.  Move the legend to the top and make it lay horizontal.  The arguments will look like `legend.something`.
+
+```{r}
+ggplot(econ, aes(x = CPI, y = HDI, color = Region)) +
+  geom_smooth(method = "lm",
+              formula = y ~ log(x),
+              se = FALSE,
+              color = "red") +
+  geom_point(shape = 1, size = 3, stroke = 2) +
+  geom_text_repel(aes(label = Country), data = data_to_label, color = "gray20") +
+  scale_x_continuous(limits = c(0.9, 10.5), 
+                     breaks = 1:10) +
+  scale_y_continuous(limits = c(0.2, 1.0), 
+                     breaks = seq(0.2, 1.0, by = 0.1)) +
+  scale_color_manual(values = c("#24576D",
+                                "#099DD7",
+                                "#28AADC",
+                                "#248E84",
+                                "#F2583F",
+                                "#96503F")) +
+  labs(title = "Corruption and Human development",
+       x = "Corruption Perceptions Index, 2011 (10=least corrupt)",
+       y = "Human Development Index, 2011 (1=Best)") +
+  theme_minimal() + # start with a minimal theme and add what we need
+  theme(legend.position = c("top"), # position the legend in the upper left 
+        legend.direction = "horizontal")
+```
+
+### Removing the extraneous lines.
+Remove the extra y-axis lines and tick marks in the same `theme` call by giving `axis.element.y` and `axis.line.y` a value that makes them blank.
+
+```{r}
+ggplot(econ, aes(x = CPI, y = HDI, color = Region)) +
+  geom_smooth(method = "lm",
+              formula = y ~ log(x),
+              se = FALSE,
+              color = "red") +
+  geom_point(shape = 1, size = 3, stroke = 2) +
+  geom_text_repel(aes(label = Country), data = data_to_label, color = "gray20") +
+  scale_x_continuous(limits = c(0.9, 10.5), 
+                     breaks = 1:10) +
+  scale_y_continuous(limits = c(0.2, 1.0), 
+                     breaks = seq(0.2, 1.0, by = 0.1)) +
+  scale_color_manual(values = c("#24576D",
+                                "#099DD7",
+                                "#28AADC",
+                                "#248E84",
+                                "#F2583F",
+                                "#96503F")) +
+  labs(title = "Corruption and Human development",
+       x = "Corruption Perceptions Index, 2011 (10=least corrupt)",
+       y = "Human Development Index, 2011 (1=Best)") +
+  theme_minimal() + # start with a minimal theme and add what we need
+  theme(text = element_text(color = "gray20"),
+        legend.position = c("top"), # position the legend in the upper left 
+        legend.direction = "horizontal",
+        axis.ticks.y = element_blank(), # element_blank() is how we remove elements
+        axis.line.y = element_blank()
+        )
+```
+
+### Finishing touches
+Add the following lines to your theme:
+```
+text = element_text(color = "gray20"),
+legend.justification = 0.1, # anchor point for legend.position.
+legend.text = element_text(size = 11, color = "gray10"),
+axis.text = element_text(face = "italic"),
+axis.title.x = element_text(vjust = -1), # move title away from axis
+axis.title.y = element_text(vjust = 2), # move away for axis
+axis.line = element_line(color = "gray40", size = 0.5),
+panel.grid.major = element_line(color = "gray50", size = 0.5),
+panel.grid.major.x = element_blank()
+```
+
+Assign your entire plot to the name `p` and then run the following lines to add the source footnote.
+```
+footnote <- "Sources: Transparency International; UN Human Development Report"
+footgrob <- textGrob(footnote, x = 0, hjust = -0.1, vjust=0.1, gp = gpar(fontface = "italic", fontsize = 12))
+g <- arrangeGrob(p, bottom = footgrob)
+grid.draw(g)
+```
+
+### Final Product
+```{r}
+p <- ggplot(econ, aes(x = CPI, y = HDI, color = Region)) +
+  geom_smooth(method = "lm",
+              formula = y ~ log(x),
+              se = FALSE,
+              color = "red") +
+  geom_point(shape = 1, size = 3, stroke = 2) +
+  geom_text_repel(aes(label = Country), data = data_to_label, color = "gray20") +
+  scale_x_continuous(limits = c(0.9, 10.5), 
+                     breaks = 1:10) +
+  scale_y_continuous(limits = c(0.2, 1.0), 
+                     breaks = seq(0.2, 1.0, by = 0.1)) +
+  scale_color_manual(values = c("#24576D",
+                                "#099DD7",
+                                "#28AADC",
+                                "#248E84",
+                                "#F2583F",
+                                "#96503F")) +
+  labs(title = "Corruption and Human development",
+       x = "Corruption Perceptions Index, 2011 (10=least corrupt)",
+       y = "Human Development Index, 2011 (1=Best)") +
+  theme_minimal() + # start with a minimal theme and add what we need
+  theme(text = element_text(color = "gray20"),
+        legend.position = c("top"), # position the legend in the upper left 
+        legend.direction = "horizontal",
+        legend.justification = 0.1, # anchor point for legend.position.
+        legend.text = element_text(size = 11, color = "gray10"),
+        axis.text = element_text(face = "italic"),
+        axis.title.x = element_text(vjust = -1), # move title away from axis
+        axis.title.y = element_text(vjust = 2), # move away for axis
+        axis.ticks.y = element_blank(), # element_blank() is how we remove elements
+        axis.line = element_line(color = "gray40", size = 0.5),
+        axis.line.y = element_blank(),
+        panel.grid.major = element_line(color = "gray50", size = 0.5),
+        panel.grid.major.x = element_blank() # removes the grid lines
+        )
+
+footnote <- "Sources: Transparency International; UN Human Development Report"
+footgrob <- textGrob(footnote, x = 0, hjust = -0.1, vjust=0.1, gp = gpar(fontface = "italic", fontsize = 12))
+g <- arrangeGrob(p, bottom = footgrob)
+grid.draw(g)
+```
+
