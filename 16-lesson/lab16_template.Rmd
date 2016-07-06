@@ -18,7 +18,7 @@ In this lab, you'll need the following packages:
 * stringr
 * dplyr
 * tidyr
-* scales (pre-installed extension of the ggplot2 package)
+* scales
 
 ## xml2
 
@@ -47,7 +47,7 @@ European Central Bank and create a time  series plot showing how the rates for f
 
 It's always a good idea to get a feel of your data before you jump into the code.  Take a look at the latest exchange rates in XML form at this link:
 
-[http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml]("http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml")
+[http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml](http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml)
 
 Examine the structure of the XML.  Answer the following questions by inspection (without code):
 
@@ -73,7 +73,7 @@ xml_find_all(exrate.xml, "/gesmes:Envelope")
 ```
 
 Use `xml_root()` to find the root element of the tree. Assign it to the `exrate_root`.
-```{r}
+```{r, echo = FALSE}
 # <Your Code>
 ```
 
@@ -136,7 +136,6 @@ Modify the above method to extract all the time attributes.  Make sure your fina
 
 ```
 
-
 ## What's next?
 
 Now we've successfully extracted the exchange rates and dates for the British pound. We can create our first simple plot.
@@ -161,7 +160,7 @@ The function should return a numeric vector with the daily exchange rates for th
 ```
 
 ## 
-Construct a `lapply` call to the character vector with GBP, USD, CAD, and AUD that uses `GetExchangeRates` to return the exchange rates for those currencies.  Name the elements of the resulting list with their corresponding currencies.  Name the list `currencies`.
+Construct a `lapply` call to the character vector with GBP, USD, CAD, and JPY that uses `GetExchangeRates` to return the exchange rates for those currencies.  Name the elements of the resulting list with their corresponding currencies.  Name the list `currencies`.
 
 ```{r}
 # <Your code>
