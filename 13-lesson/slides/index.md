@@ -186,6 +186,7 @@ ggplot(mtcars) +
 
 *** =right
 ![plot of chunk unnamed-chunk-13](assets/fig/unnamed-chunk-13-1.png)
+
 ---
 
 ## Faceting

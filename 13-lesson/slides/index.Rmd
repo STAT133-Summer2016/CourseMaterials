@@ -198,6 +198,7 @@ ggplot(mtcars) +
 ggplot(mtcars) +
   geom_point(aes(hp, mpg), size = 3)
 ```
+
 ---
 
 ## Faceting
