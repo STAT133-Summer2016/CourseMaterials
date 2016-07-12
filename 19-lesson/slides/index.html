@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lesson 19</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Lesson 19">
+  <meta name="author" content="">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Lesson 19</h1>
+    <h2>Miscellaneous Topics</h2>
+    <p><br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>man, help, google</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/img/tech_support_cheat_sheet.png" style="width:1000px;"></p>
+
+<p><a href="https://m.xkcd.com/627/">Image from xkcd</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>More Unix Tools</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Two Highly Recommended Tutorials:</h3>
+
+<p>STAT133 introduces you to to a handful of tools from UNIX and Git for you to get a taste of what the two do.  I suggest, at minimum, looking at the following two tutorials to expand your toolbox to &quot;minimal proficiency&quot;: </p>
+
+<h3>Learn Enough Unix to Be Dangerous</h3>
+
+<p><a href="https://www.learnenough.com/command-line-tutorial">https://www.learnenough.com/command-line-tutorial</a></p>
+
+<h3>Learn Enough Git to Be Dangerous</h3>
+
+<p><a href="https://www.learnenough.com/git-tutorial">https://www.learnenough.com/git-tutorial</a></p>
+
+<p>After going through these two lessons (~1-2 hours apiece), you should pick up other tools on a as-you-need-them basis.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h1>Exporting Files from an R Script</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>As you run scripts on the server, you might want your code to save cleaned data sets, plots as pngs, etc.  Here are a few useful functions and the packages they&#39;re in:</p>
+
+<table><thead>
+<tr>
+<th>function</th>
+<th>package</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>write_csv</td>
+<td>readr</td>
+<td>saves a data frame as a csv file</td>
+</tr>
+<tr>
+<td>write_tsv</td>
+<td>readr</td>
+<td>saves a data frame as a tsv file (tab-separated)</td>
+</tr>
+<tr>
+<td>ggsave</td>
+<td>ggplot2</td>
+<td>saves a ggplot object as a png or pdf file</td>
+</tr>
+<tr>
+<td>saveRDS</td>
+<td>none</td>
+<td>saves an R object as an rds file</td>
+</tr>
+<tr>
+<td>readRDS</td>
+<td>none</td>
+<td>loads an rds file (needs to be assigned to a name when loaded)</td>
+</tr>
+<tr>
+<td>save</td>
+<td>none</td>
+<td>saves an R object as an rda file</td>
+</tr>
+<tr>
+<td>load</td>
+<td>none</td>
+<td>loads an rda file (loads to global environment)</td>
+</tr>
+</tbody></table>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Coding Style</h2>
+  </hgroup>
+  <article data-timings="">
+    <blockquote>
+<p>Good coding style is like using correct punctuation.  You can manage without it, but it sure makes things easier to read.</p>
+</blockquote>
+
+<p>Hadley Wickham</p>
+
+<p>Having a consistent coding style will make it easier to revisit your code should you wish to debug, modify, or enhance your scripts.  No style is strictly better than the rest, but I&#39;ll be providing a style guide for the rest of the semester that you should try your best to adhere to.  As you work with different people, your style will have to adapt to other members&#39; coding preferences.  </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Literate Programming</h2>
+  </hgroup>
+  <article data-timings="">
+    <blockquote>
+<p>Let us change our traditional attitude to the construction of programs: Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do</p>
+</blockquote>
+
+<p>Donald Knuth (1984)</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Naming Schemes</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Choose the names of variables carefully</li>
+<li>Explain what each variable means</li>
+<li>Strive for a program that is comprehensible</li>
+<li>Introduce concepts in an order that is best for human understanding</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Naming Functions</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Writing functions with descriptive names makes your code more readable:</p>
+  
+<div class='left' style='float:left;width:45%'>
+ <h3>For Robots</h3>
+
+<pre><code class="r">if(is.numeric(x) &amp; x &gt; 0 &amp; x %% 1 == 0){
+TRUE } else {FALSE}
+</code></pre>
+
+</div>    
+<div class='right' style='float:right;width:55%'>
+ <h3>For Humans</h3>
+
+<pre><code class="r">CheckIfPosInt &lt;- function(x) {
+  # Checks if a number is a positive integer
+  # 
+  # Args:
+  #   x: a numeric vector
+  #
+  # Returns:
+  #   a logical vector of the same length as x 
+  #   denoting whether or not the values are
+  #   positive integers
+  is.numeric(x) &amp; x &gt; 0 &amp; x %% 1 == 0
+}
+
+CheckIfPosInt(x)
+</code></pre>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Whitespace</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Visually blocks off your code.  Helps you scan your code&#39;s structure quickly, making it easier to read, modify, explain, maintain, and enhance:</p>
+  
+<div class='left' style='float:left;width:50%'>
+ <pre><code class="r">if(!is.vector(x)) {
+stop(&#39;x must be a vector&#39;)
+} else {
+if(any(is.na(x))){
+x &lt;- x[!is.na(x)]
+}
+x_sum &lt;- 0
+for (i in seq_along(x)) {
+  x_sum &lt;- x_sum + x[i]
+}
+x_sum / length(x)
+}
+</code></pre>
+
+</div>    
+<div class='right' style='float:right;width:50%'>
+ <pre><code class="r">if(!is.vector(x)) stop(&#39;x must be a vector&#39;)
+
+  if(any(is.na(x))) {
+    x &lt;- na.omit(x)
+  }
+
+  x_sum &lt;- 0
+  for (i in seq_along(x)) {
+    x_sum &lt;- x_sum + x[i]
+  }
+
+  x_sum / length(x)
+}
+</code></pre>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>New lines</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Don&#39;t be afraid to press enter every now and then to separate <em>ideas</em></p>
+  
+<div class='left' style='float:left;width:55%'>
+ <h3>Difficult to Read</h3>
+
+<pre><code class="r">stats &lt;- c(min(x), max(x), max(x)-min(x),
+quantile(x, probs=0.25), quantile(x, probs=0.75), 
+IQR(x), median(x), mean(x), sd(x)
+)
+</code></pre>
+
+</div>    
+<div class='right' style='float:right;width:45%'>
+ <h3>Easier to Read Top-Down</h3>
+
+<pre><code class="r">stats &lt;- c(
+  min(x),
+  max(x),
+  max(x) - min(x),
+  quantile(x, probs = 0.25),
+  quantile(x, probs = 0.75),
+  IQR(x),
+  median(x),
+  mean(x),
+  sd(x)
+)
+</code></pre>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='man, help, google'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='More Unix Tools'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Exporting Files from an R Script'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Coding Style'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Literate Programming'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Naming Schemes'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Naming Functions'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Whitespace'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='New lines'>
+         9
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

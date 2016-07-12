@@ -1,0 +1,262 @@
+---
+title: "Style Guide"
+author: "Andrew Do"
+date: "July 12, 2016"
+output: rmarkdown::html_vignette
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+source("../../markdown_styles.R")
+```
+
+# Style Guide
+
+This style guide borrows heavily from Google's publically available R style guide.  What's important is that you pick a readable style and BE CONSISTENT.
+
+## General Rules:
+
+1. Indent with two spaces.  Never mix tabs and spaces.
+2. Keep your lines less than 80 characters. This is the amount that will fit comfortably on a printed page at a reasonable size. If you find you are running out of room, this is probably an indication that you should encapsulate some of the work in a separate function.
+3. `source()` and `library()` calls should be at the top of your document
+4. Never use `setwd()` in a script that is meant to be shared.  Use relative paths instead.
+5. Do not use semi-colons
+6. Avoid using `attach()`.  This is a bad habit that often causes unintended side-effects.
+7. Use an explicit `stop()` when raising errors in functions.  Don't just use `return()` and definitely not `print()`.
+
+## File Names
+
+File names should be meaningful
+
+__`r lolite1("GOOD:")`__
+```
+predict_ad_revenue.R
+cleaning_functions.R
+```
+__`r suplite("BAD:")`__
+```
+foo.R
+poop.R
+```
+
+## Identifiers
+
+* Variable names should be in lowercase with underscores separating words.  They should generally be nouns since they represent _things_.
+* Function names should begin with an uppercase letter with uppercase separating words.  They should generally be verbs since they represent _actions_.
+* Hard-coded constants should be named like functions except that they begin with a lowercase `k`.
+* Names should always be meaningful but concise (not too long!).  This is easier said than done.
+
+__`r lolite1("GOOD:")`__
+```
+# Variable Names
+avg_time
+book_prices
+# Function Names
+CalculateScore
+GetWikiTable
+# Constants
+kGravity
+```
+__`r suplite("BAD:")`__
+```
+# Variable Names
+poop
+g1s1f22
+# Function Names
+avg_clicks
+myfunction11112
+```
+
+## Spacing
+
+Place a space around ALL binary operators (`=`, `+`, `<=`, etc).  Do not place a space before a comma, but always place one after a comma.
+
+__`r lolite1("GOOD:")`__
+```
+average <- mean(feet / 12 + inches, na.rm = T)
+```
+__`r suplite("BAD:")`__
+```
+average<-mean(feet/12+inches,na.rm=T)  # is that a comparison with negative mean?
+```
+
+Place a space before left parentheses, except in a function call.
+
+__`r lolite1("GOOD:")`__
+```
+if (debug)
+plot(x, y)
+```
+__`r suplite("BAD:")`__
+```
+if(debug)
+ggplot (data)
+```
+
+Extra spacing (i.e., more than one space in a row) is okay if it improves alignment of equals signs or arrows (`<-`).
+
+__`r lolite1("THESE ARE FINE")`__
+```
+short_name      <- value1
+super_long_name <- value2
+
+list(
+  total = a + b + c, 
+  mean  = (a + b + c) / n)
+```
+
+Do not place spaces around code in parentheses or square brackets. (Except if there’s a trailing comma: always place a space after a comma, just like in ordinary English.)
+
+__`r lolite1("GOOD:")`__
+```
+if (debug)
+diamonds[5, ]
+```
+__`r suplite("BAD:")`__
+```
+if ( debug )  # No spaces around debug
+x[1,]  # Needs a space after the comma
+x[1 ,]  # Space goes after, not before
+```
+
+## Curly Braces
+An opening curly brace should never go on its own line and should always be followed by a new line; a closing curly brace should always go on its own line, unless followed by `else`.
+
+Always indent the code inside the curly braces.
+
+__`r lolite1("GOOD:")`__
+```
+if (y < 0 && debug) {
+  message("Y is negative")
+}
+
+if (y == 0) {
+  log(x)
+} else {
+  y ^ x
+}
+```
+__`r suplite("BAD:")`__
+```
+# Missing curly braces --- can't tell what expressions are grouped
+if (y < 0 && debug)
+message("Y is negative")
+
+# The else should follow a closing brace so we can see it follows the first if
+if (y == 0) {
+  log(x)
+} 
+else {
+  y ^ x
+}
+```
+
+It’s ok to leave very short statements on the same line (under ~60 characters total)
+
+__`r lolite1("THIS IS FINE")`__
+```
+if (y < 0 && debug) message("Y is negative")
+```
+## Whitespace
+
+Use whitespace to make your code more readable.  Each line should read like a clause in a sentence rather than a giant run-on sentence.  Do not be afraid to break up long function calls.
+
+__`r lolite1("GOOD:")`__
+```{r, eval = FALSE}
+ggplot(econ, aes(x = CPI, y = HDI, color = Region)) +
+  geom_smooth(method = "lm",
+              formula = y ~ log(x),
+              se = FALSE,
+              color = "red") +
+  geom_point(shape = 1, size = 3, stroke = 2) +
+  geom_text_repel(aes(label = Country), data = data_to_label, color = "gray20") +
+  scale_x_continuous(limits = c(0.9, 10.5), 
+                     breaks = 1:10) +
+  scale_y_continuous(limits = c(0.2, 1.0), 
+                     breaks = seq(0.2, 1.0, by = 0.1)) +
+  scale_color_manual(values = c("#24576D",
+                                "#099DD7",
+                                "#28AADC",
+                                "#248E84",
+                                "#F2583F",
+                                "#96503F")) +
+  labs(title = "Corruption and Human development",
+       x = "Corruption Perceptions Index, 2011 (10=least corrupt)",
+       y = "Human Development Index, 2011 (1=Best)")
+```
+__`r suplite("BAD:")`__
+```{r, eval = FALSE}
+ggplot(econ, aes(x = CPI, y = HDI, color = Region)) + geom_smooth(method = "lm", formula = y ~ log(x), se = FALSE, color = "red") + geom_point(shape = 1, size = 3, stroke = 2) + geom_text_repel(aes(label = Country), data = data_to_label, color = "gray20") + scale_x_continuous(limits = c(0.9, 10.5), breaks = 1:10) + scale_y_continuous(limits = c(0.2, 1.0), breaks = seq(0.2, 1.0, by = 0.1)) + scale_color_manual(values = c("#24576D", "#099DD7", "#28AADC", "#248E84", "#F2583F", "#96503F")) + labs(title = "Corruption and Human development", x = "Corruption Perceptions Index, 2011 (10=least corrupt)", y = "Human Development Index, 2011 (1=Best)")
+```
+## Documentation
+
+You should comment wherever it's not immediately obvious from reading the code what your intent is.  Imagine your coming back to the document five years from now---would you understand _why_ you wrote parts of your code? If not, include a comment explaining _why_ rather than _what_.
+
+__`r lolite1("GOOD:")`__
+```
+# Even observations should be fixed for drift
+ifelse(n %% 2 == 0, x[n] - drift, x[n])
+```
+__`r suplite("BAD:")`__
+```
+# Finds the mean of x
+mean(x)
+```
+
+Functions should contain a comments section immediately below the function definition line. These comments should consist of:
+
+* A one-sentence description of the function
+* A list of the function's arguments, denoted by `Args:` with a description of each (including the data type)
+* A description of the return value, denoted by `Returns:`
+
+The comments should be descriptive enough that a caller can use the function without reading any of the function's code.
+```{r, eval = FALSE}
+CalculateSampleCovariance <- function(x, y, verbose = TRUE) {
+  # Computes the sample covariance between two vectors.
+  #
+  # Args:
+  #   x: One of two vectors whose sample covariance is to be calculated.
+  #   y: The other vector. x and y must have the same length, greater than one,
+  #      with no missing values.
+  #   verbose: If TRUE, prints sample covariance; if not, doesn't. Default is TRUE.
+  #
+  # Returns:
+  #   The sample covariance between x and y.
+  n <- length(x)
+  # Error handling
+  if (n <= 1 || n != length(y)) {
+    stop("Arguments x and y have different lengths: ",
+         length(x), " and ", length(y), ".")
+  }
+  if (TRUE %in% is.na(x) || TRUE %in% is.na(y)) {
+    stop(" Arguments x and y must not have missing values.")
+  }
+  covariance <- var(x, y)
+  if (verbose)
+    cat("Covariance = ", round(covariance, 4), ".\n", sep = "")
+  return(covariance)
+}
+```
+
+## Expressive Coding
+Well-written code not only runs smoothly, but arguably should also be easily read and understood by humans.  This is because, in the end, it will be a human being that will have to modify and fix the code in the future.  As such, in addition to including good comments, the code itself should be structured so that the narrative is clear from function and variable names.  Compare:
+
+__`r lolite1("GOOD:")`__
+```
+# Purpose of each line is clear. Can be read like a paragraph.
+weather %>% 
+  group_by(month) %>%
+  mutate(rain = FixDecimalPlaces(rain)) %>%
+  summarise(mean(rain))
+```
+__`r suplite("BAD:")`__
+```
+# Repetitive.  The dollar signs and subsetting don't mean much semantically.
+weathersummary$mu<-c(mean(fdp(weather$rain[weather$month==1])),mean(fdp(weather$rain[weather$month==2])),
+mean(fdp(weather$rain[weather$month==3])),mean(fdp(weather$rain[weather$month==4])),
+mean(fdp(weather$rain[weather$month==5])),mean(fdp(weather$rain[weather$month==6])),
+mean(fdp(weather$rain[weather$month==7])),mean(fdp(weather$rain[weather$month==8])),
+mean(fdp(weather$rain[weather$month==9)),mean(fdp(weather$rain[weather$month==10])),
+mean(fdp(weather$rain[weather$month==11])),mean(fdp(weather$rain[weather$month==12])))
+
+```
