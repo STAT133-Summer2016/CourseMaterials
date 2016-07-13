@@ -205,7 +205,7 @@ shinyUI(fluidPage(
   titlePanel("title panel name"),
 
   sidebarLayout(
-    sidebarPanel( "sidebar panel name"),
+    sidebarPanel("sidebar panel name"),
     mainPanel("main panel name")
   )
 ))
@@ -321,7 +321,7 @@ Every widget function has several arguments, but the first two will always be:
 * A __label__ as a string.  This label will appear for the user to see.  An empty string, as usual, will be how you produce a labelless widget.
 
 ### Your turn
-Modify your `ui.R` script to create the user-interface below.  The widgets that were used were: `fileInput`, `selectInput`, and `sliderInput`.  You'll also need the `helpText` function to create the help message.  You can peak into the `rmd` file if you get stuck, but try to do it on your own.
+Modify your `ui.R` script to create the user-interface below.  The widgets that were used were: `fileInput`, `selectInput`, and `sliderInput`.  You'll also need the `helpText` function to create the help message.  You can peek into the `rmd` file if you get stuck, but try to do it on your own.
 
 ```{r, eval = TRUE, echo = FALSE}
 shinyUI(fluidPage(
