@@ -1,0 +1,81 @@
+---
+title: "hw6"
+author: ""
+date: "July 13, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Messy Style (10 points)
+This homework folder includes a `dirty_code.r` file that some students submitted in the past.  Clean up the script according to our class style guide.  Avoid creating extraneous columns like they did.  You should use the packages covered in this class to make the code more readable.  Instead of manually inputting manufacturer country-of-origin, use the appropriate table [on this wikipedia page](https://en.wikipedia.org/wiki/Automotive_industry) instead.  The alignment won't be perfect, but you can ignore the manufacturers that don't have a direct match (you will still get information on more cars than the original coders did!).
+
+### Hints:
+* The `bz2` extension in `mpg2.csv.bz2` just denotes a file compression.  `read_csv` will still be able to read the file.
+* The whole script can be done with a table scrape, 3 wrangling verbs, and a join.
+* You can significantly shorten what they did to create their `z` column by using regular expressions.
+* Don't actually create a column called `z`...  in fact, don't create any of the extra columns they did.  Instead, `mutate` the appropriate columns.
+* Include a `write_csv()` call in your script, but don't actually submit the cleaned csv.
+
+```{r, eval = FALSE}
+# <Your Cleanup Code>
+```
+
+## Shiny App (30 points)
+
+Watch this wonderful video on data visualization:
+
+[https://youtu.be/jbkSRLYSojo](https://youtu.be/jbkSRLYSojo)
+
+Your goal will be to reproduce a very similar dynamic plot.  Note that you can "play" the graph!
+
+[https://doctordo.shinyapps.io/demographic/](https://doctordo.shinyapps.io/demographic/)
+
+When you are done, sign up for a free account on [shinyapps.io](http://www.shinyapps.io/) and follow the instructions to upload your app.  Include a link to your app in this document.
+
+[You can find region codes here.](https://docs.google.com/spreadsheets/d/1OxmGUNWeADbPJkQxVPupSOK5MbAECdqThnvyPrwG5Os/pub?gid=1#)  You can ignore countries that aren't included in this google sheet.
+
+### Cleaning
+The data are not in the right format to produce the plots.  You should write a script that cleans your data exports a `cleaned_demographics.csv` file.  Copy the contents of the script into the chunk below.  I should be able to run this code to go from the three included data files to your `cleaned_demographics.csv` without hassle.
+
+```{r cleaning, eval = FALSE}
+# <Your cleaning code>
+```
+
+#### Hints
+
+* The population data are not complete, you can just assume that given a country, missing population for a year is just an average of the decade.  For example, if the population of France in 1834 is missing, you can just assume it's the same as the average of the population in 1830-1839 in France provided at least one of those values exists.
+* If a column has a dirty name with spaces or special characters in it, you can refer to it with backticks.  For example, there's a column called `GDP per capita` in the `GDDPC.csv` file.  You can rename it with ``rename(df, new_name = `GDP per capita`)``
+* There's a lot of `NA` nonsense that you should deal with.  Don't just remove all the `NA`s... some of them are there for legitimate reasons.
+
+### Making the Shiny App
+Create `server.R` and `ui.R` scripts for your app.  Copy the contents of your script into the chunks below.  I should be able to reproduce your app by running your cleaning script followed by your server and ui code.
+
+[Change the link in the parentheses to be the link to your app](http:www.yourlinkgoeshere.com)
+
+```{r ui, eval = FALSE}
+# <Your ui code>
+```
+
+```{r server, eval = FALSE}
+# <Your server code>
+```
+
+## Bonus (30 points)
+There's a way to make the plot even more interactive, but not with `ggplot`.  `ggplot` has a cousin called `ggvis` that allows you to, among other things, hover over points in the plot to reveal information about that point.  Implement a `shiny` app that acts like the one in the previous part, but has the additional feature of revealing the country when you hover your cursor over the data point. The hover functionality [should look something like this](http://www.gapminder.org/tools/bubbles#_state_time_value=1831).  Upload your app to your shiny.io account and include the link below in addition to copies of your `ui.R` and `server.R` scripts.  Given that it's bonus material, I will not be providing any troubleshooting.
+
+[Change the link in the parentheses to be the link to your app](http:www.yourlinkgoeshere.com)
+
+```{r, eval = FALSE}
+# <Your ui code>
+```
+
+```{r, eval = FALSE}
+# <Your server code>
+```
+
+## Submission
+On bCourses, you should just submit this rmd file and its knitted html page.  Your `hw6` folder on github should have your two cleaning scripts (one for the dirty code and one for the shiny app), and a directory containing your `server.R` and `ui.R` scripts.  If you're doing the bonus as well, then you should also have a directory for the bonus app.
