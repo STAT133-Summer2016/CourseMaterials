@@ -1,0 +1,236 @@
+---
+title: "Creating a Shiny App Part 2"
+author: "Andrew Do"
+date: "July 14, 2016"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Recap
+Yesterday, you created an interface that looked like:
+
+```{r, eval = FALSE}
+shinyUI(fluidPage(
+  titlePanel("Occupancy Rates in Berkeley"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      helpText("Upload an XML file with the Census Data to get started"),
+      
+      fileInput("file", label = "File input"),
+      
+      selectInput("neigh", 
+        label = "Choose the neighborhood to inspect",
+        choices = list("North Berkeley", 
+                       "Rockridge",
+                       "Downtown Berkeley", 
+                       "Berkeley Hills"),
+        selected = "North Berkeley"),
+      
+      sliderInput("occupancy", 
+        label = "Number of People in Household:",
+        min = 0, max = 40, value = c(0, 40))
+    ),
+    
+    mainPanel()
+  )
+))
+```
+
+Our goal today is to learn how to make the interface actually do something.  Start by copying the app you submitted yesterday into today's folder.
+
+## Creating a Reactive Object
+
+We can break the process of creating reactive output into two steps:
+
+1. Add an R object to yoru user-interface with `ui.R`
+2. Tell Shiny how to build the object in `server.R`.  The object will be reactive if the code that builds it calls a widget value.
+
+### Step 1: Add an R object to the UI.  
+
+To add an object to the UI, you simply call on one of the functions below, placing it in the Panel that you want it to appear in.
+
+Function                | Type of Output
+----------------------- | -----------------------------------
+htmlOutput              | raw html
+imageOutput             | image
+plotOutput              | plot
+tableOutput             | table
+textOutput              | text
+uiOutput                | raw HTML
+verbatimTextOutput      | unformatted text
+
+Each of these functions have the same required first argument: a character string that tells the UI what object from the `server.R` script it should be looking for.  In the example below, `textOutput` will be looking for the contents of `output$text1`.
+
+```{r, eval = FALSE}
+shinyUI(fluidPage(
+  titlePanel("Occupancy Rates in Berkeley"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      helpText("Upload an XML file with the Census Data to get started"),
+      
+      fileInput("file", label = "File input"),
+      
+      selectInput("neigh", 
+        label = "Choose the neighborhood to inspect",
+        choices = list("North Berkeley", 
+                       "Rockridge",
+                       "Downtown Berkeley", 
+                       "Berkeley Hills"),
+        selected = "North Berkeley"),
+      
+      sliderInput("occupancy", 
+        label = "Number of People in Household:",
+        min = 0, max = 40, value = c(0, 40))
+    ),
+    
+    mainPanel(
+      textOutput("text1")
+    )
+  )
+))
+```
+
+### Creating an Object in the Server Script
+
+Now that you've told the UI where to display the object, you'll actually need to build it server-side.
+
+We modify the `server.R` code from yesterday a little.
+
+```{r, eval = FALSE}
+shinyServer(function(input, output) {
+  
+  # Note the curly braces in addition to the parentheses
+  output$text1 <- renderText({ 
+    "You have selected this"
+  })
+  
+})
+```
+
+The `function(input, output)` call plays a very special role in the `Shiny` app.  It will build an `output` object with named elements that can be accessed by the UI.  Notice that we assign the text to `output$text1` in the server script when we want it to output to `"text1"` on the UI.
+
+The other thing that you've probably noticed is that I had to wrap the expression in `renderText`.  This does some light pre-processing that's not super-important to understand.  What's important is to remember that every `*Output` function in the UI needs a corresponding `render*` on the server.  You should call them with parentheses and curly braces to group the expression.
+
+Function            | Object Type
+------------------- | -------------------------------------------------
+renderImage         | images (usually as a path on your computer)
+renderPlot          | plots
+renderPrint         | any printed output
+renderTable         | tabular structures like data frames and matrices
+renderText          | character strings
+renderUI            | a Shiny tag object or HTML
+
+### Using Widget Values Notice 
+
+Just like how the `ui.R` script can take `output` values from the `server.R` script, the `server.R` process can access `input` values given by widgets in the UI.  In our example, we have access to three `input` values: `input$file`, `input$neigh`, and `input$occupancy`, each derived from their corresponding widgets.  We can modify the server script as follows to take the widget values into account:
+
+```{r, echo = FALSE}
+ui <- shinyUI(fluidPage(
+  titlePanel("Occupancy Rates in Berkeley"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      helpText("Upload an XML file with the Census Data to get started"),
+      
+      fileInput("file", label = "File input"),
+      
+      selectInput("neigh", 
+        label = "Choose the neighborhood to inspect",
+        choices = list("North Berkeley", 
+                       "Rockridge",
+                       "Downtown Berkeley", 
+                       "Berkeley Hills"),
+        selected = "North Berkeley"),
+      
+      sliderInput("occupancy", 
+        label = "Number of People in Household:",
+        min = 0, max = 40, value = c(0, 40))
+    ),
+    
+    mainPanel(
+      textOutput("text1"),
+      textOutput("text2")
+    )
+  )
+))
+
+
+server <- shinyServer(function(input, output) {
+  
+  # Note the curly braces in addition to the parentheses
+  output$text1 <- renderText({ 
+    paste("You have selected", input$neigh, "as your neighborhood.", sep = " ")
+  })
+  output$text2 <- renderText({ 
+    paste("You are interested in houses where",
+          input$occupancy[1], "to", input$occupancy[2],
+          "people live.", sep = " ")
+  })
+  
+})
+
+shinyApp(ui, server)
+```
+
+### String Evaluations
+
+This is a very cursory introduction into a deep topic called "non-standard evaluation".  For more information, run
+```{r, eval = FALSE}
+vignette("nse")
+```
+
+
+`dplyr`, `tidyr`, and `ggplot2` allow you to call on variables hidden inside data frames without having to do something like `df$var1`.  This is great for interactive work when you're the one providing names to the function, but what happens when you want reactive content---when you want `R` to adjust the function calls automatically based on user input? In comes string evaluation.
+
+Every `dplyr` and `tidyr` `verb()` function comes with its cousin, a `verb_()` string-evaluated function.
+
+```{r}
+library(dplyr)
+df <- data.frame(FirstVar = 1:3, SecondVar = 4:6)
+
+# These two are equivalent
+select(df, FirstVar)
+select_(df, .dots = list("FirstVar"))
+
+# When the second is more useful
+variable_of_interest <- "FirstVar"
+# select(df, variable_of_interest) # Does not work
+select_(df, .dots = list(variable_of_interest)) # This does work
+```
+
+Very similarly, `ggplot2` has an equivalent `aes_string` as a string-evaluated version of `aes`.
+
+```{r}
+library(ggplot2)
+
+var1 <- "FirstVar"
+var2 <- "SecondVar"
+
+# This doesn't work
+# ggplot(df) +
+#   geom_point(aes(x = var1, y = var2))
+
+# This does
+ggplot(df) +
+  geom_point(aes_string(x = var1, y = var2))
+```
+
+### Lab Work
+Using the `diamonds` dataset (included when you load `ggplot2`), write a Shiny App that plots a scatter plot of `price` against either depth, table, or carat as per the user's choice via a dropdown menu.  The user should be able to select `cut` and `color` via checkboxes to subset the data before plotting.  For example, if they choose `carat`, Ideal `cut`, and E and I `color`, then they should see the following plot:
+
+```{r}
+diamonds %>% 
+  # The cut and color values will vary with user choice
+  filter(cut == "Ideal", color %in% c("E", "I")) %>% 
+  # The x aesthetic should be dynamic
+  ggplot(aes(x = carat, y = price)) +
+  geom_point()
+```
+
+On the UI side, you'll use `outputPlot`.  Consequently, you'll wrap your `ggplot` call in `renderPlot` server-side.  When you're done, submit your `server.R` and `ui.R` files.
