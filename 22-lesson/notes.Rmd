@@ -1,0 +1,168 @@
+---
+title: "JSON Data"
+author: "Andrew Do"
+date: "July 18, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(jsonlite)
+library(dplyr)
+source('../markdown_styles.R')
+```
+
+## Introduction
+
+JSON stands for __`r hilite1("JavaScript Object Notation")`__.  It is a fairly simple, lightweight method of representing data.  Its origins obviously lay in the JavaScript language.
+
+## Example
+
+[The New York Times provides information about its workings in JSON format](http://developer.nytimes.com/).  The format of the JSON structure of the searches on the NYT website has changed since this tutorial was written, but the ideas are still the same.
+
+```{r, eval = FALSE}
+{ # 1
+  "results": [ # 2
+    {
+    "city": "NEW YORK", # 3
+    "address": "34 WEST 38TH ST - FLR 5",
+    "name": "AMERICANLP",
+    "zip": 10018, # 4
+    "treasurer": "TJ WALKER",
+    "super_pac": true,
+    "relative_uri": "/committees/C00507244.json",
+    "candidate": null, # 5
+    "id": "C00507244",
+    "leadership": false, # 6
+    "sponsor_name": null,
+    "party": "",
+    "fec_uri": "http://query.nictusa.com/.../C00507244/",
+    "state": "NY" # 7
+    },
+  ...
+    {
+    "city": "LANSING",
+    "address": "313 S WASHINGTON SQUARE",
+    "name": "TEA PAC",
+    "zip": 48933,
+    "treasurer": "CHERYL SHERRELL",
+    "super_pac": true,
+    "relative_uri": "/committees/C00504464.json",
+    "candidate": null,
+    "id": "C00504464",
+    "leadership": false,
+    "sponsor_name": null,
+    "party": "",
+    "fec_uri": "http://query.nictusa.com/.../C00504464/",
+    "state": "MI"
+    }
+  ],
+  "base_uri": "http://api.nytimes.com/.../finances/2012/",
+  "copyright": "Copyright (c) 2011 The New York Times Comapny...",
+  "cycle": 2012,
+  "status": "OK"
+}
+```
+
+1. The `}` delimits a JSON object.  In `R` terms, we can think of this object as a list with seven named elements: `results`, `base_uri`, `copyright`, `cycle`, and `status`.
+2. The `[` indicates that `results` is a simpled ordered array---a collection of objects with an ordering.
+3. Each element of `results` is another object with many fields such as `city`, `address`, `name`, `zip`, etc.
+4. The `zip` field is a _number_
+5. The `candidate` and `sponsor_name` fields have a special value `null`.
+6. The `leadership` and `super_pac` fields contain logical values: `true` or `false`.
+7. Many of the values are strings
+
+## The JSON Format
+
+### Primitive Types
+JSON has four scalar (basic) data types.  These values, when taken alone, can be thought of as "vectors of length 1" in `R`.
+
+* Logical
+* Number (like numeric in `R`)
+* String
+* `null` - the "empty object"
+
+It does not support any special values like `NA`, `Inf`, `NaN`, etc.
+
+JSON has two container data types for collections of values.  The simple, ordered, unnamed array is identified by the square bracket `[`.
+
+```
+[value, value, value, ...]
+```
+
+Named arrays or "objects" use `{`.  The quotes are necessary for the names.
+```
+{"name" : value, "name" : value, ...}
+```
+
+These containers can be nested, i.e., containers can contain other containers or scalar values.
+
+## jsonlite
+
+The relevant package for working with `JSON` data in `R` is `jsonlite`.  The primary workhorses will be `fromJSON` and `toJSON`, which converts `JSON` objects to and from `R` data structures.
+
+```{r}
+andrew_repos <- fromJSON("https://api.github.com/users/doctordo/repos")
+names(andrew_repos)
+names(andrew_repos$owner)
+andrew_repos$owner$login
+```
+
+If you know that your data can be simplified from a list to another `R` data type, you should look at the `simplifyVector`, `simplifyDataFrame`, and `simplifyMatrix` arguments.
+
+JSON structure      | Example JSON Data                 | Simplifies to R class   | Argument
+------------------- | --------------------------------- | ----------------------- | -----------
+Array of Primitives | `["Dallas", "Houston", "Austin"]` | Atomic vector           | simplifyVector
+Array of objects    | `[{"name": "Daniel", "age": 26}, {"name": "Doug", "age": 27}]` | Data frame | simplifyDataFrame
+Array of arrays     | `[[1, 2, 3], [4, 5, 6]]`          | Matrix                  | simplifyMatrix
+
+### Atomic Vectors
+When `simplifyVector` is enabled, JSON arrays containing primitives (strings, numbers, logical, or null) are understood as atomic vectors
+
+```{r}
+# A JSON array of primitives
+json <- '["Mario", "Peach", null, "Bowser"]'
+
+# Simplifies into an atomic vector
+fromJSON(json)
+```
+
+Without simplification, any JSON array turns into a list:
+
+```{r}
+fromJSON(json, simplifyVector = FALSE)
+```
+
+When `simplifyDataFrame` is enabled, JSON arrays containing objects (key(name)-value pairs) simplify into a data frame:
+
+```{r}
+json <-
+'[
+  {"Name" : "Mario", "Age" : 32, "Occupation" : "Plumber"}, 
+  {"Name" : "Peach", "Age" : 21, "Occupation" : "Princess"},
+  {},
+  {"Name" : "Bowser", "Occupation" : "Koopa"}
+]'
+
+party <- fromJSON(json)
+party
+```
+
+To change the data frame back to JSON, use `toJSON`.  The `pretty` argument adds whitespace to make it readable.
+```{r}
+party <- mutate(party, Ranking = c(3, 1, 2, 4))
+toJSON(party, pretty = TRUE)
+```
+
+## Example
+
+[Kiva](https://www.kiva.org/) is a nonprofit organization that "connect[s]" people through lending to alleviate poverty".  It might be interesting to explore the characteristics of people and activities that receive loans.  Or maybe even the characteristics of people who give those loans.  Kiva dumps its entire database of loans and lenders online in both JSON and XML format.  You can learn more about its API [here](http://build.kiva.org/api)
+
+
+```{r}
+kiva_url <- "http://api.kivaws.org/v1/loans/newest.json"
+kiva_data <- fromJSON("http://api.kivaws.org/v1/loans/newest.json", F, T, F)
+kiva_data$loans[1,]
+kiva_data$loans[1,]$use
+```
+
