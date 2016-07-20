@@ -12,3 +12,5 @@ knitr::opts_chunk$set(echo = TRUE)
 ## GeoJSON and Earthquakes
 
 The United States Geological Survey (USGS) keeps a public running record of detected earthquakes on its website, updated once every 15 minutes.  Included with this lab is the earthquake data for the past 30 days as of 6am today.  Your task is to spatially display all the earthquakes in the continental US.  You should somehow represent the magnitude of the earthquakes in your visualization.
+
+[You can find documentation on the GeoJSON data on the USGS website here](http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php)
