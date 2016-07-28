@@ -156,8 +156,10 @@ TakeSafeLog(&quot;a&quot;)
 ## $error
 ## &lt;simpleError in .f(...): non-numeric argument to mathematical function&gt;</code></pre>
 <p>Since it’s part of the <code>purr</code> package, of course it works with <code>map</code>:</p>
-<pre class="r"><code>x &lt;- c(&quot;a&quot;, TRUE, 10, 100, -3)
+<pre class="r"><code>x &lt;- list(&quot;a&quot;, TRUE, 10, 100, -3)
 x %&gt;% map(safely(log10))
+## Warning in doTryCatch(return(expr), name, parentenv, handler): NaNs
+## produced
 ## [[1]]
 ## [[1]]$result
 ## NULL
@@ -168,35 +170,240 @@ x %&gt;% map(safely(log10))
 ## 
 ## [[2]]
 ## [[2]]$result
-## NULL
+## [1] 0
 ## 
 ## [[2]]$error
-## &lt;simpleError in .f(...): non-numeric argument to mathematical function&gt;
+## NULL
 ## 
 ## 
 ## [[3]]
 ## [[3]]$result
-## NULL
+## [1] 1
 ## 
 ## [[3]]$error
-## &lt;simpleError in .f(...): non-numeric argument to mathematical function&gt;
+## NULL
 ## 
 ## 
 ## [[4]]
 ## [[4]]$result
-## NULL
+## [1] 2
 ## 
 ## [[4]]$error
-## &lt;simpleError in .f(...): non-numeric argument to mathematical function&gt;
+## NULL
 ## 
 ## 
 ## [[5]]
 ## [[5]]$result
-## NULL
+## [1] NaN
 ## 
 ## [[5]]$error
-## &lt;simpleError in .f(...): non-numeric argument to mathematical function&gt;</code></pre>
+## NULL</code></pre>
+<p>As a reminder, you might think it more natural to group the results and errors together with <code>transpose</code>:</p>
+<pre class="r"><code>x %&gt;% map(safely(log10)) %&gt;% transpose
+## Warning in doTryCatch(return(expr), name, parentenv, handler): NaNs
+## produced
+## $result
+## $result[[1]]
+## NULL
+## 
+## $result[[2]]
+## [1] 0
+## 
+## $result[[3]]
+## [1] 1
+## 
+## $result[[4]]
+## [1] 2
+## 
+## $result[[5]]
+## [1] NaN
+## 
+## 
+## $error
+## $error[[1]]
+## &lt;simpleError in .f(...): non-numeric argument to mathematical function&gt;
+## 
+## $error[[2]]
+## NULL
+## 
+## $error[[3]]
+## NULL
+## 
+## $error[[4]]
+## NULL
+## 
+## $error[[5]]
+## NULL</code></pre>
+<p>If you know that you want a default value whenever there’s an error, <code>possibly</code> is possibly for you. It, too, always succeeds, but instead of returning an error when it encounters one, it instead outputs a default value you supply. Some common default values are <code>NA_integer_</code>, <code>NA_real_</code>, <code>NA_complex_</code>, and <code>NA_character_</code>, which are typed <code>NA</code> values.</p>
+<pre class="r"><code>x &lt;- list(10, 100, &quot;thousand&quot;)
+x %&gt;% map_dbl(possibly(log10, NA_real_))
+## [1]  1  2 NA</code></pre>
+<p>If you know that your code doesn’t produce errors, but instead is overly chatty with its messages and warnings, you can silence your function with <code>quietly</code>, which captures printed output.</p>
+<pre class="r"><code>x &lt;- list(1, -1)
+x %&gt;% map(quietly(log10)) %&gt;% transpose
+## $result
+## $result[[1]]
+## [1] 0
+## 
+## $result[[2]]
+## [1] NaN
+## 
+## 
+## $output
+## $output[[1]]
+## [1] &quot;&quot;
+## 
+## $output[[2]]
+## [1] &quot;&quot;
+## 
+## 
+## $warnings
+## $warnings[[1]]
+## character(0)
+## 
+## $warnings[[2]]
+## [1] &quot;NaNs produced&quot;
+## 
+## 
+## $messages
+## $messages[[1]]
+## character(0)
+## 
+## $messages[[2]]
+## character(0)</code></pre>
 </div>
+</div>
+<div id="so-many-argumentsall-the-arguments.-parallel-mapping" class="section level2">
+<h2>So many arguments—all the arguments. (Parallel Mapping)</h2>
+<p>Say you wanted to map along multiple lists in parallel. For example, what if I wanted to create vectors <code>1:3</code>, <code>2:4</code>, <code>3:5</code>, …, <code>8:10</code>? This is a job for <code>map2</code> and <code>seq</code>:</p>
+<pre class="r"><code># This doesn't work
+seq(1:8, 3:10)
+## Error in seq.default(1:8, 3:10): 'from' must be of length 1
+
+# Use map2 instead
+map2(1:8, 3:10, seq)
+## [[1]]
+## [1] 1 2 3
+## 
+## [[2]]
+## [1] 2 3 4
+## 
+## [[3]]
+## [1] 3 4 5
+## 
+## [[4]]
+## [1] 4 5 6
+## 
+## [[5]]
+## [1] 5 6 7
+## 
+## [[6]]
+## [1] 6 7 8
+## 
+## [[7]]
+## [1] 7 8 9
+## 
+## [[8]]
+## [1]  8  9 10</code></pre>
+<p>You could imagine that we could implement <code>map3</code>, <code>map4</code>, <code>map100</code> etc. But this, of course, is poor practice. Instead, we have <code>pmap</code>, which takes a list of arguments.</p>
+<pre class="r"><code>args &lt;- list(from = 1:3, by = 10*(1:3), length.out = seq(5, 15, 5))
+args %&gt;% pmap(seq)
+## [[1]]
+## [1]  1 11 21 31 41
+## 
+## [[2]]
+##  [1]   2  22  42  62  82 102 122 142 162 182
+## 
+## [[3]]
+##  [1]   3  33  63  93 123 153 183 213 243 273 303 333 363 393 423</code></pre>
+</div>
+<div id="so-many-functionsall-the-functions.-invoking" class="section level2">
+<h2>So many functions—all the functions. (Invoking)</h2>
+<p><code>invoke</code> by itself is a clone of <code>do.call</code></p>
+<pre class="r"><code>list(letters[1:3], 1:3) %&gt;% invoke(stringr::str_c, ., sep = &quot;.&quot;)
+## [1] &quot;a.1&quot; &quot;b.2&quot; &quot;c.3&quot;</code></pre>
+<p><code>invoke_map</code> lets you run multiple functions on the same object:</p>
+<pre class="r"><code># Note that x is the name of the argument in mean and median
+list(m1 = mean, m2 = median) %&gt;% invoke_map(x = rnorm(100))
+## $m1
+## [1] 0.04939398
+## 
+## $m2
+## [1] 0.1615853</code></pre>
+<p>You can also pass different arguments to each of the functions</p>
+<pre class="r"><code># Sample size of 10 from uniform distribution
+# Sample size of 5 from normal distribution
+invoke_map(list(runif, rnorm), list(list(n = 10), list(n = 5)))
+## [[1]]
+##  [1] 0.450257988 0.669081016 0.121464698 0.983747540 0.168442779
+##  [6] 0.010410398 0.110657833 0.003991693 0.240472564 0.112163977
+## 
+## [[2]]
+## [1] -0.6369005 -0.6085637  0.8992872  0.1830165 -1.5688797</code></pre>
+</div>
+<div id="so-much-outputi-hate-it" class="section level2">
+<h2>So much output—I hate it</h2>
+<p>Sometimes you only want your code to <strong>do</strong> things rather than return things. A good example of this would be if you wanted to save a bunch of plots into a folder on your computer rather than saving them as objects in an <code>R</code> session. This is a job for <code>walk</code>, <code>walk2</code>, and <code>pwalk</code>.</p>
+<pre class="r"><code>library(ggplot2)
+plots &lt;- mtcars %&gt;% 
+  split(.$cyl) %&gt;% 
+  map(~ggplot(., aes(mpg, wt)) + geom_point())
+filenames &lt;- paste0(names(plots), &quot;.pdf&quot;)
+
+pwalk(list(filenames, plots), ggsave, path = tempdir())</code></pre>
+</div>
+<div id="predicates" class="section level2">
+<h2>Predicates</h2>
+<p>A <strong>predicate</strong> is a function that returns <code>TRUE</code> or <code>FALSE</code>. <code>purrr</code> has a few functions designed to work with predicates.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">keep()</td>
+<td align="left">keeps list elements where the predicate is <code>TRUE</code></td>
+</tr>
+<tr class="even">
+<td align="left">head_while()</td>
+<td align="left">keeps top elements until predicate is <code>FALSE</code></td>
+</tr>
+<tr class="odd">
+<td align="left">tail_while()</td>
+<td align="left">keeps bottom elements until predicate is <code>FALSE</code></td>
+</tr>
+<tr class="even">
+<td align="left">some()</td>
+<td align="left">checks if predicate is <code>TRUE</code> for some elements</td>
+</tr>
+<tr class="odd">
+<td align="left">every()</td>
+<td align="left">checks if predicate is <code>TRUE</code> for all elements</td>
+</tr>
+<tr class="even">
+<td align="left">detect()</td>
+<td align="left">finds value of first <code>TRUE</code></td>
+</tr>
+<tr class="odd">
+<td align="left">detect_index()</td>
+<td align="left">finds index of first <code>TRUE</code></td>
+</tr>
+</tbody>
+</table>
+<p>Without these functions, you would have to break finding column sums of numeric columns into two steps:</p>
+<pre class="r"><code>FindColSum &lt;- function(df, f) {
+  is_num &lt;- df %&gt;% map_lgl(is_numeric)
+  df[is_num] %&gt;% map_dbl(f)
+}</code></pre>
+<p>With these utility functions, this becomes a single pipeline:</p>
+<pre class="r"><code>FindColSum &lt;- function(df, f) {
+  df %&gt;%
+    keep(is.numeric) %&gt;%
+    map_dbl(f)
+}</code></pre>
 </div>
 
 

@@ -105,12 +105,12 @@ invoke_map(list(runif, rnorm), list(list(n = 10), list(n = 5)))
 
 Sometimes you only want your code to __do__ things rather than return things.  A good example of this would be if you wanted to save a bunch of plots into a folder on your computer rather than saving them as objects in an `R` session.  This is a job for `walk`, `walk2`, and `pwalk`.
 
-```{r}
+```{r, eval = FALSE}
 library(ggplot2)
 plots <- mtcars %>% 
   split(.$cyl) %>% 
   map(~ggplot(., aes(mpg, wt)) + geom_point())
-paths <- paste0(names(plots), ".pdf")
+filenames <- paste0(names(plots), ".pdf")
 
 pwalk(list(filenames, plots), ggsave, path = tempdir())
 ```
