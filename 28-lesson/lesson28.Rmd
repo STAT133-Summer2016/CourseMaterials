@@ -1,0 +1,155 @@
+---
+title: "purrr Part 2"
+author: "Andrew Do"
+date: "July 28, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      collapse = TRUE)
+
+library(purrr)
+```
+
+## So many bugs---all of the bugs
+
+Sometimes functions will fail on one element of a list---presumably of a large list that is infeasible to fully inspect.  When this happens, your script probably returns an error message and throws away all of the work it did before, causing you to summarily flip the nearest object into the air.  How should we deal with situations like this?
+
+One possibility is through the use of __function operators__.  These are functions that modify how other functions work.  I like to think of them as __adverbs__ since they describe how our __verbs__ (functions) should behave.
+
+### My first adverb
+
+In the `purrr` package, there's an adverb called `safely()`.  It takes a function (verb) as its argument and returns a modified version that will never return an error.  Instead, the new function will always return a list with two elements:
+
+1. `result` is the original result.  If there was an error, this will be `NULL`.
+2. `error` is an error object.  If the operation was successful, this will be `NULL`.
+
+As an example, consider the `log` function
+```{r, error = TRUE}
+# Normal functionality
+log(10)
+log("a")
+
+# Safe functionality
+TakeSafeLog <- safely(log)
+TakeSafeLog(10)
+TakeSafeLog("a")
+```
+
+Since it's part of the `purr` package, of course it works with `map`:
+```{r}
+x <- list("a", TRUE, 10, 100, -3)
+x %>% map(safely(log10))
+```
+
+As a reminder, you might think it more natural to group the results and errors together with `transpose`:
+```{r}
+x %>% map(safely(log10)) %>% transpose
+```
+
+If you know that you want a default value whenever there's an error, `possibly` is possibly for you.  It, too, always succeeds, but instead of returning an error when it encounters one, it instead outputs a default value you supply.  Some common default values are `NA_integer_`, `NA_real_`, `NA_complex_`, and `NA_character_`, which are typed `NA` values.
+
+```{r}
+x <- list(10, 100, "thousand")
+x %>% map_dbl(possibly(log10, NA_real_))
+```
+
+If you know that your code doesn't produce errors, but instead is overly chatty with its messages and warnings, you can silence your function with `quietly`, which captures printed output.
+```{r}
+x <- list(1, -1)
+x %>% map(quietly(log10)) %>% transpose
+```
+
+
+## So many arguments---all the arguments. (Parallel Mapping) 
+
+Say you wanted to map along multiple lists in parallel.  For example, what if I wanted to create vectors `1:3`, `2:4`, `3:5`, ..., `8:10`? This is a job for `map2` and `seq`:
+
+```{r, error = TRUE}
+# This doesn't work
+seq(1:8, 3:10)
+
+# Use map2 instead
+map2(1:8, 3:10, seq)
+```
+
+You could imagine that we could implement `map3`, `map4`, `map100` etc.  But this, of course, is poor practice.  Instead, we have `pmap`, which takes a list of arguments.
+
+```{r}
+args <- list(from = 1:3, by = 10*(1:3), length.out = seq(5, 15, 5))
+args %>% pmap(seq)
+```
+
+## So many functions---all the functions. (Invoking)
+
+`invoke` by itself is a clone of `do.call`
+```{r}
+list(letters[1:3], 1:3) %>% invoke(stringr::str_c, ., sep = ".")
+```
+
+`invoke_map` lets you run multiple functions on the same object:
+```{r}
+# Note that x is the name of the argument in mean and median
+list(m1 = mean, m2 = median) %>% invoke_map(x = rnorm(100))
+```
+
+You can also pass different arguments to each of the functions
+```{r}
+# Sample size of 10 from uniform distribution
+# Sample size of 5 from normal distribution
+invoke_map(list(runif, rnorm), list(list(n = 10), list(n = 5)))
+```
+
+## So much output---I hate it
+
+Sometimes you only want your code to __do__ things rather than return things.  A good example of this would be if you wanted to save a bunch of plots into a folder on your computer rather than saving them as objects in an `R` session.  This is a job for `walk`, `walk2`, and `pwalk`.
+
+```{r}
+library(ggplot2)
+plots <- mtcars %>% 
+  split(.$cyl) %>% 
+  map(~ggplot(., aes(mpg, wt)) + geom_point())
+paths <- paste0(names(plots), ".pdf")
+
+pwalk(list(filenames, plots), ggsave, path = tempdir())
+```
+
+## Predicates
+
+A __predicate__ is a function that returns `TRUE` or `FALSE`.  `purrr` has a few functions designed to work with predicates.
+
+Function | Description
+-------- | -------------------------------------------------
+keep()   | keeps list elements where the predicate is `TRUE`
+head_while() | keeps top elements until predicate is `FALSE`
+tail_while() | keeps bottom elements until predicate is `FALSE`
+some()       | checks if predicate is `TRUE` for some elements
+every()      | checks if predicate is `TRUE` for all elements
+detect()     | finds value of first `TRUE`
+detect_index() | finds index of first `TRUE`
+
+Without these functions, you would have to break finding column sums of numeric columns into two steps:
+```{r}
+FindColSum <- function(df, f) {
+  is_num <- df %>% map_lgl(is_numeric)
+  df[is_num] %>% map_dbl(f)
+}
+```
+
+With these utility functions, this becomes a single pipeline:
+
+```{r}
+FindColSum <- function(df, f) {
+  df %>%
+    keep(is.numeric) %>%
+    map_dbl(f)
+}
+```
+
+
+
+
+
+
+
