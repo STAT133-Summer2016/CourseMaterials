@@ -1,0 +1,105 @@
+---
+title: "FinalExam"
+author: "Andrew Do"
+date: "August 1, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## General Points
+
+* Look at the midterm review for topics up to lesson 13
+* Review the solutions to all the labs and homeworks for problem-solving strategies
+* The specifics of functions are not as important as the conceptual ideas behind them.  As with the midterm, the test is designed so that you're not punished for not knowing what an argument does.
+* Be able to read code and decipher what a script is doing.  I'll be fairly nice with the formatting.
+
+## XML
+
+* Know how to use XPath
+* Understand the structure of an XML document (parents, children, siblings, attributes, etc)
+* Be able to discern if an XML document is well-formed
+    + Does it have a root node?
+    + Are all the elements nested properly?
+    + Do the case-sensitive things match?
+    + Are attributes quoted?
+* Be able to envision what basic `xml2` functions do
+    + `xml_find_all`
+    + `xml_children`
+
+## WebScraping
+
+* Understand the basics of CSS Selectors
+* Be able to translate between basic CSS Selectors and XPath
+* Be able to envision what basic `rvest` functions do
+    + `html_nodes`
+    + `html_text`
+
+## Shiny
+There will be exactly 0 questions on Shiny on the exam.  Shiny is purely a technical topic (though hopefully you're playing with it on your final project!)
+
+## JSON
+There's not much I can ask conceptually about JSON data.  You should have an idea of how a JSON data set looks like once it's read into `R`.  A reminder that the relevant package is `jsonlite`
+
+## Geospatial Data
+There's not much I can ask conceptually about geospatial topics.  This will not be a tested topic.  The package we covered was `ggmap`, which allowed you to pull maps from stamen and google down to display your data.
+
+## Simulations
+Again, without the theory to give simulations a firm footing, there's not much to test on here.  At most I might ask you to write a small simulation involving `sample` and/or `replicate`.
+
+## Functional Programming `purrr`
+
+There's a lot of substance in this package ... hint.
+* Understand the core ideas behind `map_*`, `walk`, `invoke_*`, `flatten_*`, and `transpose`.
+* Be able to comfortably go back and forth between explicit loops and using `map`.  An example is given below
+
+### Different Approaches
+
+A classic weed-out interview question is the "FizzBuzz" problem, which goes as follows: Given a vector of numbers, write a function that has the computer print out those numbers one-by-one, substituting "Fizz" for numbers divisible by 3 and "Buzz" for numbers divisible by 5.  For numbers divisible by both, the computer should print out "FizzBuzz".  Possible solutions are given at the end of this document.
+
+Write an implementation of `FizzBuzz` that:
+
+* Uses a loop
+* Uses control flow ideas `if`, `else`, `ifelse`, etc
+* Does not use any packages (not even piping)
+* Uses no more than 5 named function calls
+
+Write an implementation of the `FizzBuzz` program that:
+
+* Is no longer than 5 lines of code
+* Does not use any loops or apply functions
+* Does not use `if`, `else`, `ifelse`, or `switch`
+* Can rely on functionals from `purrr`
+
+## SQL
+Undoubtedly there will be at least one SQL question on the exam
+
+* Given a SQL query and a database, be able to write out the results of the query
+* Given a database, be able to write a SQL query that will give the desired result
+* See lesson and lab 29 for examples
+
+### Possible FizzBuzz Solutions
+
+```{r basic, eval = F}
+FizzBuzz <- function(x) {
+  x <-
+    ifelse(x %% 15 == 0, "FizzBuzz",
+    ifelse(x %%  3 == 0, "Fizz"    ,
+    ifelse(x %%  5 == 0, "Buzz"    , 
+                         as.character(x)
+    )))
+  for (i in x) print(i)
+}
+```
+
+```{r purrr, eval = F}
+FizzBuzz <- function(x) {
+  y <- as.character(x)
+  y[x %%  3 == 0] <- "Fizz"
+  y[x %%  5 == 0] <- "Buzz"
+  y[x %% 15 == 0] <- "FizzBuzz"
+  y %>% walk(print)
+}
+```
