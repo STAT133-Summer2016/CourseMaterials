@@ -1,0 +1,187 @@
+---
+title: "Untitled"
+author: "Andrew Do"
+date: "August 8, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## XML
+
+Consider the following XML document:
+
+```
+<patients>
+  <patientrole>
+    <id extension="996-756-495" root="2.16.840.1.113883.19.5">
+    <id extension="775-756-495" root="2.16.840.1.113883.14.6">
+    <patient>
+      <name>
+        <given>Henry</given>
+        <family>Levin</family>
+      </name>
+      <administrativegendercode code="M" codesystem="2.16.840.1.113883.5.1">
+      <birthtime value="19320924">
+    </birthtime></administrativegendercode></patient>
+    <providerorganization>
+      <id root="2.16.840.1.113883.19.5">
+      <name>Good Health Clinic</name>
+    </id></providerorganization>
+    <admissiontime value="2012030111:32">
+  </admissiontime></id></id></patientrole>
+  <patientrole>
+    <id extension="65" root="2.16.840.1.113883.3.933">
+    <patient>
+      <name>
+        <given>Paul</given>
+        <family>Pappel</family>
+      </name>
+      <administrativegendercode code="M" codesystem="2.16.840.1.113883.5.1">
+      <birthtime value="19551217">
+    </birthtime></administrativegendercode></patient>
+    <providerorganization>
+      <id extension="84756-11241-283-OPTD-3322" root="1.2.3.4.5.6.1.8.9.0">
+      <name> Dr.med. Hans Topp-Glucklich</name>
+    </id></providerorganization>
+    <admissiontime value="201201152200">
+  </admissiontime></id></patientrole>
+  <patientrole>
+    <id extension="800001" root="2.16.840.1.113883.19.5">
+    <patient>
+      <name>
+        <given>JEANNE</given>
+        <family>PETIT</family>
+      </name>
+      <administrativegendercode code="F" codesystem="2.16.840.1.113883.5.1">
+      <birthtime value="19480105">
+    </birthtime></administrativegendercode></patient>
+    <providerorganization>
+      <id root="2.16.840.1.113883.19.5">
+      <name>Good Health Clinic</name>
+    </id></providerorganization>
+    <admissiontime value="20120101T22:00">
+  </admissiontime></id></patientrole>
+</patients>
+```
+
+1. Circle the node(s) that the following XPath expression will return: `//admissiontime/@value`
+2. Write an XPath that will return the `patient` nodes for all patients born in 1948 or later.
+3. Write an XPath that will return nodes containing the providers of patients born on December 17, 1955.
+
+## CSS
+
+1. What is the equivalent CSS selector for the XPath `//table//div[@class="col-md-6" and id="38192"]`?
+2. What would the CSS selector `div p` return from the document below? Circle each element of the node set separately.
+3. Assuming the document below has been assigned to `dd`, what would the following scraping script return? 
+```{r, eval = FALSE}
+dd %>% html_nodes(".helpTable ul")
+```
+
+```
+<html>
+  <h1>Welcome to My Homepage</h1>
+  <div class="intro">
+    <p>My name is Donald <span id="Lastname">Duck.</span></p>
+    
+    <p id="my-Address">I live in Duckburg</p>
+    
+    <p>I have many friends:</p>
+  </div>
+  
+  <ul id="Listfriends">
+    <li>Goofy</li>
+    <li>Mickey</li>
+    <li>Daisy</li>
+    <li>Pluto</li>
+  </ul>
+  <p>All my friends are great!<br>
+  But I really like Daisy!!</p>
+  
+  <p lang="it" title="Hello beautiful">Ciao bella</p>
+  
+  <h3>We are all animals!</h3>
+  
+  <p><b>My latest discoveries have led me to believe that we are all animals:</b></p>
+  <div class="helpTable" style="width:220px;">
+    <ul style="display:none;"></ul>
+    
+    <table cellpadding="2" cellspacing="2">
+      <tr>
+        <th style="background-color:#f1f1f1;">Name</th>
+        <th style="background-color:#f1f1f1;">Type of Animal</th>
+      </tr>
+      <tr>
+        <td style="background-color:#f1f1f1;">Mickey</td>
+        <td style="background-color:#f1f1f1;">Mouse</td>
+      </tr>
+      <tr>
+        <td style="background-color:#f1f1f1;">Goofey</td>
+        <td style="background-color:#f1f1f1;">Dog</td>
+      </tr>
+      <tr>
+        <td style="background-color:#f1f1f1;">Daisy</td>
+        <td style="background-color:#f1f1f1;">Duck</td>
+      </tr>
+      <tr>
+        <td style="background-color:#f1f1f1;">Pluto</td>
+        <td style="background-color:#f1f1f1;">Dog</td>
+      </tr>
+    </table>
+  </div>
+
+</html>
+```
+
+## JSON
+
+```{r, eval = FALSE}
+{
+  "match":[
+    { 
+      "team": "TLA",
+      "color": "blue", 
+      "roster":[
+        {"champion": "maokai","role": "top"},
+        {"champion": "lee sin", "role": "jungle"},
+        {"champion": "viktor", "role": "middle"},
+        {"champion": "lucian", "role": "marksman"},
+        {"champion": "zyra", "role": "support"}
+        ]
+    },
+    {
+      "team": "C9C",
+      "color": "red", 
+      "roster":[
+        {"champion": "trundle","role": "top"},
+        {"champion": "reksai", "role": "jungle"},
+        {"champion": "twisted fate", "role": "middle"},
+        {"champion": "twitch", "role": "marksman"},
+        {"champion": "braum", "role": "support"}
+        ]
+    }
+  ]
+}
+```
+
+Suppose you read in the JSON data above and assign the name `nacl`.  All the default arguments are used, meaning that `fromJSON` coerces JSON arrays containing only primitives into atomic vectors,  JSON arrays containing only records (JSON objects) into data frames, and JSON arrays containing vectors of equal mode and dimension into matrices or arrays.
+
+1.  What is the class of `nacl`?
+2.  What is the class of `nacl[[1]]`? What are its dimensions?
+3.  What would `names(nacl)` return?
+4.  What is the class of `nacl$match$roster[[1]]`?
+
+## purrr
+
+Suppose you had a list:
+```{r}
+hp <- list(gryffindor = c("harry", "ron", "hermione", "neville"),
+           slytherin = c("draco", "crabbe", "goyle", "tom"),
+           hufflepuff = c("cedric", "nymphadora", "hannah", "pomona"),
+           ravenclaw = c("luna", "cho", "filius", "marrietta"))
+```
+
+1.  What would `map(hp, length)` return?  Be sure to provide your answer in the correct data structure.
+2.  Without using an explicit loop, subsetting or any of the `apply` functions, write a script that finds the number of letters in all the character names provided in `hp`.  Remember that `str_length` is a vectorized function that returns the number of characters in a character vector.
