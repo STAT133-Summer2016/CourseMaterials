@@ -1,0 +1,312 @@
+---
+title       : Lesson 11
+subtitle    : Time data
+author      : Andrew Do
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## Packages and Locale
+
+```{r, include = F}
+library(lubridate)
+```
+
+### You will need to install the following packages if you haven't:
+
+* `lubridate`
+
+### Locale problems.  
+
+If your computer is not natively run on English, you may have to fun the following commands or else it might not recognize things like "Jan" as "January".
+
+```{r, eval = F}
+Sys.setlocale("LC_ALL", "en")
+Sys.setenv("LANGUAGE" = "en")
+```
+
+---
+
+## Riddle me that
+
+### When does a day not equal 24 hours?
+
+### When does a year not equal 365 days?
+
+### When does a minute not equal 60 seconds?
+
+---
+
+## Formalizing Time
+
+Time is deceptively rather difficult to work with.  In the `lubridate` package, we formalize 4 notions of time:
+
+1. Instants
+2. Periods
+3. Durations
+4. Intervals
+
+---
+
+## Instants
+
+### An instant is a specific moment of time
+
+### Instants are a combination of years, months, days, hours, minutes, seconds, and time zone.
+
+### e.g, 2011-03-28 08:44:32 CST
+
+---
+
+## Strings into instants
+
+To turn a `string` into an instant, use y, m, d, h, m, and s in the correct order to specify the order of year, month, day, hour, minutes, and seconds in the string.  For example
+
+```{r, eval = F}
+ymd("2011-03-28")
+mdy("03/28/2011")
+dmy("28032011")
+ymd_hms("2011:03:28 08:50:30")
+
+#order matters
+dmy("05-03-2011")
+mdy("05-03-2011")
+```
+
+---
+
+## Data Type
+
+Time objects have a class of their own defined within `lubridate`
+
+```{r}
+time_string <- "2011-03-28"
+class(time_string)
+
+time_lubridated <- ymd(time_string)
+class(time_lubridated)
+```
+
+---
+
+## Manipulating Time
+
+You can write logical statements and do arithmetic with time:
+
+```{r, eval = F}
+# Comparisons
+today() > ymd("2016-03-29")
+
+# Round
+floor_date(now(), "month")
+ceiling_date(now(), "month")
+round_date(now(), "month")
+
+# Extract
+year(today())
+month(ymd("2016-03-29"))
+wday(ymd("2016-06-23"))
+```
+
+---
+
+## Extracting Information
+
+Date Component | Extractor
+-------------- | ------------------------------------------------
+Year           | year()
+Month          | month()
+Week           | week()
+Day            | day()
+Day of year    | yday()
+Day of month   | mday()
+Day of week    | wday()
+Hour           | hour()
+Minute         | minute()
+Second         | second()
+Time Zone      | tz()
+
+---
+
+## Try these commands
+
+```{r}
+now()
+year(now())
+hour(now())
+day(now())
+yday(now())
+wday(now())
+wday(now(), label = TRUE)
+wday(now(), label = TRUE, abbr = FALSE)
+month(now(), label = TRUE, abbr = FALSE)
+
+# Which day of the week were you born?
+```
+
+---
+
+## Can use the extractors to change components of a `Date` object
+
+```{r}
+time <- now()
+time
+
+year(time) <- 2000
+hour(time) <- 23
+day(time) <- 45
+
+tz(time) <- "UTC"
+time
+```
+
+---
+
+## Your turn
+
+## What day of the week will your birthday be in 2017?
+
+---
+
+## Time Spans
+
+Suppose we want to set our alarms on `R`
+
+```{r, eval = F}
+ymd_hms("2011-01-01 08:30:00", tz = "") + ddays(0:30)
+```
+
+How about
+
+```{r, eval = F}
+ymd_hms("2011-03-01 08:30:00", tz = "") + ddays(0:30)
+```
+
+---
+
+## 3 Types of Time Spans
+
+### Durations represent exact time lengths
+
+### Periods represent clock time lengths
+
+### Intervals represent specific times
+
+---
+
+## Durations
+
+### Durations measure the exact amount of seconds that pass through two time points.
+
+### Use d + the plural of a unit of time to create a duration
+
+* dyears(x) - number of seconds in x 365 day-years
+* dminutes(x) - number of seconds in x 60 second minutes
+* dhours(x) - can you guess?
+* dmonths? - can this exist?
+
+---
+
+## Try it
+
+```{r, eval = F}
+
+dhours(2)
+now() + dhours(2)
+
+dminutes(5)
+now() + dminutes(c(5,10,15))
+
+```
+
+---
+
+## Periods
+
+### Periods measure time spans in units larger than seconds.  Periods can be thought of as "clock time" 
+
+### Use the plural of a unit of time to create a period
+
+---
+
+## Try it
+
+```{r, eval = F}
+
+minutes(10)
+hours(278)
+
+now() + years(1:10)
+```
+
+---
+
+## Periods vs. Durations
+
+### Periods are intuitive time
+
+### Durations give exact times (good for science)
+
+---
+
+## Intervals
+
+### Intervals measure a time span by recording its endpoints.  Since we known when a time span occurs, we can calculate lengths with all units (can adjust for leap years, daylight savings, etc)
+
+To create an interval, use the special `%--%` operator.
+```{r, eval = F}
+int <- ymd("2010-01-01") %--% ymd("2009-01-01")
+```
+
+Access and set the endpoints with `int_start()` and `int_end()`
+```{r, eval = F}
+int_start(int)
+int_end(int) <- ymd("2010-03-14")
+```
+
+Intervals can be accurately converted to either periods or durations with as.period() and as.duration()
+
+---
+
+## Math with Intervals
+
+```{r, eval = F}
+birthday <- Your_birthday
+life <- birthday %--% now()
+life / ddays(1)
+life / days(1)
+life %/% days(1)
+```
+
+---
+
+## Your Turn
+
+### Calculate your birthday in minutes, hours, days.
+
+---
+
+## Useful Interval functions
+
+* `%within%` checks if a moment is in an interval
+* `int_overlaps` checks if two intervals overlap
+* `intersect` returns any overlaps in the intervals
+* `setdiff` returns the parts that don't overlap in the intervals
+
+```{r, eval = F}
+# Try these to see
+int_a <- ymd("2016-08-01") %--% ymd("2016-08-31")
+int_b <- ymd("2016-08-15") %--% ymd("2016-09-15")
+test_dates <- ymd(c("20160802", "20160831", "20160703"))
+
+test_dates %within% int_a
+int_overlaps(int_a, int_b)
+setdiff(int_a, int_b)
+intersect(int_a, int_b)
+```
+

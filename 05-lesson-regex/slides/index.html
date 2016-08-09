@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lesson 5</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Lesson 5">
+  <meta name="author" content="Andrew Do">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Lesson 5</h1>
+    <h2>Regular Expressions R</h2>
+    <p>Andrew Do<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Motivation</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>How would you describe a (US) phone number to someone?</li>
+<li>How about the date format?</li>
+<li>Time?</li>
+<li>Money?</li>
+<li>Email address?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Pattern Matching</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>Each of the data I just asked about has a fairly <em>regular</em> pattern that we can pick out by eye</p></li>
+<li><p>In this lesson, we&#39;re going to learn about <strong>regular expressions</strong>, a precise and concise language for describing patterns.</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Phone numbers</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>With a partner, spend 5 minutes discussing in detail:</p>
+
+<ul>
+<li>How are phone numbers normally written?</li>
+<li>How can we describe this format?</li>
+</ul>
+
+<p>Write down this description in words.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Phone numbers</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>10 digits, grouped 3-3-4</li>
+<li><p>Separated by a space, short dash, or parentheses</p></li>
+<li><p>How do we translate that into something the computer can understand? Regular expressions:</p>
+
+<ul>
+<li><code>[0-9]</code> matches any number between 0 and 9</li>
+<li><code>[- ()]</code> matches <code>-</code>, <code>SPACE</code>, <code>(</code>, or <code>)</code></li>
+<li><code>{3}</code> following a character means that that character is repeated 3 times.</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Test text</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">email &lt;- &quot;Nothing. It is a generic folder that has Enron Global Markets on the cover. It is the one that I sent you to match your insert to when you were designing. With the dots. I am on my way over for a meeting, I&#39;ll bring one. 
+
+Juli Salvagio
+Manager, Marketing Communications
+Public Relations
+Enron-3641
+1400 Smith Street
+Houston, TX 77002
+713-345-2908-Phone
+713-542-0103-Mobile
+713-646-5800-Fax&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">phone &lt;- &quot;[ (][0-9][0-9][0-9][- )][0-9][0-9][0-9][- ]
+[0-9][0-9][0-9][0-9]&quot;
+phone2 &lt;- &quot;[0-9]{3}[- .][0-9]{3}[- .][0-9]{4}&quot;
+
+str_detect(email, phone2)
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">str_extract(email, phone2)
+</code></pre>
+
+<pre><code>## [1] &quot;713-345-2908&quot;
+</code></pre>
+
+<pre><code class="r">str_extract_all(email, phone2)
+</code></pre>
+
+<pre><code>## [[1]]
+## [1] &quot;713-345-2908&quot; &quot;713-542-0103&quot; &quot;713-646-5800&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h1>Qualifiers</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>The following special symbols, called <strong>metacharacters</strong> have special meanings in regular expressions.</p>
+
+<table><thead>
+<tr>
+<th>Qualifier</th>
+<th>&gt;=</th>
+<th>&lt;=</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>?</td>
+<td>0</td>
+<td>1</td>
+<td>at most 1</td>
+</tr>
+<tr>
+<td>+</td>
+<td>1</td>
+<td>Inf</td>
+<td>at least 1</td>
+</tr>
+<tr>
+<td>*</td>
+<td>0</td>
+<td>Inf</td>
+<td>any number of</td>
+</tr>
+<tr>
+<td>{m,n}</td>
+<td>m</td>
+<td>n</td>
+<td>between m and n</td>
+</tr>
+<tr>
+<td>{,n}</td>
+<td>0</td>
+<td>n</td>
+<td>at most n</td>
+</tr>
+<tr>
+<td>{m,}</td>
+<td>m</td>
+<td>Inf</td>
+<td>at least m</td>
+</tr>
+<tr>
+<td>{n}</td>
+<td>n</td>
+<td>n</td>
+<td>exactly n</td>
+</tr>
+</tbody></table>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h1>Other metacharacters</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>These symbols also represent something other than their <em>literal</em> meaning:</p>
+
+<table><thead>
+<tr>
+<th>Metacharacter</th>
+<th>Meaning</th>
+<th>Example Usage</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>()</td>
+<td>group</td>
+<td>&quot;(ham){3}&quot;</td>
+<td>matches &quot;hamhamham&quot;</td>
+</tr>
+<tr>
+<td>.</td>
+<td>anything</td>
+<td>&quot;.{3}&quot;</td>
+<td>matches any 3 characters (e.g &quot;ham&quot;, &quot;h@m&quot;, &quot;h49&quot;)</td>
+</tr>
+<tr>
+<td>^</td>
+<td>beginning</td>
+<td>&quot;^ham&quot;</td>
+<td>only matches &quot;ham&quot; if it appears at the beginning of the string</td>
+</tr>
+<tr>
+<td>$</td>
+<td>end</td>
+<td>&quot;ham$&quot;</td>
+<td>only matches &quot;ham&quot; if it appears at the end of the string</td>
+</tr>
+</tbody></table>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h1>Escaping</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>R uses the double-slash <code>\\</code> to <strong>escape</strong> special meanings</li>
+<li><p>Illustrating Examples</p>
+
+<ul>
+<li>&quot;a.b&quot; matches the letter a, then any character, then the letter b</li>
+<li>&quot;a\\.b&quot; matches the literal string &quot;a.b&quot;</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h1>Character Classes</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Square brackets also have a special meaning in regular expressions</li>
+<li>They denote something called a <strong>character class</strong></li>
+<li>You&#39;ve already seen two examples: <code>[0-9]</code> matches any one digit. <code>[( -]</code> matches <code>(</code>, <code>-</code>, or <code>-</code></li>
+<li><code>[a-z]</code> matches any one lowercase letter</li>
+<li><code>[a-zA-Z]</code> matches any one letter</li>
+<li><code>[LATE]</code> matches one of the four letters <code>L</code>, <code>A</code>, <code>T</code>, <code>E</code>.</li>
+<li><code>[LATE]{4}</code> matches <code>&quot;LATE&quot;</code>, but it also matches <code>&quot;TEAL&quot;</code></li>
+</ul>
+
+<pre><code class="r">char_class &lt;- &quot;[LATE]{4}&quot;
+str_detect(&quot;TEALING&quot;, char_class)
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h1>Character classes</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>All of the metacharacters mentioned lose their special meanings inside of character classes</li>
+<li>The only exception is <code>^</code>, which when placed at the beginning means &quot;everything but the characters in this class&quot;</li>
+</ul>
+
+<pre><code class="r"># Everything but the letters E, A, and T
+neg_class &lt;- &quot;[^EAT]&quot;
+
+# BAT contains B, which is not E, A, or T
+str_detect(&quot;BAT&quot;, neg_class)
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r"># Beat does not contain those characters either
+str_detect(&quot;Beat&quot;, neg_class)
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h1>stringr functions</h1>
+  </hgroup>
+  <article data-timings="">
+    <table><thead>
+<tr>
+<th>function</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>str_detect</td>
+<td>detects presence of a pattern</td>
+</tr>
+<tr>
+<td>str_locate</td>
+<td>finds first position of pattern</td>
+</tr>
+<tr>
+<td>str_replace</td>
+<td>replaces first matched pattern</td>
+</tr>
+<tr>
+<td>str_replace_all</td>
+<td>replace all matched patterns</td>
+</tr>
+<tr>
+<td>str_match</td>
+<td>returns first matched pattern</td>
+</tr>
+<tr>
+<td>str_match_all</td>
+<td>returns all matched patterns</td>
+</tr>
+<tr>
+<td>str_split</td>
+<td>splits string at matched pattern</td>
+</tr>
+</tbody></table>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h1>Your Turn</h1>
+  </hgroup>
+  <article data-timings="">
+    <h3>Create a regular expression to match a date. Test it against the following cases:</h3>
+
+<pre><code class="r">c(&quot;10/14/1979&quot;, &quot;20/20/1945&quot;, &quot;1/1/1905&quot;, &quot;5/5/5&quot;)
+</code></pre>
+
+<h3>Create a regular expression to match a time. Test it against the following cases:</h3>
+
+<pre><code class="r">c(&quot;12:30 pm&quot;, &quot;2:15 AM&quot;, &quot;312:23 pm&quot;, &quot;1:00 american&quot;, &quot;08:20 am&quot;)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Motivation'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Pattern Matching'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Phone numbers'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Phone numbers'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Test text'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='NA'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Qualifiers'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Other metacharacters'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Escaping'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Character Classes'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Character classes'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='stringr functions'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Your Turn'>
+         13
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

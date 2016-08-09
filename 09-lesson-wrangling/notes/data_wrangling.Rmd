@@ -1,0 +1,256 @@
+---
+title: "Data Wrangling"
+author: "Andrew Do"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r libraries, include = FALSE}
+library(maps)
+library(stringr)
+library(dplyr)
+
+worldcities <- tbl_df(world.cities) %>%
+  mutate(name = str_replace_all(name, "'", "")) %>%
+  rename(country = country.etc)
+```
+
+
+## Data Wrangling
+
+The literal meaning of _wrangling_ is the herding or rounding up of animals for a specific purpose.  As such, the inteded metaphor is that data wrangling is a process during which we transform a data set into a visualization-ready or analysis-ready form.
+
+## Example Data Set
+For the examples in these notes, we'll draw on the data set `world.cities` from the `maps` package, which contains information on cities across the globe.  The variables in this data set are `name`, `country`, `pop`, `lat`, `long`, and `capital`.  `capital` takes on values from 0 to 3: 0 for noncapital, 1 for capital, 2 for China Municipalities, and 3 for China Provincial capitals.  The first few rows of the data set are given below:
+
+```{r, echo = F}
+head(worldcities, 6)
+```
+
+## Data Wrangling Verbs
+Data verbs transform your data table.  Some modify variables, others create or delete existing ones.  Below are the six data wrangling verbs we will deal with:
+
+Verb        | Meaning
+----------- | --------------------------------------------------------------------
+filter      | keep rows matching criteria
+select      | pick columns by name
+arrange     | reorder rows
+summarise   | reduce a variable to a single value
+mutate      | create new variables/modify existing ones
+group       | modifies the actions of mutate and summarise to groups in your data
+
+
+### filter
+To filter means to remove undesirable things.  Therefore the purpose of `filter()` is to subset your data, keeping only cases that meet certain conditions.  The first argument is the name of the data frame. The second and subsequent arguments are the expressions that filter the data frame.  Those expressions should be logical statements of some sort.
+
+##### Logical Statements
+Below is a table to refresh your memory of logical statements.  In this table, `a` and `b` are numerical vectors.  `p` and `q` are logical values (`TRUE` or `FALSE`).
+  
+Symbol | Usage      | Meaning 
+------ | ---------- | -------------------------------------
+==   | a == b   | Does a equal b?
+<=   | a <= b   | Is a less than or equal to b?
+>=   | a >= b   | Is a greater than or equal to b?
+<    | a < b    | Is a less than b?
+&#62;    | a &#62; b    | Is a greater than b?
+!    | !p       | Returns negation of p
+&#124; | p &#124; q | p OR q
+&    | p & q    | p AND q
+xor  | xor(p, q)| p XOR q (exclusive or)
+%in% | a %in% b | Is a in b?
+
+##### Filtering by country
+```{r}
+worldcities %>%
+  filter(country == "Palestine")
+
+worldcities %>%
+  filter(country %in% c("Palestine", "Israel"))
+```
+
+##### Filtering by values
+```{r}
+worldcities %>%
+  filter(pop <= 6000)
+
+worldcities %>%
+  filter(pop >= 2000, pop <= 6000)
+```
+
+### select
+To select means to pick out from.  `select()` allows you to choose variables to keep from your data frame.  Using a negative sign, it also allows you exclude variables, and naming arguments allows you to rename arguments.
+
+##### Selecting by name
+```{r}
+worldcities %>%
+  select(name, country)
+```
+
+##### Excluding by name
+```{r}
+worldcities %>% 
+  select(-name, -country)
+
+worldcities %>% 
+  select(-c(name, country))
+```
+
+##### Renaming while selecting
+Note `select()` removes all the variables that weren't explicitly selected.  To keep all the other variables after selecting, use `rename()` instead.
+```{r}
+worldcities %>%
+  select(city_name = name)
+
+worldcities %>%
+  rename(city_name = name)
+```
+
+### arrange
+
+To arrange means to put in a neat, attractive order.  `arrange()` does exactly that.  By default, numerical values are arranged from least to greatest; character values are arranged in alphabetical order; and factors, if they have a natural ordering, are arranged in their specified order.
+
+##### Ordering multiple variables
+
+The ordering of the arguments of `arrange()` matters.  Compare the results below:
+
+```{r}
+worldcities %>%
+  arrange(country, name)
+
+worldcities %>%
+  arrange(name, country)
+```
+
+##### Arrange in descending order
+
+To arrange in descending order (or reverse alphabetical order), use the `desc()` helper function.
+
+```{r}
+worldcities %>%
+  arrange(desc(name))
+
+worldcities %>% 
+  arrange(desc(pop))
+```
+
+### summarise
+
+To summarize means to make a brief statement about the mains points of something. `summarise` makes a statement about variables by boiling them down to one value through __reduction functions__.  Reduction functions summarize or reduce a variable to a single number or character string.  Below is a table of common reduction functions.  They are commonly used with `summarise()` but can be used with `mutate()` as well.
+
+Function        | Description
+--------------- | --------------------------------------------------------
+`mean()`        | finds the arithmetic average                           
+`sum()`         | adds up all the values
+`n()`           | counts the number of cases
+`min()`         | finds the smallest value
+`max()`         | finds the largest value
+`median()`      | finds the 50th percentile
+`quantile()`    | finds the nth percentile
+`sd`            | finds the sample standard deviation
+`var`           | finds the sample variance
+`n_distinct`    | counts the number of unique values
+
+##### Basic usage of summarise
+Calling summarise will almost always make your data frame smaller as you are reducing the information carried in variables down to a single value.
+```{r}
+worldcities %>%
+  summarise(med_pop = median(pop))
+```
+
+### mutate
+
+To mutate means to change in form.  `mutate()` changes a variable or adds new ones based on existing variables through __transformation functions__.  Transformation functions take one or more variables as input and returns a new variable.  Unlike reduction functions, which _reduce_ the data to a single number, transformation functions _transform_ the data from one form to another, producing a number for each case.  Often, transformation functions come in the form mathematical operations, but also include operations such as logical comparisons and string manipulations.  Transformation functions typically only work with `mutate()`.  Examples include:
+
+* `weight / height`
+* `log(population)`
+* `round(age)`
+* `str_replace(name, ",", " ")`
+* `score > 90`
+
+##### Changing existing variables
+```{r}
+worldcities %>%
+  mutate(name = str_to_upper(name))
+```
+
+##### Adding new variables
+Note that you can immediately use your new variable in the same `mutate()` call.
+```{r}
+worldcities %>%
+  mutate(doublepop = 2*pop,
+         quadpop = 2*doublepop) %>%
+  select(-c(lat, long))
+```
+
+### group_by
+Central to the usage of `summarise()` and `mutate()` is the idea of grouping, which subsets your data set based off some variable and restricts `summarise()` and `mutate()` to working only within those subgroups.  `group_by()`, on the surface, doesn't actually change your data frame.  It does some set-up magic in the background so that other verbs like `summarise` and `mutate()` will act on a group-by-group basis.  In other words, `group_by` won't do anything unless it's followed by another verb.  `ungroup()` removes the grouping.
+
+##### Basic group_by usage
+
+Compare how `summarise()` and `mutate()` differ when given the same functions:
+```{r}
+worldcities %>%
+  group_by(country) %>%
+  summarise(num_cities = n())
+
+worldcities %>%
+  group_by(country) %>%
+  mutate(num_cities = n())
+```
+
+##### Multiple groupings
+
+When more than one variable is used, the data set is subsetted into groups based off unique combinations of the subsetting variables.  Groupings can also be made on-the-fly using existing variables.  In the example below, we split the globe into four quadrants using lat and long and group cities using those quadrants.
+
+```{r}
+worldcities %>% 
+  group_by(lat > 0, long > 0) %>%
+  summarise(avg_pop = mean(pop)) %>%
+  ungroup
+```
+
+### Chaining Multiple Verbs
+
+These data verbs are at their most powerful when you chain them together, piping the output of one verb into the action of another, forming a data pipeline.  It may seem daunting at first to come up with your own data pipeline, but with practice comes intuition on good ways to break large problems into smaller tasks.
+
+There are three steps to successful wrangling:
+
+* Plan your wrangling in plain language
+* Formalize your plan in the language of wrangling verbs
+* Write your code according to your plan
+
+##### Worked out multi-step wrangling
+
+Compare the average population of capitals in the northern hemisphere with that of capitals in the southern part of the world.
+
+First, we plan out in words what we have to do:
+
+1. Only look at capital cities
+2. Distinguish between nothern and southern hemisphere using lat
+3. Group the cities using the north/south designation
+4. Find the average population in those subgroups
+5. Order the data by average population
+
+Then we translate those ideas into data verbs
+
+1. `filter()` out cities that do not have a `capital` value of `1`
+2. `mutate()` `latitude`, creating a new logical variable `north` based off whether or not a city is above the 0th `latitude` line
+3. `group_by()` `north`
+4. `summarise()` the `population` variable within the groups using `mean`
+5. `arrange` the average from least to greatest
+
+Now we write the code.  Luckily our wrangling verbs are easily translated into code via `dplyr`.
+
+```{r}
+worldcities %>% 
+  filter(capital != 1) %>% 
+  mutate(north = lat > 0) %>%
+  group_by(north) %>% 
+  summarise(avg_pop = mean(pop)) %>% 
+  arrange(avg_pop)
+```
+

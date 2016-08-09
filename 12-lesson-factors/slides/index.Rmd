@@ -1,0 +1,190 @@
+---
+title       : Lesson 12
+subtitle    : Factors and Graphing
+author      : Andrew Do
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+```{r, include=FALSE}
+library(dplyr)
+library(ggplot2)
+```
+
+## Factors
+
+* A factor is a vector that can contain only predefined values, and is used to store categorical data.  They handle categorical data.
+* Examples Include:
+  - Treatment A, Treatment B, Treatment C
+  - Small, Medium, Large
+  - Likert Scale (Very bad, bad, somewhat bad, neutral, ...)
+
+---
+
+## Internals of Factors
+
+* Factors are NOT basic data types
+* Internally, they are stored as integers
+
+```{r}
+my_factor <- factor(c("A", "A", "B", "A", "C"))
+
+typeof(my_factor)
+levels(my_factor)
+```
+
+---
+
+## More Internals of Factors
+
+Levels keep track of what the integers actually mean
+
+```{r}
+str(my_factor)
+levels(my_factor)
+```
+
+---
+
+## 3 types of categorical variables
+
+### Binary
+Two categories (e.g. Homeowner or not).  Usually handled by logical vectors
+
+### Nomimal
+No ordering to categories (e.g. Treatment A, B, C).  Handled by factors
+
+### Ordinal
+Natural ordering to categories (slow, average, fast).  Handled by ordered factors
+
+---
+
+## Creating Factors
+
+Create a factor using `factor()`
+```{r}
+factor(c("red", "blue", "red", "red", "yellow"))
+```
+
+The values a factor can take are called __levels__.  It's not necessary for all levels to be present in a factor vector.
+```{r}
+factor(c("red", "blue", "red", "red", "yellow"), 
+       levels = c("red", "yellow", "blue", "green"))
+```
+
+---
+
+## Ordered factors
+
+To create an ordered factor, we just need to specify the levels in order and then pass `TRUE` to the `ordered` argument.
+
+```{r}
+x <- factor(c("sm", "lg", "lg", "md", "sm"), levels = c("sm", "md", "lg"), ordered = TRUE)
+x 
+```
+
+This allows us to sort the factors
+```{r}
+sort(x)
+```
+
+---
+
+## More Internals of Factors
+
+To see what integers represent each level, use `unclass()`.  The order of the attributes gives the integer values.
+```{r}
+x <- factor(c("sm", "lg", "lg", "md", "sm"), levels = c("sm", "md", "lg"), ordered = TRUE)
+unclass(x)
+```
+
+To change the levels, you can assign new values a `levels()` call:
+```{r}
+levels(x) <- c("S", "M", "L")
+x
+```
+
+---
+
+## stringsAsFactors
+
+* By default, `data.frame` converts all strings to factors
+* This will often mess things up (as we saw in lab)
+* To fix this, specify `stringsAsFactors = FALSE` when making data frames and then go back and turn specific columns into factors as needed.
+* By default, `readr` functions such as `read_csv` and `read_tsv` take care of this for you
+
+```{r}
+df <- data.frame(x = c("a", "b", "c"), y = 1:6)
+str(df)
+```
+
+---
+
+## Data Set
+
+For this next exercise, consider this data frame
+```{r}
+tbl_df(mtcars)
+```
+
+---
+
+## How would you make this graph?
+Talk with the people around you.
+
+```{r, echo = FALSE, fig.width=10, fig.height=5.5}
+ggplot(mtcars, aes(x = hp, y = mpg)) +
+  geom_point(aes(color = factor(cyl)), size = 3) +
+  geom_smooth() +
+  ggtitle("Horsepower and Fuel Efficiency") +
+  theme(title = element_text(size = 26),
+        axis.text = element_text(size = 18),
+        axis.title = element_text(size = 22),
+        legend.text = element_text(size = 18))
+```
+
+---
+
+## How would you make this graph?
+
+```{r, echo = F, fig.width=7.5, fig.height=5.5}
+mtcars %>%
+  mutate(cyl = factor(cyl)) %>%
+  ggplot(aes(x = cyl, y = mpg, fill = cyl)) +
+    geom_boxplot() +
+    ggtitle("Horsepower and Fuel Efficiency") +
+    theme(title = element_text(size = 26),
+          axis.text = element_text(size = 18),
+          axis.title = element_text(size = 22),
+          legend.text = element_text(size = 18))
+```
+
+---
+
+## Example Code
+
+### We will want to formalize how we talk about graphs
+```{r, eval = FALSE}
+mtcars %>%
+  mutate(cyl = factor(cyl)) %>%
+  ggplot(aes(x = cyl, y = mpg, fill = cyl)) +
+    geom_boxplot() +
+    ggtitle("Horsepower and Fuel Efficiency") +
+    theme(title = element_text(size = 26),
+          axis.text = element_text(size = 18),
+          axis.title = element_text(size = 22),
+          legend.text = element_text(size = 18))
+```
+ 
+---
+
+## TOMMOROW
+
+* Formalizing the grammar of graphics
+* Basic ggplot2
+* To do tonight: Install the ggplot2 package

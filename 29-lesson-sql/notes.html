@@ -859,8 +859,8 @@ WHERE
 <span class="st">    Artist.ArtistId,</span>
 <span class="st">    albumId</span>
 <span class="st">  FROM</span>
-<span class="st">    Artist LEFT JOIN Album </span>
-<span class="st">    ON Artist.artistid = Album.artistid</span>
+<span class="st">    Artist </span>
+<span class="st">    LEFT JOIN Album ON Artist.artistid = Album.artistid</span>
 <span class="st">  ORDER BY</span>
 <span class="st">    albumid</span>
 <span class="st">&quot;</span>))
@@ -886,8 +886,8 @@ WHERE
 <span class="st">    Artist.ArtistId,</span>
 <span class="st">    albumId</span>
 <span class="st">  FROM</span>
-<span class="st">    Artist LEFT JOIN Album </span>
-<span class="st">    ON Artist.artistid = Album.artistid</span>
+<span class="st">    Artist </span>
+<span class="st">    LEFT JOIN Album ON Artist.artistid = Album.artistid</span>
 <span class="st">  WHERE</span>
 <span class="st">    albumid IS NULL</span>
 <span class="st">&quot;</span>))
@@ -914,8 +914,8 @@ WHERE
 <span class="st">    a.ArtistId,</span>
 <span class="st">    albumId</span>
 <span class="st">  FROM</span>
-<span class="st">    Artist a LEFT JOIN Album b </span>
-<span class="st">    ON a.artistid = b.artistid</span>
+<span class="st">    Artist a </span>
+<span class="st">    LEFT JOIN Album b ON a.artistid = b.artistid</span>
 <span class="st">  WHERE</span>
 <span class="st">    albumid IS NOT NULL</span>
 <span class="st">&quot;</span>))
@@ -1025,8 +1025,8 @@ WHERE
 <span class="st">  title AS AlbumTitle,</span>
 <span class="st">  COUNT(trackid) AS NumberOfSongs</span>
 <span class="st">FROM</span>
-<span class="st">  Track a INNER JOIN Album b </span>
-<span class="st">  ON a.albumid = b.albumid</span>
+<span class="st">  Track a </span>
+<span class="st">  INNER JOIN Album b ON a.albumid = b.albumid</span>
 <span class="st">GROUP BY</span>
 <span class="st">  a.albumid</span>
 <span class="st">&quot;</span>))
@@ -1073,7 +1073,8 @@ WHERE
 <span class="st">    title,</span>
 <span class="st">    SUM(Milliseconds) AS length</span>
 <span class="st">  FROM</span>
-<span class="st">    Track a INNER JOIN Album b ON a.AlbumId = b.AlbumId</span>
+<span class="st">    Track a </span>
+<span class="st">    INNER JOIN Album b ON a.AlbumId = b.AlbumId</span>
 <span class="st">  GROUP BY</span>
 <span class="st">    a.albumid</span>
 <span class="st">  HAVING</span>
@@ -1088,6 +1089,86 @@ WHERE
 ## 2     230                           Lost, Season 1 64854936
 ## 3     231                           Lost, Season 2 63289631
 ## 4     253 Battlestar Galactica (Classic), Season 1 70213784</code></pre></div>
+</div>
+<div id="except" class="section level2">
+<h2>EXCEPT</h2>
+<p>We’ll look at one multi-select query. <code>EXCEPT</code> returns all the results of one <code>SELECT</code> statement, omitting any it finds in a second <code>SELECT</code> statement. Its basic structure looks like</p>
+<pre><code>SELECT STATEMENT 1
+EXCEPT
+SELECT STATMENT2</code></pre>
+<p>Here I look for all artists who didn’t make any albums at all:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT </span>
+<span class="st">    artistId, </span>
+<span class="st">    name </span>
+<span class="st">  FROM artist</span>
+<span class="st">  </span>
+<span class="st">  EXCEPT</span>
+<span class="st">  </span>
+<span class="st">  SELECT </span>
+<span class="st">    artist.artistId, </span>
+<span class="st">    artist.name </span>
+<span class="st">  FROM </span>
+<span class="st">    artist, album </span>
+<span class="st">  WHERE </span>
+<span class="st">    artist.artistId = album.artistId</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 2]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##    artistId                       name
+##       &lt;int&gt;                      &lt;chr&gt;
+## 1        25 Milton Nascimento &amp; Bebeto
+## 2        26                    Azymuth
+## 3        28             JoÃ£o Gilberto
+## 4        29             Bebel Gilberto
+## 5        30              Jorge Vercilo
+## 6        31              Baby Consuelo
+## 7        32             Ney Matogrosso
+## 8        33               Luiz Melodia
+## 9        34                 Nando Reis
+## 10       35     Pedro LuÃ­s &amp; A Parede
+## # ... with more rows</code></pre></div>
+<p>I could take this idea further to see which artists did not make albums of the ‘Latin’ genre:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chinook %&gt;%<span class="st"> </span><span class="kw">tbl</span>(<span class="kw">sql</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT </span>
+<span class="st">    artistId, </span>
+<span class="st">    name </span>
+<span class="st">  FROM </span>
+<span class="st">    artist</span>
+<span class="st">  </span>
+<span class="st">  EXCEPT</span>
+<span class="st">  </span>
+<span class="st">  SELECT </span>
+<span class="st">    artist.artistId, </span>
+<span class="st">    artist.name</span>
+<span class="st">  FROM </span>
+<span class="st">    artist, </span>
+<span class="st">    album, </span>
+<span class="st">    track, </span>
+<span class="st">    genre</span>
+<span class="st">  WHERE </span>
+<span class="st">    artist.artistId = album.artistId </span>
+<span class="st">    AND album.albumId = track.albumId </span>
+<span class="st">    AND track.genreId = genre.genreId </span>
+<span class="st">    AND genre.name = 'Latin'</span>
+<span class="st">&quot;</span>))
+## Source:   query [?? x 2]
+## Database: sqlite 3.8.6 [Chinook_Sqlite.sqlite]
+## 
+##    artistId                name
+##       &lt;int&gt;               &lt;chr&gt;
+## 1         1               AC/DC
+## 2         2              Accept
+## 3         3           Aerosmith
+## 4         4   Alanis Morissette
+## 5         5     Alice In Chains
+## 6         7        Apocalyptica
+## 7         8          Audioslave
+## 8         9            BackBeat
+## 9        10        Billy Cobham
+## 10       11 Black Label Society
+## # ... with more rows</code></pre></div>
 </div>
 
 

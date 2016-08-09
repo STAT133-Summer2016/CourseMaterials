@@ -1,0 +1,239 @@
+---
+title       : Lesson 4
+subtitle    : Strings and Factors in R
+author      : Andrew Do
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## Office Hours
+Office hours will be held in the classroom.  Evans 342
+
+Person      | Time
+----------- | -------
+Andrew      | M 10-12
+Cindy       | T 11-1
+Andrew      | W 11-1
+Cindy       | Th 11-1
+
+---
+
+## Strings
+
+We can express strings using single or double quotes:
+
+```{r}
+# Single quotes
+'this is a string'
+
+# Double quotes
+"this is also a string"
+```
+
+---
+
+## Quotes inside strings
+Single quotes can only be used in double-quote strings and vice versa.
+
+```{r}
+# Can do
+"The little bird chirped 'hello' cheerfully."
+
+# No can do
+# 'This won't work'
+```
+
+---
+
+## Empty String
+
+You can create an __empty string__ with two consecutive quotation marks.
+
+```{r}
+empty_str <- ""
+empty_str
+```
+
+---
+
+## Character vectors
+
+You can, of course, create vectors of strings
+
+```{r}
+x <- c("this is a vector")
+x
+
+y <- c("this", "is", "a", "vector")
+y
+```
+
+---
+
+## Recycling Rule
+R tries to be nice to you if you don't specify equal numbers of arguments to functions that need them.
+
+It will "recycle" shorter vectors until it reaches the right length so long as the longer vector is a multiple of the shorter one.
+
+```{r}
+# Recycling at work
+c(1,2) + c(1,2,3,4)
+1:3 / 1:6
+```
+
+---
+
+## Invalid Lengths
+
+You should avoid using the recycling rule if you aren't sure how the operation will extend the shorter vector.
+
+```{r}
+# This "works" but is not recommended
+c(1,2) + c(1,2,3,4,5)
+```
+
+---
+
+## paste
+
+`paste()` is one of the most important tools for string manipulation.  
+
+```
+paste(..., sep = " ", collapse = NULL)
+```
+
+It takes one or more vectors, coerces them into the `character` type, and "pastes" them together.
+
+---
+
+## Examples
+
+Simple example
+```{r}
+paste("The life of", pi)
+```
+
+Vectorized example
+```{r}
+paste("Hello, my name is", c("Andrew", "Bob", "Chris"))
+```
+
+---
+
+## sep
+To change what goes in between elements to be pasted, we use the `sep` argument.  The default __separator__ is a blank space (`sep = " "`).
+```{r}
+paste("to", "be", "or", "not", "to", "be")
+paste("to", "be", "or", "not", "to", "be", sep = " ")
+paste("to", "be", "or", "not", "to", "be", sep = "-")
+```
+
+---
+
+## collapse
+The collapse argument allows us to further paste the pasted strings together.  It's easier to see it in action:
+```{r}
+paste("Hello,", c("my", "his", "her"), "name is", c("A", "B", "C"))
+paste("Hello,", c("my", "his", "her"), "name is", c("A", "B", "C"), collapse = ".  ")
+```
+
+---
+
+## Installing Packages in R
+To install a package in R, simply call the command.  The name of the package must be put in as a string
+```
+install.packages("name_of_package")
+```
+To get access to the package in an R session, you must use `library`.  If you are using a package in an R Markdown document, you should include this line near the beginning of your document:
+```
+library(name_of_package)
+```
+
+---
+
+## Stringr
+
+`stringr` is an `R` package that provides functions for:
+
+* basic string manipulation
+* __regular expression__ operations (more on this later)
+
+```{r}
+library(stringr)
+```
+
+
+---
+
+## Basic `stringr` functions
+
+Function       | Description
+-------------- | -------------------------------
+str_c          | same usage as paste
+str_length     | number of characters
+str_sub        | extracts substrings
+str_dup        | duplicates characters
+str_to_lower   | converts to lowercase
+str_to_upper   | converts to uppercase
+str_pad        | pads a string
+
+---
+
+## str_c
+
+We'll go over some basic uses, but you might want to look up the documentation for the `stringr` package if you want to learn more.  The difference between `str_c` and `paste` is that the default separator for `paste` is the empty string rather than a space
+
+```{r}
+str_c("woe", "is", c("I", "me", "everyone"))
+str_c("woe", "is", c("I", "me", "everyone"), sep = " ")
+str_c("woe", "is", c("I", "me", "everyone"), sep = " ", collapse = ". ")
+```
+
+---
+
+## str_length
+Counting how long a string is.  Note that whitespace counts as a character.
+```{r}
+some_text <- c("You are", "two", "I am", NA)
+str_length(some_text)
+```
+
+--- 
+
+## str_sub
+Allows you to extract substrings by location
+```{r}
+nonsense <- "Lorem ipsum dolor sit amet"
+str_sub(nonsense, start = 1, end = 5)
+```
+You can use negative indices to start at the back
+```{r}
+restaurants <- c("brasserie", "bistrot", "creperie", "bouchon")
+str_sub(restaurants, start = -4, end = -1)
+```
+
+---
+
+## Replacing at exact locations
+You can use str_sub to replace text at exact locations
+```{r}
+lorem <- "Lorem Ipsum"
+# One substitution
+str_sub(lorem, 1) <- "Nullaming"
+lorem
+
+# Multiple substitutions
+lorem <- "Lorem Ipsum"
+str_sub(lorem, c(1,7), c(5,8)) <- c("Nullam", "Enim")
+lorem
+```
+
+---
+
+## Regular Expressions
+[http://regexone.com/](Interactive Tutorial)

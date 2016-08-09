@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lesson 13</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Lesson 13">
+  <meta name="author" content="">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Lesson 13</h1>
+    <h2>Grammar of Graphics</h2>
+    <p><br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Motivation</h2>
+  </hgroup>
+  <article data-timings="">
+    <h1>&quot;If any number of magnitudes are each the same multiple of the same number of other magnitudes, then the sum is that multiple of the sum.&quot;</h1>
+
+<h1>Euclid, ~300 BC</h1>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Motivation</h2>
+  </hgroup>
+  <article data-timings="">
+    <h1>&quot;If any number of magnitudes are each the same multiple of the same number of other magnitudes, then the sum is that multiple of the sum.&quot;</h1>
+
+<h1>Euclid, ~300 BC</h1>
+
+<h2>\(\sum{mx} = m \sum{x}\)</h2>
+
+<blockquote>
+<p>Abstraction limits vocabulary, but makes thinking about, reasoning about, and communicating easier.</p>
+</blockquote>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>What is a plot?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>A plot is a set of <strong>layers</strong></li>
+<li>A set of scales</li>
+<li>A coordinate system</li>
+<li>A facetting specification</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>What is a layer?</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Layers consist of:</p>
+
+<ul>
+<li>Data</li>
+<li>Aesthetic mappings <code>aes</code></li>
+<li>A geometric object <code>geom</code></li>
+<li>A statistical transformation <code>stat</code></li>
+<li>A position adjustment <code>position</code></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Geometries and Aesthetics</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Geometries are the shapes and lines representing data in a plot.  Aesthetics are physical qualities of the geometries in the graph.  The most common aesthetics are:</p>
+
+<table><thead>
+<tr>
+<th>Aesthetic</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>x</td>
+<td>position along the x-axis</td>
+</tr>
+<tr>
+<td>y</td>
+<td>position along the y-axis</td>
+</tr>
+<tr>
+<td>color</td>
+<td>color of 1D component (point, line)</td>
+</tr>
+<tr>
+<td>fill</td>
+<td>color of 2D component (&quot;insides&quot;)</td>
+</tr>
+<tr>
+<td>alpha</td>
+<td>opacity (opposite of transparency).  takes on values from 0-1</td>
+</tr>
+<tr>
+<td>shape</td>
+<td>shape used for points</td>
+</tr>
+</tbody></table>
+
+<ul>
+<li><a href="http://docs.ggplot2.org/current/vignettes/ggplot2-specs.html">Click on this link for more information about aesthetics</a></li>
+<li><a href="http://docs.ggplot2.org/current/">Click on this link for a comprehensive list of available geometries</a></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Common geometries - Bar</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ggplot(mpg, aes(class)) + geom_bar()
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Common geometries - Points</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ggplot(mtcars, aes(wt, mpg)) + geom_point()
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Common Geometries - Line</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ggplot(economics, aes(date, unemploy)) + geom_line()
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-4-1.png" alt="plot of chunk unnamed-chunk-4"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>What geometry is in this plot and what are its aesthetics?</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-5-1.png" alt="plot of chunk unnamed-chunk-5"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>First principles</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:;'>
+  <pre><code class="r">ggplot() +
+  layer(
+    data = mtcars,
+    mapping = aes(x = hp, y = mpg),
+    geom = &quot;point&quot;,
+    stat = &quot;identity&quot;,
+    position = &quot;identity&quot;
+  )
+</code></pre>
+
+</div>
+<div style='float:right;width:;'>
+  <p><img src="assets/fig/unnamed-chunk-7-1.png" alt="plot of chunk unnamed-chunk-7"></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Wordy</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The last way of writing it was somewhat wordy.  Instead, we can rely on default geometries and statistics.  Every <code>geom</code> has an associated default statistic (and vice versa):</p>
+
+<div style='float:left;width:;'>
+  <pre><code class="r">ggplot() +
+  geom_point(mtcars,aes(hp, mpg))
+</code></pre>
+
+</div>
+<div style='float:right;width:;'>
+  <p><img src="assets/fig/unnamed-chunk-9-1.png" alt="plot of chunk unnamed-chunk-9"></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Default Geometries for Statistics:</h2>
+  </hgroup>
+  <article data-timings="">
+    <table><thead>
+<tr>
+<th>Graph Type</th>
+<th>call</th>
+<th>statistic</th>
+<th>default geom</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>histogram</td>
+<td>geom_histogram</td>
+<td>bin</td>
+<td>bar</td>
+</tr>
+<tr>
+<td>smoother</td>
+<td>geom_smooth</td>
+<td>smooth</td>
+<td>line</td>
+</tr>
+<tr>
+<td>boxplot</td>
+<td>geom_boxplot</td>
+<td>boxplot</td>
+<td>boxplox</td>
+</tr>
+<tr>
+<td>density</td>
+<td>geom_density</td>
+<td>density</td>
+<td>line</td>
+</tr>
+<tr>
+<td>freqpoly</td>
+<td>geom_freqpoly</td>
+<td>bin</td>
+<td>line</td>
+</tr>
+</tbody></table>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Multiple layers</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>You can add on multiple layers with <code>+</code>.  If you don&#39;t specify aesthetics, then the layer inherits those values in order from the main ggplot call.</p>
+
+<div style='float:left;width:;'>
+  <pre><code class="r">ggplot(mtcars, aes(hp, mpg)) +
+  geom_point() +
+  geom_smooth()
+</code></pre>
+
+</div>
+<div style='float:right;width:;'>
+  <p><img src="assets/fig/unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11"></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Fixed Aesthetics</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>We usually think of aesthetics as being <strong>mapped from variables</strong>.  However, when customizing our graphics, it&#39;s often desirable to specify fixed aesthetics.  Below, <code>x</code> and <code>y</code> are being mapped from variables whereas <code>size</code> is a <strong>fixed aesthetic</strong>.  Note that it sits outside the <code>aes</code> call.</p>
+
+<div style='float:left;width:;'>
+  <pre><code class="r">ggplot(mtcars) +
+  geom_point(aes(hp, mpg), size = 3)
+</code></pre>
+
+</div>
+<div style='float:right;width:;'>
+  <p><img src="assets/fig/unnamed-chunk-13-1.png" alt="plot of chunk unnamed-chunk-13"></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Faceting</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Facets refer to different sides of an object.  When graphing, facetting refers to splitting your data up into subsets and then making multiple graphs from those data.  There are two faceting calls:</p>
+
+<ul>
+<li><code>facet_wrap(~x)</code> <strong>facets</strong> the <code>x</code> variable, <strong>wrapping</strong> the panels to make sure they all fit in the frame</li>
+<li><code>facet_grid(x~y)</code> <strong>facets</strong> the <code>x</code> and <code>y</code> variable, <strong>gridding</strong> them so that the <code>x</code> values form the rows and <code>y</code> values form the columns</li>
+<li>Obviously facetting only works with categorical (factor) variables</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Examples of facet_wrap</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ggplot(diamonds) + geom_point(aes(carat, price)) + facet_wrap(~clarity)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-14-1.png" alt="plot of chunk unnamed-chunk-14"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Example of facet_grid</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ggplot(cars, aes(hp, mpg)) + geom_point() + facet_grid(vs~am)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-16-1.png" alt="plot of chunk unnamed-chunk-16"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Learning ggplot2</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>ggplot2 mailing list</h3>
+
+<p><a href="http://groups.google.com/group/ggplot2">http://groups.google.com/group/ggplot2</a></p>
+
+<h3>stackoverflow</h3>
+
+<p><a href="http://stackoverflow.com/tags/ggplot2">http://stackoverflow.com/tags/ggplot2</a></p>
+
+<h3>Cookbook for common graphics</h3>
+
+<p><a href="http://wiki.stdout.org/rcookbook/Graphs/">http://wiki.stdout.org/rcookbook/Graphs/</a></p>
+
+<h3>ggplot2 book</h3>
+
+<p><a href="http://www.springerlink.com/content/978-0-387-98140-6/contents/">http://www.springerlink.com/content/978-0-387-98140-6/contents/</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Motivation'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Motivation'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='What is a plot?'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='What is a layer?'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Geometries and Aesthetics'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Common geometries - Bar'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Common geometries - Points'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Common Geometries - Line'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='What geometry is in this plot and what are its aesthetics?'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='First principles'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Wordy'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Default Geometries for Statistics:'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Multiple layers'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Fixed Aesthetics'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Faceting'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Examples of facet_wrap'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Example of facet_grid'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Learning ggplot2'>
+         18
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

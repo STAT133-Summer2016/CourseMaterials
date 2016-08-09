@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lesson 1</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Lesson 1">
+  <meta name="author" content="Andrew Do">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/pojoaque.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Lesson 1</h1>
+    <h2>Introduction to R</h2>
+    <p>Andrew Do<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h1>Calculator</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Here are some very basic things you can do in R:</p>
+
+<p>R can be used as a calculator: any expressions that you type into the R console will be
+computed, and the answer printed.  For example</p>
+
+<pre><code class="r">1 + 1
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<pre><code class="r">5 / 9
+</code></pre>
+
+<pre><code>## [1] 0.5555556
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <article data-timings="">
+    <p>You can write comments in R using the hash symbol #.</p>
+
+<pre><code class="r"># This line of code will not get evaluated.  2 + 2
+## The line below this one will be though
+2 + 2
+</code></pre>
+
+<pre><code>## [1] 4
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h1>Vectors</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>You can form vectors in R using the command <code>c</code>.  Operations are usually applied element-by-element to a vector.</p>
+
+<pre><code class="r"># Adding two vectors together
+c(1, 2, 3) + c(4, 5, 6)
+</code></pre>
+
+<pre><code>## [1] 5 7 9
+</code></pre>
+
+<pre><code class="r"># Multiplying two vectors together
+c(1, 2, 3) * c(1, 2, 3)
+</code></pre>
+
+<pre><code>## [1] 1 4 9
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h1>Naming Objects</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>You can &quot;save&quot; objects in memory by using either the arrow <code>&lt;-</code> or an equal sign <code>=</code>. We call this action &quot;assignment&quot;.</p>
+
+<pre><code class="r"># Assigning the vector (1, 2, 3) to x
+x &lt;- c(1, 2, 3)
+# Assigning the vector (4, 5, 6) to y
+y = c(4, 5, 6)
+# Adding x and y should return (5, 7, 9)
+x + y
+</code></pre>
+
+<pre><code>## [1] 5 7 9
+</code></pre>
+
+<p>There are some rules for naming objects in R:</p>
+
+<ul>
+<li>Names cannot start with a number, so, for example <code>001graph</code> would not be valid.</li>
+<li>Names cannot contain punctuation, so <code>n*mmatrix</code> is not legitimate.  The only two exceptions are periods <code>.</code> and underscores <code>_</code>.</li>
+<li>Names are case-sensitive, so <code>vorpal1</code> and <code>Vorpal1</code> are two different objects</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h1>Functions</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>All functions in R are called using their names followed by their arguments in parentheses (more on this later).  For example, here we take the average of <code>x</code>, which was assigned the values 1, 2, and 3 earlier.</p>
+
+<pre><code class="r">mean(x)
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h1>Getting Help in R</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>To get help about a function in R, you can use <code>help(function_name)</code> or <code>?function_name</code>.  For example, the following calls would fetch information about the mean function.</p>
+
+<pre><code class="r">help(mean)
+?mean
+</code></pre>
+
+<p>More often than not, though, I end up deferring to StackExchange or Google.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h1>Logical Statements</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>R understands the following logical checks:</p>
+
+<pre><code>==, &gt;=, &lt;=, &lt;, &gt;, !=
+</code></pre>
+
+<p>The <code>==</code> checks for equality.  Note that it&#39;s two equal signs! This is a common mistake.</p>
+
+<pre><code class="r">5 == 2+3
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">c(1,2) == c(1,5)
+</code></pre>
+
+<pre><code>## [1]  TRUE FALSE
+</code></pre>
+
+<p>The <code>!=</code> checks for nonequality.  Usually the <code>!</code> in programming denotes negation.</p>
+
+<pre><code class="r">4 != 2+3
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<p>Another thing to note is that R performs these checks element-by-element for vectors.</p>
+
+<pre><code class="r">c(1, 2, 3, 4, 5) &lt;= 3
+</code></pre>
+
+<pre><code>## [1]  TRUE  TRUE  TRUE FALSE FALSE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h1>Combining Logical Statements</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>To combine logical statements together, we use <code>&amp;</code> for the logical <code>AND</code> and <code>|</code> for the logical <code>OR</code>.</p>
+
+<pre><code class="r">x &lt;- 5
+3 &lt; x &amp; x &lt; 7
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r"># 3 &lt; x &lt; 7 doesn&#39;t work!
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h1>Logical Symbols</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>In this table, <code>a</code> and <code>b</code> are numerical vectors.  <code>p</code> and <code>q</code> are logical values (<code>TRUE</code> or <code>FALSE</code>).  Unless otherwise stated, the operations are vectorized.</p>
+
+<table><thead>
+<tr>
+<th>Symbol</th>
+<th>Usage</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>==</code></td>
+<td><code>a == b</code></td>
+<td>Does <code>a</code> equal <code>b</code>?</td>
+</tr>
+<tr>
+<td><code>&lt;=</code></td>
+<td><code>a &lt;= b</code></td>
+<td>Is <code>a</code> less than or equal to <code>b</code>?</td>
+</tr>
+<tr>
+<td><code>&gt;=</code></td>
+<td><code>a &gt;= b</code></td>
+<td>Is <code>a</code> greater than or equal to <code>b</code>?</td>
+</tr>
+<tr>
+<td><code>&lt;</code></td>
+<td><code>a &lt; b</code></td>
+<td>Is <code>a</code> less than <code>b</code>?</td>
+</tr>
+<tr>
+<td><code>&gt;</code></td>
+<td><code>a &gt; b</code></td>
+<td>Is <code>a</code> greater than <code>b</code>?</td>
+</tr>
+<tr>
+<td><code>!</code></td>
+<td><code>!p</code></td>
+<td>Returns negation of <code>p</code></td>
+</tr>
+<tr>
+<td>&#124;</td>
+<td>p &#124; q</td>
+<td><code>p</code> OR <code>q</code></td>
+</tr>
+<tr>
+<td><code>&amp;</code></td>
+<td><code>p &amp; q</code></td>
+<td><code>p</code> AND <code>q</code></td>
+</tr>
+<tr>
+<td>&#124;&#124;</td>
+<td>p &#124;&#124; q</td>
+<td><code>p</code> OR <code>q</code> (first element only)</td>
+</tr>
+<tr>
+<td><code>&amp;&amp;</code></td>
+<td><code>p &amp;&amp; q</code></td>
+<td><code>p</code> AND <code>q</code> (first element only)</td>
+</tr>
+<tr>
+<td><code>xor</code></td>
+<td><code>xor(p, q)</code></td>
+<td><code>p</code> XOR <code>q</code> (exclusive or)</td>
+</tr>
+<tr>
+<td><code>%in%</code></td>
+<td><code>a %in% b</code></td>
+<td>Is <code>a</code> in <code>b</code>?</td>
+</tr>
+</tbody></table>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h1>Logical Checks</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Say you have a logical vector, <code>x</code>, then there are some special checks you can do with that vector:</p>
+
+<table><thead>
+<tr>
+<th>Function Call</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>any(x)</code></td>
+<td>Is at least one element of <code>x</code> <code>TRUE</code>?</td>
+</tr>
+<tr>
+<td><code>all(x)</code></td>
+<td>Are all values of <code>x</code> <code>TRUE</code>?</td>
+</tr>
+</tbody></table>
+
+<p>Strategy: Sometimes the complements of these are useful. <code>!any(x)</code> would mean &quot;are all the elements of <code>x</code> <code>FALSE</code>?&quot;</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h1>Subsetting in R</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>You can pick out certain elements of a vector using square brackets</p>
+
+<pre><code class="r">x &lt;- c(1, 3, 5, 7, 9)
+x[2]
+</code></pre>
+
+<pre><code>## [1] 3
+</code></pre>
+
+<pre><code class="r">x[c(1, 3, 5)]
+</code></pre>
+
+<pre><code>## [1] 1 5 9
+</code></pre>
+
+<pre><code class="r">x[c(TRUE, FALSE, FALSE, FALSE, TRUE)]
+</code></pre>
+
+<pre><code>## [1] 1 9
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h1>Some useful functions in R</h1>
+  </hgroup>
+  <article data-timings="">
+    <p><code>length</code> gives you the number of elements in a vector</p>
+
+<pre><code class="r">x &lt;- c(1, 2, 3, 3, 3)
+length(x)
+</code></pre>
+
+<pre><code>## [1] 5
+</code></pre>
+
+<p>I won&#39;t go over these functions explicitly during lecture, but they should be helpful for you in your lab and homework.</p>
+
+<pre><code>sum, mean, median, max, min, summary, seq
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h1>Seq</h1>
+  </hgroup>
+  <article data-timings="">
+    <p><code>seq</code> creates a sequence of numbers</p>
+
+<pre><code class="r">seq(from = 1, to = 6, by = 2) # sequence from 1 to 6 by 2
+</code></pre>
+
+<pre><code>## [1] 1 3 5
+</code></pre>
+
+<pre><code class="r">seq(1, 6, 2) # not necessary to type out the argument names
+</code></pre>
+
+<pre><code>## [1] 1 3 5
+</code></pre>
+
+<pre><code class="r">seq(1, 6) # by default, by is 1
+</code></pre>
+
+<pre><code>## [1] 1 2 3 4 5 6
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h1>Sort</h1>
+  </hgroup>
+  <article data-timings="">
+    <p><code>sort</code> sorts the values of a vector in increasing order</p>
+
+<pre><code class="r">x &lt;- c(13, 6, 18, 2, 11)
+sort(x)
+</code></pre>
+
+<pre><code>## [1]  2  6 11 13 18
+</code></pre>
+
+<pre><code class="r">sort(x, decreasing = TRUE) # can specify decreasing
+</code></pre>
+
+<pre><code>## [1] 18 13 11  6  2
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h1>Order</h1>
+  </hgroup>
+  <article data-timings="">
+    <p><code>order</code> gives the <em>indices</em> (positions) of the values in increasing order</p>
+
+<pre><code class="r">x &lt;- c(13, 6, 18, 2, 11)
+order(x)
+</code></pre>
+
+<pre><code>## [1] 4 2 5 1 3
+</code></pre>
+
+<pre><code class="r">order(x, decreasing = TRUE)
+</code></pre>
+
+<pre><code>## [1] 3 1 5 2 4
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h1>Head and Tail</h1>
+  </hgroup>
+  <article data-timings="">
+    <p><code>head</code> gives the first few elements while <code>tail</code> gives the last few elements</p>
+
+<pre><code class="r">x &lt;- c(1, 2, 3, 4, 5)
+head(x, 2) # gives the first two elements
+</code></pre>
+
+<pre><code>## [1] 1 2
+</code></pre>
+
+<pre><code class="r">tail(x, 3) # gives the last three elements
+</code></pre>
+
+<pre><code>## [1] 3 4 5
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h1>which</h1>
+  </hgroup>
+  <article data-timings="">
+    <p><code>which</code> gives the <em>indices</em> (positions) that are <code>TRUE</code> for a given logical vector</p>
+
+<pre><code class="r">which(c(TRUE, TRUE, FALSE, TRUE, FALSE))
+</code></pre>
+
+<pre><code>## [1] 1 2 4
+</code></pre>
+
+<pre><code class="r">x &lt;- c(1, 2, 3, 4, 5)
+which(x &lt;= 3)
+</code></pre>
+
+<pre><code>## [1] 1 2 3
+</code></pre>
+
+<p><code>which.max</code> and <code>which.min</code> returns the index of the FIRST value that satisfies maximality or minimality</p>
+
+<pre><code class="r">x &lt;- c(5, 5, 5, 3, 2)
+which.max(x)
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h1>unique</h1>
+  </hgroup>
+  <article data-timings="">
+    <p><code>unique</code> returns the unique values in a vector</p>
+
+<pre><code class="r">x &lt;- c(1, 1, 1, 2, 2, 3)
+unique(x)
+</code></pre>
+
+<pre><code>## [1] 1 2 3
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h1>any and all</h1>
+  </hgroup>
+  <article data-timings="">
+    <p><code>any</code> is a way to check if <em>any</em> values of a logical vector are <code>TRUE</code>
+<code>all</code> checks if <em>all</em> values of a logical vector are <code>TRUE</code></p>
+
+<pre><code class="r">x &lt;- c(1, 100, 1000, 10000, 100000)
+any(x &gt; 10^6)
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
+
+<pre><code class="r">all(x &lt;= 10^5)
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h1>in</h1>
+  </hgroup>
+  <article data-timings="">
+    <p><code>%in%</code> is a special <em>infix</em> operator (it goes between its arguments like a <code>+</code> sign) that checks to see if some values are in a set</p>
+
+<pre><code class="r"># Are the values of x in y?
+x &lt;- c(1, 2, 10)
+y &lt;- seq(1, 5)
+
+x %in% y
+</code></pre>
+
+<pre><code>## [1]  TRUE  TRUE FALSE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h1>table</h1>
+  </hgroup>
+  <article data-timings="">
+    <p><code>table</code> counts the number of occurences of each value in a vector</p>
+
+<pre><code class="r">x &lt;- c(1, 1, 1, 2, 2, 3)
+table(x)
+</code></pre>
+
+<pre><code>## x
+## 1 2 3 
+## 3 2 1
+</code></pre>
+
+<pre><code class="r">y &lt;- c(&quot;a&quot;, &quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;c&quot;)
+table(y)
+</code></pre>
+
+<pre><code>## y
+## a b c 
+## 2 3 1
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Calculator'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='NA'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Vectors'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Naming Objects'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Functions'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Getting Help in R'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Logical Statements'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Combining Logical Statements'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Logical Symbols'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Logical Checks'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Subsetting in R'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Some useful functions in R'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Seq'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Sort'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Order'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Head and Tail'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='which'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='unique'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='any and all'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='in'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='table'>
+         21
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

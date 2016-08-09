@@ -1,0 +1,149 @@
+---
+title       : Lesson 7
+subtitle    : Loops
+author      : Andrew Do
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+```{r, echo = F}
+library(stringr)
+```
+
+## Repeated Actions
+
+Say you wanted to repeat an action over and over again, maybe with some slight changes.  For example, you might want your computer to sing _99 Bottles of Beer_:
+```{r}
+print("99 bottles of beer on the wall.")
+print("99 bottles of beer!")
+print("Take one down, pass it around.")
+print("98 bottles of beer on the wall!")
+```
+
+---
+
+## Looping
+
+Now you could type out the 396 lines of the song by hand or you could have your computer do what's called a loop.
+```{r}
+for (n in 99:1) {
+  print(str_c(n, " bottles of beer on the wall."))
+  print(str_c(n, " bottles of beer!"))
+  print("Take one down, pass it around.")
+  print(str_c(n-1, " bottles of beer on the wall!"))
+}
+```
+
+---
+
+## For loops
+
+There are three main types of loops in R: repeat loops, while loops, and for loops.  We will only talk about the last two.  A for loop executes a set of actions over an index set.  So, in the example below, the for loop continually adds one to the numbers in the set `c(1,2,3)` sequentially, and then prints out the result.
+
+```{r}
+for (i in 1:3) {
+  print(i + 1)
+}
+```
+
+---
+
+## Common Uses
+
+One common use is for the index set to be a set of indices of an object:
+```{r}
+v <- c(3, 5, rep(0, 8))
+
+# This code will modify the third through fifth elements of v
+
+for (i in 3:10) {
+  v[i] <- v[i-2] + v[i-1]
+}
+v
+```
+Note that the `i` is used to call on elements of `v`.  It's never used for its face value.
+
+---
+
+## Common uses
+
+Of course the for loop isn't just constrained to looping over indices.  It can in fact loop over any set.  In the example below, it loops over a character vector:
+
+```{r}
+x <- data.frame(first_column = 1:3, second_column = c("a", "b", "c"), third_column = 7:9)
+names(x)
+
+for (name in names(x)) {
+  print(x[[name]])
+}
+```
+
+---
+
+## While Loops
+
+A while loop repeats a set of actions until its stop condition is met.  In the example below, the loop repeatedly divides by 2 until it hits an odd number.  The stop condition would be hitting the odd number.
+
+```{r}
+# Start off with some value
+n <- 748192
+i <- 0
+# The stop condition is the negation of the statement in the parentheses
+while (n %% 2 == 0) {
+  n <- n/2
+  i <- i + 1 # this i is being used as a counter for verification
+}
+
+print(c(n = n, i = i, verification = 2^i * n))
+```
+
+---
+
+## Initializing Values
+Notice that it's often the case that you have some initial value for the loop.  Otherwise the object that you want to change using a loop wouldn't actually exist!  This applies to both for and while loops. 
+
+```{r}
+# Count the number of times you can subtract 5 from a number n before it's less than 5
+HowManyFives <- function(n) {
+  counter <- 0 # Initialize a counter
+  while (n >= 5) {
+    n <- n - 5 # update the value of n
+    counter <- counter + 1 # update the counter
+  }
+  return(counter)
+}
+```
+
+---
+
+## When to use each type of loop
+
+The general idea is as follows: use for loops for when
+
+* You have a finite number of repetitions
+* You know the set you want to loop over (e.g. the indices of a vector)
+* You want to definitely loop over everything in that set
+
+Use while loops when:
+
+* You don't know how many times you want to repeat something
+* You'll know when to stop "when you see it" (stopping condition)
+
+---
+
+## Let's Write Some Loops
+
+Using a loop, write a function that will replace all the `99` values in odd columns of a data frame with NA.
+
+First, let's break down the problem into digestable bits:
+
+* We need to know the number of columns (`ncol`)
+* We'll need to only have the odd columns (`seq` or `%%`)
+* We'll loop over the set of odd columns (`for (i in set)`)
+* In each iteration of the loop, we 
+

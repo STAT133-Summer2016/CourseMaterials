@@ -1,0 +1,184 @@
+---
+title       : Lesson 5
+subtitle    : Regular Expressions R
+author      : Andrew Do
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## Motivation
+
+```{r libraries, echo = F}
+library(stringr)
+```
+
+* How would you describe a (US) phone number to someone?
+* How about the date format?
+* Time?
+* Money?
+* Email address?
+
+---
+
+## Pattern Matching
+
+* Each of the data I just asked about has a fairly _regular_ pattern that we can pick out by eye
+
+* In this lesson, we're going to learn about __regular expressions__, a precise and concise language for describing patterns.
+
+---
+
+## Phone numbers
+
+With a partner, spend 5 minutes discussing in detail:
+
+* How are phone numbers normally written?
+* How can we describe this format?
+
+Write down this description in words.
+
+---
+
+## Phone numbers
+
+* 10 digits, grouped 3-3-4
+* Separated by a space, short dash, or parentheses
+
+* How do we translate that into something the computer can understand? Regular expressions:
+
+  * `[0-9]` matches any number between 0 and 9
+  * `[- ()]` matches `-`, `SPACE`, `(`, or `)`
+  * `{3}` following a character means that that character is repeated 3 times.
+
+---
+
+## Test text
+
+```{r}
+email <- "Nothing. It is a generic folder that has Enron Global Markets on the cover. It is the one that I sent you to match your insert to when you were designing. With the dots. I am on my way over for a meeting, I'll bring one. 
+
+Juli Salvagio
+Manager, Marketing Communications
+Public Relations
+Enron-3641
+1400 Smith Street
+Houston, TX 77002
+713-345-2908-Phone
+713-542-0103-Mobile
+713-646-5800-Fax"
+```
+
+---
+
+```{r}
+phone <- "[ (][0-9][0-9][0-9][- )][0-9][0-9][0-9][- ]
+[0-9][0-9][0-9][0-9]"
+phone2 <- "[0-9]{3}[- .][0-9]{3}[- .][0-9]{4}"
+
+str_detect(email, phone2)
+str_extract(email, phone2)
+str_extract_all(email, phone2)
+```
+
+---
+
+# Qualifiers
+The following special symbols, called __metacharacters__ have special meanings in regular expressions.
+
+Qualifier | >=   | <=   | description
+--------- | ---- | ---- | ----------------------
+?         | 0    | 1    | at most 1
++         | 1    | Inf  | at least 1
+*         | 0    | Inf  | any number of
+{m,n}     | m    | n    | between m and n
+{,n}      | 0    | n    | at most n
+{m,}      | m    | Inf  | at least m
+{n}       | n    | n    | exactly n
+
+---
+
+# Other metacharacters
+These symbols also represent something other than their _literal_ meaning:
+
+Metacharacter | Meaning   | Example Usage | Description
+------------- | --------- | ------------- | -------------------
+()            | group     | "(ham){3}"    | matches "hamhamham"
+.             | anything  | ".{3}"        | matches any 3 characters (e.g "ham", "h@m", "h49")
+^             | beginning | "\^ham"        | only matches "ham" if it appears at the beginning of the string
+$             | end       | "ham$"        | only matches "ham" if it appears at the end of the string
+
+---
+
+# Escaping
+
+* R uses the double-slash `\\` to __escape__ special meanings
+* Illustrating Examples
+  
+  * "a.b" matches the letter a, then any character, then the letter b
+  * "a\\\\.b" matches the literal string "a.b"
+
+---
+
+# Character Classes
+
+* Square brackets also have a special meaning in regular expressions
+* They denote something called a __character class__
+* You've already seen two examples: `[0-9]` matches any one digit. `[( -]` matches `(`, `-`, or `-`
+* `[a-z]` matches any one lowercase letter
+* `[a-zA-Z]` matches any one letter
+* `[LATE]` matches one of the four letters `L`, `A`, `T`, `E`.
+* `[LATE]{4}` matches `"LATE"`, but it also matches `"TEAL"`
+```{r}
+char_class <- "[LATE]{4}"
+str_detect("TEALING", char_class)
+```
+
+---
+
+# Character classes
+
+* All of the metacharacters mentioned lose their special meanings inside of character classes
+* The only exception is `^`, which when placed at the beginning means "everything but the characters in this class"
+```{r}
+# Everything but the letters E, A, and T
+neg_class <- "[^EAT]"
+
+# BAT contains B, which is not E, A, or T
+str_detect("BAT", neg_class)
+
+# Beat does not contain those characters either
+str_detect("Beat", neg_class)
+```
+
+---
+
+# stringr functions
+function       | description
+-------------- | ---------------------------------
+str_detect     | detects presence of a pattern
+str_locate     | finds first position of pattern
+str_replace    | replaces first matched pattern
+str_replace_all| replace all matched patterns
+str_match      | returns first matched pattern
+str_match_all  | returns all matched patterns
+str_split      | splits string at matched pattern
+
+---
+
+# Your Turn
+
+### Create a regular expression to match a date. Test it against the following cases:
+```{r, eval = F}
+c("10/14/1979", "20/20/1945", "1/1/1905", "5/5/5")
+```
+
+### Create a regular expression to match a time. Test it against the following cases:
+```{r, eval = F}
+c("12:30 pm", "2:15 AM", "312:23 pm", "1:00 american", "08:20 am")
+```
+

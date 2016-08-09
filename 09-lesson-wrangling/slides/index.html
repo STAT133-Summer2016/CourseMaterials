@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lesson 9</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Lesson 9">
+  <meta name="author" content="Andrew Do">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Lesson 9</h1>
+    <h2>Data Manipulation</h2>
+    <p>Andrew Do<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Ceci n&#39;est pas une pipe</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>These couple of slides will motivate the usage of the piping operator <code>%&gt;%</code> from the <code>maggritr</code> package.</p>
+
+<p>For a more detailed look at everything the package has to offer, consider reading through the vignette online:</p>
+
+<p><a href="https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html">maggritr vignette</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Nested function calls</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>It&#39;s fairly natural that you might want to use the output of one function as the input of another.</p>
+
+<pre><code class="r">as.numeric(str_c(str_match_all(c(&quot;1 hundred&quot;, &quot;2 tens&quot;, &quot;3 ones&quot;), &quot;[0-9]+&quot;), collapse = &quot;&quot;))
+</code></pre>
+
+<pre><code>## [1] 123
+</code></pre>
+
+<p>To some extent, you can fix readability with whitespace</p>
+
+<pre><code class="r">as.numeric(
+  str_c(
+    str_match_all(c(&quot;1 hundred&quot;, &quot;2 tens&quot;, &quot;3 ones&quot;), &quot;[0-9]+&quot;),
+    collapse = &quot;&quot;
+  )
+)
+</code></pre>
+
+<pre><code>## [1] 123
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Function Sandwich</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="img/sandwich.jpg" width="300"></p>
+
+<p>At some point, you&#39;ll just end up with a sandwich too impractical for human consumption.  The &quot;Dagwood Sandwich&quot; problem.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Piping</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Thankfully, the <code>maggritr</code> package implements a piping operator <code>%&gt;%</code> that allows you to construct readable sequences of function calls:</p>
+
+<pre><code class="r">number &lt;- c(&quot;1 hundred&quot;, &quot;2 tens&quot;, &quot;3 ones&quot;)
+
+number %&gt;%
+  str_match_all(&quot;[0-9]+&quot;) %&gt;%
+  str_c(collapse = &quot;&quot;) %&gt;%
+  as.numeric()
+</code></pre>
+
+<pre><code>## [1] 123
+</code></pre>
+
+<p><code>%&gt;%</code> passes the output of the left function into the first argument of the right function.<br>
+The keyboard shortcut for <code>%&gt;%</code> in RStudio is <code>CTRL(COMMAND)+Shift+M</code></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Data Wrangling Verbs</h2>
+  </hgroup>
+  <article data-timings="">
+    <table><thead>
+<tr>
+<th>Verb</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>filter</td>
+<td>keep rows matching criteria</td>
+</tr>
+<tr>
+<td>select</td>
+<td>pick columns by name</td>
+</tr>
+<tr>
+<td>arrange</td>
+<td>reorder rows</td>
+</tr>
+<tr>
+<td>mutate</td>
+<td>create new variables/modify existing ones</td>
+</tr>
+<tr>
+<td>summarise</td>
+<td>reduce variables to values</td>
+</tr>
+</tbody></table>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>dplyr</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The structure and usage of all <code>dplyr</code> functions is as follows:</p>
+
+<ul>
+<li>First argument is the data frame</li>
+<li>Subsequent arguments say what to do with the data frame</li>
+<li>Function always returns a data frame</li>
+<li>Function never modifies in place (doesn&#39;t overwrite object)</li>
+</ul>
+
+<p><code>dplyr</code> comes with the <code>maggritr</code> package preloaded</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Some parts of this presentation will ask you to try function calls for yourself</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Load the <code>flights</code> data from the <code>nycflights13</code> package</h3>
+
+<h3>Install and load the <code>dplyr</code> package</h3>
+
+<pre><code class="r">library(nycflights13)
+library(dplyr)
+
+flights &lt;- tbl_df(flights)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Examples</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>These next few examples will refer to the following data frame:</p>
+
+<pre><code class="r">df &lt;- data.frame(color = c(&quot;blue&quot;, &quot;black&quot;, &quot;blue&quot;, &quot;blue&quot;, &quot;black&quot;), value = 1:5)
+df
+</code></pre>
+
+<pre><code>##   color value
+## 1  blue     1
+## 2 black     2
+## 3  blue     3
+## 4  blue     4
+## 5 black     5
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Filter</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="img/filter.png" width="600"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Filter</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="img/filter2.png" width="650"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Find all flights</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>To SFO or OAK</h3>
+
+<h3>Delayed by an hour</h3>
+
+<h3>That left between midnight and 5am</h3>
+
+<h3>Where the arrival delay was more than twice the departure delay</h3>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Find all flights</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># To SFO or OAK
+filter(flights, dest %in% c(&quot;SFO&quot;, &quot;OAK&quot;))
+filter(flights, dest == &quot;SFO&quot; | dest == &quot;OAK&quot;)
+
+# Delayed by more than 1 hour
+filter(flights, dep_delay &gt; 60)
+
+# Left between midnight and 5am
+filter(flights, hour &gt;= 0, hour &lt;= 5)
+filter(flights, hour &gt;= 0 &amp; hour &lt;= 5)
+
+# Arrival delay more than twice departure delay
+filter(flights, arr_delay &gt; 2 * dep_delay)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Select</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="img/select.png" width="650"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Select</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="img/select2.png" width="650"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Explore Select</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Try the following commands:</p>
+
+<pre><code class="r">select(flights, arrival_delay = arr_delay)
+rename(flights, arrival_delay = arr_delay)
+select(flights, arr_delay, dep_delay)
+select(flights, arr_delay:dep_delay)
+select(flights, ends_with(&quot;delay&quot;))
+select(flights, contains(&quot;delay&quot;))
+</code></pre>
+
+<ul>
+<li><code>select</code> only keeps the variables you mention; <code>rename</code> keeps all of them</li>
+<li><code>ends_with</code> and <code>contains</code> are examples of special functions that only work inside <code>select</code></li>
+<li>On your own time, read through the documentation of <code>select</code> to learn about other special functions</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Arrange</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="img/arrange.png" width="650"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Arrange</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="img/arrange2.png" width="650"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Explore <code>arrange</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Order the flights by departure date</h3>
+
+<h3>Which flights were most delayed?</h3>
+
+<h3>Which flights caught up the most time during the flight?</h3>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Explore <code>arrange</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># Ordered by departure date
+arrange(flights, year, month, day, hour, minute)
+
+# Most delayed means I need to know ordering
+arrange(flights, desc(dep_delay))
+arrange(flights, desc(arr_delay))
+
+# Ordered by recovered/lost time during flight
+arrange(flights, desc(dep_delay - arr_delay))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Mutate</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="img/mutate.png" width="650"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Mutate</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="img/mutate2.png" width="650"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Of course I can, Professor X</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Add a new variable, <code>recovered_delay</code>, that computes the difference between arrival and departure delay.</h3>
+
+<h3>Add a new variable, <code>speed</code>, that contains the speed in mph for each flight.  The <code>air_time</code> variable is in minutes and <code>distance</code> is in miles.  Return the top 5 fastest flights.</h3>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>Exploring Mutate</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># Recovered delay
+mutate(flights, recovered_delay = dep_delay - arr_delay)
+
+# Top 5 speediest
+flights %&gt;%
+  mutate(speed = 60 * distance / air_time) %&gt;%
+  top_n(5, speed) # doesn&#39;t return the results in order
+
+flights %&gt;%
+  mutate(speed = 60 * distance / air_time) %&gt;%
+  arrange(desc(speed)) %&gt;%
+  head(5)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>Summarise</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="img/summarise.png" width="650"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>Summarise</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="img/summarise2.png" width="650"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-26" style="background:;">
+  <hgroup>
+    <h2>Sparknotes pls</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Find the mean departure delay by date</h3>
+
+<h3>Find the percentage of flights each day that were over 30 minutes late for departure</h3>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-27" style="background:;">
+  <hgroup>
+    <h2>Multistep data wrangling</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Which destinations have the highest average arrival delays?</h3>
+
+<h3>I need to</h3>
+
+<ul class = "build incremental">
+<li>Group by destination -&gt; <code>group_by</code> dest</li>
+<li>Find the mean arrival delay in each group -&gt; <code>summarise</code> with <code>mean</code></li>
+<li>Highest value means I need orderings -&gt; <code>arrange</code> in descending order</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-28" style="background:;">
+  <hgroup>
+    <h2>Highest average arrival delays</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">flights %&gt;%
+  group_by(dest) %&gt;%
+  summarise(arr_delay = mean(arr_delay, na.rm = T)) %&gt;%
+  arrange(desc(arr_delay)) %&gt;%
+  top_n(7, arr_delay)
+</code></pre>
+
+<pre><code>## Source: local data frame [7 x 2]
+## 
+##    dest arr_delay
+##   (chr)     (dbl)
+## 1   CAE  41.76415
+## 2   TUL  33.65986
+## 3   OKC  30.61905
+## 4   JAC  28.09524
+## 5   TYS  24.06920
+## 6   MSN  20.19604
+## 7   RIC  20.11125
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-29" style="background:;">
+  <hgroup>
+    <h2>Two-table verbs</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Now imagine we have two tables</p>
+
+<p><img src="img/twotable.png" width="800"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-30" style="background:;">
+  <hgroup>
+    <h2>Inner Join</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="img/innerjoin.png" width="650"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-31" style="background:;">
+  <hgroup>
+    <h2>Left Join</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="img/leftjoin.png" width="650"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-32" style="background:;">
+  <hgroup>
+    <h2>Semijoin</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="img/semijoin.png" width="650"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-33" style="background:;">
+  <hgroup>
+    <h2>Antijoin</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="img/antijoin.png" width="650"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-34" style="background:;">
+  <hgroup>
+    <h2>Joins</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Joins are always of the form</p>
+
+<pre><code>join(x, y, by)
+</code></pre>
+
+<p>You can specify what columns you want to use in your match by giving a character vector to <code>by</code>.  If no vector is given, the join will search for common names.  To match on variables with different names, use a named vector.  For example <code>by = c(&quot;a&quot; = &quot;b&quot;)</code> will match <code>x.a</code> to <code>y.b</code></p>
+
+<table><thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>inner</td>
+<td>return rows in <code>x</code> AND <code>y</code></td>
+</tr>
+<tr>
+<td>left</td>
+<td>return all of <code>x</code> and matching rows in <code>y</code></td>
+</tr>
+<tr>
+<td>semi_join</td>
+<td>return rows of <code>x</code> that match <code>y</code>, only columns of <code>x</code></td>
+</tr>
+<tr>
+<td>anti_join</td>
+<td>only rows of <code>x</code> not in <code>y</code>, keeping only columns of <code>x</code></td>
+</tr>
+<tr>
+<td>full_join</td>
+<td>return all rows and all columns from both <code>x</code> and <code>y</code>, matching when possible</td>
+</tr>
+</tbody></table>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-35" style="background:;">
+  <hgroup>
+    <h2>Slide Adaptation</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>These slides have been adapted from Hadley Wickham&#39;s tutorial at useR 2014.</p>
+
+<p><a href="http://www.r-bloggers.com/hadley-wickhams-dplyr-tutorial-at-user-2014-part-1/">http://www.r-bloggers.com/hadley-wickhams-dplyr-tutorial-at-user-2014-part-1/</a></p>
+
+<p>There are two vignettes that I think would be helpful to read through:</p>
+
+<p><a href="https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html">This dplyr vignette</a></p>
+
+<p><a href="https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html">and this window function vignette</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Ceci n&#39;est pas une pipe'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Nested function calls'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Function Sandwich'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Piping'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Data Wrangling Verbs'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='dplyr'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Some parts of this presentation will ask you to try function calls for yourself'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Examples'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Filter'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Filter'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Find all flights'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Find all flights'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Select'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Select'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Explore Select'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Arrange'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Arrange'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Explore <code>arrange</code>'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Explore <code>arrange</code>'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Mutate'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Mutate'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Of course I can, Professor X'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Exploring Mutate'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Summarise'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='Summarise'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='Sparknotes pls'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='Multistep data wrangling'>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title='Highest average arrival delays'>
+         28
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=29 title='Two-table verbs'>
+         29
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=30 title='Inner Join'>
+         30
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=31 title='Left Join'>
+         31
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=32 title='Semijoin'>
+         32
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=33 title='Antijoin'>
+         33
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=34 title='Joins'>
+         34
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=35 title='Slide Adaptation'>
+         35
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

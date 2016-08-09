@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lesson 11</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Lesson 11">
+  <meta name="author" content="Andrew Do">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Lesson 11</h1>
+    <h2>Time data</h2>
+    <p>Andrew Do<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Packages and Locale</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>You will need to install the following packages if you haven&#39;t:</h3>
+
+<ul>
+<li><code>lubridate</code></li>
+</ul>
+
+<h3>Locale problems.</h3>
+
+<p>If your computer is not natively run on English, you may have to fun the following commands or else it might not recognize things like &quot;Jan&quot; as &quot;January&quot;.</p>
+
+<pre><code class="r">Sys.setlocale(&quot;LC_ALL&quot;, &quot;en&quot;)
+Sys.setenv(&quot;LANGUAGE&quot; = &quot;en&quot;)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Riddle me that</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>When does a day not equal 24 hours?</h3>
+
+<h3>When does a year not equal 365 days?</h3>
+
+<h3>When does a minute not equal 60 seconds?</h3>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Formalizing Time</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Time is deceptively rather difficult to work with.  In the <code>lubridate</code> package, we formalize 4 notions of time:</p>
+
+<ol>
+<li>Instants</li>
+<li>Periods</li>
+<li>Durations</li>
+<li>Intervals</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Instants</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>An instant is a specific moment of time</h3>
+
+<h3>Instants are a combination of years, months, days, hours, minutes, seconds, and time zone.</h3>
+
+<h3>e.g, 2011-03-28 08:44:32 CST</h3>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Strings into instants</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>To turn a <code>string</code> into an instant, use y, m, d, h, m, and s in the correct order to specify the order of year, month, day, hour, minutes, and seconds in the string.  For example</p>
+
+<pre><code class="r">ymd(&quot;2011-03-28&quot;)
+mdy(&quot;03/28/2011&quot;)
+dmy(&quot;28032011&quot;)
+ymd_hms(&quot;2011:03:28 08:50:30&quot;)
+
+#order matters
+dmy(&quot;05-03-2011&quot;)
+mdy(&quot;05-03-2011&quot;)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Data Type</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Time objects have a class of their own defined within <code>lubridate</code></p>
+
+<pre><code class="r">time_string &lt;- &quot;2011-03-28&quot;
+class(time_string)
+</code></pre>
+
+<pre><code>## [1] &quot;character&quot;
+</code></pre>
+
+<pre><code class="r">time_lubridated &lt;- ymd(time_string)
+class(time_lubridated)
+</code></pre>
+
+<pre><code>## [1] &quot;Date&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Manipulating Time</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>You can write logical statements and do arithmetic with time:</p>
+
+<pre><code class="r"># Comparisons
+today() &gt; ymd(&quot;2016-03-29&quot;)
+
+# Round
+floor_date(now(), &quot;month&quot;)
+ceiling_date(now(), &quot;month&quot;)
+round_date(now(), &quot;month&quot;)
+
+# Extract
+year(today())
+month(ymd(&quot;2016-03-29&quot;))
+wday(ymd(&quot;2016-06-23&quot;))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Extracting Information</h2>
+  </hgroup>
+  <article data-timings="">
+    <table><thead>
+<tr>
+<th>Date Component</th>
+<th>Extractor</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Year</td>
+<td>year()</td>
+</tr>
+<tr>
+<td>Month</td>
+<td>month()</td>
+</tr>
+<tr>
+<td>Week</td>
+<td>week()</td>
+</tr>
+<tr>
+<td>Day</td>
+<td>day()</td>
+</tr>
+<tr>
+<td>Day of year</td>
+<td>yday()</td>
+</tr>
+<tr>
+<td>Day of month</td>
+<td>mday()</td>
+</tr>
+<tr>
+<td>Day of week</td>
+<td>wday()</td>
+</tr>
+<tr>
+<td>Hour</td>
+<td>hour()</td>
+</tr>
+<tr>
+<td>Minute</td>
+<td>minute()</td>
+</tr>
+<tr>
+<td>Second</td>
+<td>second()</td>
+</tr>
+<tr>
+<td>Time Zone</td>
+<td>tz()</td>
+</tr>
+</tbody></table>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Try these commands</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">now()
+</code></pre>
+
+<pre><code>## [1] &quot;2016-06-23 13:33:44 PDT&quot;
+</code></pre>
+
+<pre><code class="r">year(now())
+</code></pre>
+
+<pre><code>## [1] 2016
+</code></pre>
+
+<pre><code class="r">hour(now())
+</code></pre>
+
+<pre><code>## [1] 13
+</code></pre>
+
+<pre><code class="r">day(now())
+</code></pre>
+
+<pre><code>## [1] 23
+</code></pre>
+
+<pre><code class="r">yday(now())
+</code></pre>
+
+<pre><code>## [1] 175
+</code></pre>
+
+<pre><code class="r">wday(now())
+</code></pre>
+
+<pre><code>## [1] 5
+</code></pre>
+
+<pre><code class="r">wday(now(), label = TRUE)
+</code></pre>
+
+<pre><code>## [1] Thurs
+## Levels: Sun &lt; Mon &lt; Tues &lt; Wed &lt; Thurs &lt; Fri &lt; Sat
+</code></pre>
+
+<pre><code class="r">wday(now(), label = TRUE, abbr = FALSE)
+</code></pre>
+
+<pre><code>## [1] Thursday
+## 7 Levels: Sunday &lt; Monday &lt; Tuesday &lt; Wednesday &lt; Thursday &lt; ... &lt; Saturday
+</code></pre>
+
+<pre><code class="r">month(now(), label = TRUE, abbr = FALSE)
+</code></pre>
+
+<pre><code>## [1] June
+## 12 Levels: January &lt; February &lt; March &lt; April &lt; May &lt; June &lt; ... &lt; December
+</code></pre>
+
+<pre><code class="r"># Which day of the week were you born?
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Can use the extractors to change components of a <code>Date</code> object</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">time &lt;- now()
+time
+</code></pre>
+
+<pre><code>## [1] &quot;2016-06-23 13:33:44 PDT&quot;
+</code></pre>
+
+<pre><code class="r">year(time) &lt;- 2000
+hour(time) &lt;- 23
+day(time) &lt;- 45
+
+tz(time) &lt;- &quot;UTC&quot;
+time
+</code></pre>
+
+<pre><code>## [1] &quot;2000-07-15 23:33:44 UTC&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Your turn</h2>
+  </hgroup>
+  <article data-timings="">
+    <h2>What day of the week will your birthday be in 2017?</h2>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Time Spans</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Suppose we want to set our alarms on <code>R</code></p>
+
+<pre><code class="r">ymd_hms(&quot;2011-01-01 08:30:00&quot;, tz = &quot;&quot;) + ddays(0:30)
+</code></pre>
+
+<p>How about</p>
+
+<pre><code class="r">ymd_hms(&quot;2011-03-01 08:30:00&quot;, tz = &quot;&quot;) + ddays(0:30)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>3 Types of Time Spans</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Durations represent exact time lengths</h3>
+
+<h3>Periods represent clock time lengths</h3>
+
+<h3>Intervals represent specific times</h3>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Durations</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Durations measure the exact amount of seconds that pass through two time points.</h3>
+
+<h3>Use d + the plural of a unit of time to create a duration</h3>
+
+<ul>
+<li>dyears(x) - number of seconds in x 365 day-years</li>
+<li>dminutes(x) - number of seconds in x 60 second minutes</li>
+<li>dhours(x) - can you guess?</li>
+<li>dmonths? - can this exist?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Try it</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">dhours(2)
+now() + dhours(2)
+
+dminutes(5)
+now() + dminutes(c(5,10,15))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Periods</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Periods measure time spans in units larger than seconds.  Periods can be thought of as &quot;clock time&quot;</h3>
+
+<h3>Use the plural of a unit of time to create a period</h3>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Try it</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">minutes(10)
+hours(278)
+
+now() + years(1:10)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Periods vs. Durations</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Periods are intuitive time</h3>
+
+<h3>Durations give exact times (good for science)</h3>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Intervals</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Intervals measure a time span by recording its endpoints.  Since we known when a time span occurs, we can calculate lengths with all units (can adjust for leap years, daylight savings, etc)</h3>
+
+<p>To create an interval, use the special <code>%--%</code> operator.</p>
+
+<pre><code class="r">int &lt;- ymd(&quot;2010-01-01&quot;) %--% ymd(&quot;2009-01-01&quot;)
+</code></pre>
+
+<p>Access and set the endpoints with <code>int_start()</code> and <code>int_end()</code></p>
+
+<pre><code class="r">int_start(int)
+int_end(int) &lt;- ymd(&quot;2010-03-14&quot;)
+</code></pre>
+
+<p>Intervals can be accurately converted to either periods or durations with as.period() and as.duration()</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Math with Intervals</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">birthday &lt;- Your_birthday
+life &lt;- birthday %--% now()
+life / ddays(1)
+life / days(1)
+life %/% days(1)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Your Turn</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Calculate your birthday in minutes, hours, days.</h3>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Useful Interal functions</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><code>%within%</code> checks if a moment is in an interval</li>
+<li><code>int_overlaps</code> checks if two intervals overlap</li>
+<li><code>intersect</code> returns any overlaps in the intervals</li>
+<li><code>setdiff</code> returns the parts that don&#39;t overlap in the intervals</li>
+</ul>
+
+<pre><code class="r"># Try these to see
+int_a &lt;- ymd(&quot;2016-08-01&quot;) %--% ymd(&quot;2016-08-31&quot;)
+int_b &lt;- ymd(&quot;2016-08-15&quot;) %--% ymd(&quot;2016-09-15&quot;)
+test_dates &lt;- ymd(c(&quot;20160802&quot;, &quot;20160831&quot;, &quot;20160703&quot;))
+
+test_dates %within% int_a
+int_overlaps(int_a, int_b)
+setdiff(int_a, int_b)
+intersect(int_a, int_b)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Packages and Locale'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Riddle me that'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Formalizing Time'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Instants'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Strings into instants'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Data Type'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Manipulating Time'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Extracting Information'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Try these commands'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Can use the extractors to change components of a <code>Date</code> object'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Your turn'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Time Spans'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='3 Types of Time Spans'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Durations'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Try it'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Periods'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Try it'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Periods vs. Durations'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Intervals'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Math with Intervals'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Your Turn'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Useful Interal functions'>
+         22
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

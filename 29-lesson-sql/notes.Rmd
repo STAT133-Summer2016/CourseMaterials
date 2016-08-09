@@ -399,8 +399,8 @@ chinook %>% tbl(sql("
     Artist.ArtistId,
     albumId
   FROM
-    Artist LEFT JOIN Album 
-    ON Artist.artistid = Album.artistid
+    Artist 
+    LEFT JOIN Album ON Artist.artistid = Album.artistid
   ORDER BY
     albumid
 "))
@@ -414,8 +414,8 @@ chinook %>% tbl(sql("
     Artist.ArtistId,
     albumId
   FROM
-    Artist LEFT JOIN Album 
-    ON Artist.artistid = Album.artistid
+    Artist 
+    LEFT JOIN Album ON Artist.artistid = Album.artistid
   WHERE
     albumid IS NULL
 "))
@@ -432,8 +432,8 @@ chinook %>% tbl(sql("
     a.ArtistId,
     albumId
   FROM
-    Artist a LEFT JOIN Album b 
-    ON a.artistid = b.artistid
+    Artist a 
+    LEFT JOIN Album b ON a.artistid = b.artistid
   WHERE
     albumid IS NOT NULL
 "))
@@ -492,8 +492,8 @@ SELECT
   title AS AlbumTitle,
   COUNT(trackid) AS NumberOfSongs
 FROM
-  Track a INNER JOIN Album b 
-  ON a.albumid = b.albumid
+  Track a 
+  INNER JOIN Album b ON a.albumid = b.albumid
 GROUP BY
   a.albumid
 "))
@@ -524,7 +524,8 @@ chinook %>% tbl(sql("
     title,
     SUM(Milliseconds) AS length
   FROM
-    Track a INNER JOIN Album b ON a.AlbumId = b.AlbumId
+    Track a 
+    INNER JOIN Album b ON a.AlbumId = b.AlbumId
   GROUP BY
     a.albumid
   HAVING
